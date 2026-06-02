@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# sciagent-bench specific
+smoke/*/results/
+results/
+.DS_Store
+.agent_states/
+_logs/
