@@ -1,0 +1,24 @@
+id: photonics
+title: "Three-zone metasurface in-coupler (photonics.pdf)"
+prompt: |
+  Reproduce the three-zone TiO2/N-BK7 metasurface in-coupler from
+  photonics.pdf using S4 RCWA at lambda=532 nm. Optimize nano-beam +
+  nano-pillar geometry per zone to hit the per-zone first-order
+  diffraction and zeroth-order reflection targets in Fig 2(e).
+  Verify: minimum field efficiency (MFE) >= 25% across the +/-10 deg
+  FOV (paper: 25.3%), plus the efficiency-vs-incident-angle curves
+  for each zone matching the shape of Fig 3(d-f).
+inputs:
+  - path: ./project/photonics.pdf
+    source: /Users/shrutibadhwar/Documents/2026/testpackage/sciagent-tasks/nowtasks/photonics.pdf
+verification_criteria:
+  key_value: minimum_field_efficiency_mfe
+  comparator: ">="
+  threshold: 0.25
+  paper_value: 0.253
+  required_figure: "efficiency_vs_angle_per_zone.png"
+budget:
+  wall_time_seconds: 1800
+  cost_usd: 2.00
+services_needed:
+  - rcwa

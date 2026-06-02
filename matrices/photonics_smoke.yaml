@@ -1,0 +1,35 @@
+# Camera-ready Phase-1 smoke matrix.
+# 5 cells × N=1 invocation each. Total budget cap: ~$8.
+# Per DESIGN_BENCH.md §5.6 — Claude Code raw vs +sky+registry isolates the
+# registry/cloud bits; sciagent verifier-ON vs verifier-OFF isolates
+# mid-session verifier feedback; cross-family-verifier answers R1.
+cells:
+  - id: photonics__cc-bare__sonnet
+    task: photonics
+    adapter: claude_code
+    adapter_config: {with_sky: false, with_registry: false}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: photonics__cc-sky-registry__sonnet
+    task: photonics
+    adapter: claude_code
+    adapter_config: {with_sky: true, with_registry: true}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: photonics__sciagent-verifier-on__sonnet
+    task: photonics
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-single-family.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: photonics__sciagent-verifier-off__sonnet
+    task: photonics
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-no-verifier.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: photonics__sciagent-cross-family-verifier__sonnet
+    task: photonics
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-cross-family-verifier.yaml}
+    llm: anthropic/claude-sonnet-4-6

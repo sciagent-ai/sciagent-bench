@@ -1,0 +1,26 @@
+# Recipe: gemini-single-family
+#
+# Varies: provider (all four role models on Gemini).
+# Held fixed at sciagent defaults (NOT ablated in this cell):
+#   - DATA gate ON, EXEC gate ON, LLM verification ON (BUT see note below)
+#   - verifier is same family as main (gemini-2.5-flash)
+#   - registry: default catalog
+#   - compute tools: loaded (unused for tasks that don't need clusters)
+#
+# Model status as of 2026-05-29:
+#   - gemini-3-pro-preview was SHUT DOWN on 2026-03-09; use 3.1 instead.
+#   - gemini-3.1-pro-preview is preview-gated; requires preview access on the key.
+#   - gemini-3.5-flash is GA (released 2026-05-19).
+#   - gemini-2.5-flash / 2.5-flash-lite are long GA.
+#
+# NOTE on verifier_model: today `sciagent run "task"` routes through
+# AgentLoop directly and skips the verification gate (which lives on
+# TaskOrchestrator.execute_all). This field is wired but unread until
+# sciagent's verification gate fires on single-task runs too.
+agent:
+  model: gemini/gemini-3.1-pro-preview
+orchestrator:
+  scientific_model: gemini/gemini-3.1-pro-preview
+  coding_model:     gemini/gemini-3.5-flash
+  fast_model:       gemini/gemini-2.5-flash-lite
+  verifier_model:   gemini/gemini-2.5-flash

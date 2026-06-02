@@ -1,0 +1,21 @@
+# Recipe: anthropic-single-family
+#
+# Varies: provider (all four role models on Anthropic).
+# Held fixed at sciagent defaults (NOT ablated in this cell):
+#   - DATA gate ON, EXEC gate ON, LLM verification ON
+#   - verifier is same family as main (Sonnet 4.6)
+#   - registry: default catalog
+#   - compute tools: loaded (unused for tasks that don't need clusters)
+#
+# Future ablation cells slot in alongside:
+#   anthropic-cross-family-verifier.yaml   (main=Sonnet, verifier=non-Anthropic)
+#   anthropic-no-verifier.yaml             (enable_verification=false)
+#   anthropic-no-data-gate.yaml            (enable_data_gate=false)
+#   anthropic-raw.yaml                     (all three gates off)
+agent:
+  model: anthropic/claude-sonnet-4-6
+orchestrator:
+  scientific_model: anthropic/claude-sonnet-4-6
+  coding_model:     anthropic/claude-sonnet-4-6
+  fast_model:       anthropic/claude-haiku-4-5-20251001
+  verifier_model:   anthropic/claude-sonnet-4-6

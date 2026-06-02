@@ -1,0 +1,30 @@
+# Recipe: xai-single-family
+#
+# Varies: provider (all four role models on xAI Grok family).
+# Held fixed at sciagent defaults (NOT ablated in this cell):
+#   - DATA gate ON, EXEC gate ON, LLM verification ON (BUT see note below)
+#   - verifier is same family as main (grok-4.3)
+#   - registry: default catalog
+#   - compute tools: loaded (unused for tasks that don't need clusters)
+#
+# Model picks as of 2026-05-29:
+#   - xAI uses dot notation: model id is `grok-4.3` (not `grok-4-3`).
+#   - As of the 2026-05-15 retirement, ALL prior Grok model strings
+#     (grok-3, grok-4-0709, grok-4-fast-reasoning, grok-4-fast-non-reasoning,
+#      grok-4-1-fast-reasoning, grok-4-1-fast-non-reasoning, grok-code-fast-1)
+#     redirect to grok-4.3 and bill at 4.3 rates. So xAI's live API has only
+#     one model today, and "single-family" reduces to all roles on grok-4.3.
+#   - When xAI adds a separate fast tier again, swap fast_model + verifier_model
+#     to that. Until then, the same model fills every role honestly.
+#
+# NOTE on verifier_model: today `sciagent run "task"` routes through
+# AgentLoop directly and skips the verification gate (which lives on
+# TaskOrchestrator.execute_all). This field is wired but unread until
+# sciagent's verification gate fires on single-task runs too.
+agent:
+  model: xai/grok-4.3
+orchestrator:
+  scientific_model: xai/grok-4.3
+  coding_model:     xai/grok-4.3
+  fast_model:       xai/grok-4.3
+  verifier_model:   xai/grok-4.3

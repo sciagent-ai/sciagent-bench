@@ -1,0 +1,12 @@
+# Recipe: anthropic-cross-family-verifier
+# Cross-family ablation: Anthropic main + OpenAI o4-mini verifier.
+# Directly answers original-review R1 on same-model vs different-model verification.
+# Verifier choice rationale: o4-mini is reasoning-tuned ($0.55/$2.20 per M),
+# cross-family from Anthropic, and pre-validated as verifier in openai-single-family.yaml.
+agent:
+  model: anthropic/claude-sonnet-4-6
+orchestrator:
+  scientific_model: anthropic/claude-sonnet-4-6
+  coding_model:     anthropic/claude-sonnet-4-6
+  fast_model:       anthropic/claude-haiku-4-5-20251001
+  verifier_model:   openai/o4-mini   # cross-family

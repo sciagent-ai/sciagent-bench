@@ -1,0 +1,13 @@
+# Recipe: anthropic-no-verifier
+#
+# Same as anthropic-single-family but with the LLM verification gate OFF.
+# Pairs with anthropic-single-family.yaml in the camera-ready matrix to
+# isolate whether the agent saw verification feedback mid-session.
+agent:
+  model: anthropic/claude-sonnet-4-6
+orchestrator:
+  scientific_model: anthropic/claude-sonnet-4-6
+  coding_model:     anthropic/claude-sonnet-4-6
+  fast_model:       anthropic/claude-haiku-4-5-20251001
+  verifier_model:   anthropic/claude-sonnet-4-6
+  enable_verification: false

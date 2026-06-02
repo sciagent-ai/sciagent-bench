@@ -1,0 +1,1 @@
+Fetch 10 antimicrobial peptides from DBAASP (https://dbaasp.org). Report their names and sequences.
