@@ -18,7 +18,20 @@ verification_criteria:
   paper_value: 0.253
   required_figure: "efficiency_vs_angle_per_zone.png"
 budget:
-  wall_time_seconds: 1800
+  # 90 min — the first cc-bare run produced real simulation artifacts
+  # (per-zone optimized geometries + 3 figures) at ~54 of 60 min, leaving
+  # almost no headroom for the agent to read the background-sim output
+  # and write a final result block. Sciagent cells also include verifier
+  # subagent turns on top, so they need at least the same runway.
+  wall_time_seconds: 5400
   cost_usd: 2.00
+  # Claude Code's --print mode defaults to ~42 turns. The first cc-bare
+  # run hit exactly turn 42 mid-work (its "result" was the cut-off
+  # message "the simulation is running, I'll let it run"), so we bump
+  # explicitly. 100 gives the agent room to read BashOutput from any
+  # background job it spawned and report the final number.
+  # Sciagent has its own iteration cap (--max-iterations) with sensible
+  # defaults that are model-aware — we leave it to sciagent.
+  max_turns: 100
 services_needed:
   - rcwa

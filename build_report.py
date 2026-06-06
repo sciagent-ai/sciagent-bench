@@ -8,10 +8,36 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import pathlib
 import statistics
 import sys
 from collections import defaultdict
+
+REPO_ROOT = pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(REPO_ROOT))
+
+from tools.render_transcript import (  # noqa: E402
+    _read_jsonl,
+    render_claude_transcript,
+    render_sciagent_provenance,
+)
+
+
+def _render_trajectory(transcript: pathlib.Path) -> str:
+    """Render a JSONL transcript (Claude Code or sciagent) to markdown.
+    Format autodetected: sciagent rows have `event_kind`; Claude Code rows
+    have top-level `type`."""
+    events = list(_read_jsonl(transcript))
+    if not events:
+        return ""
+    if "event_kind" in events[0]:
+        body = render_sciagent_provenance(events)
+        header = f"# Sciagent provenance — {transcript.name}\n"
+    else:
+        body = render_claude_transcript(events)
+        header = f"# Claude Code transcript — {transcript.name}\n"
+    return header + "\n" + body
 
 
 def _to_float(s: str) -> float:
@@ -97,7 +123,34 @@ def build_summary(rows: list[dict]) -> str:
         cell = r.get("cell_id", "(no id)")
         lines.append(f"### {cell}")
         lines.append("")
-        block = _read_result_block(r.get("artifacts_dir", ""))
+        artifacts = r.get("artifacts_dir", "")
+        transcript = r.get("transcript_path", "")
+        verifier_summary = r.get("verifier_summary", "")
+
+        rendered_path = ""
+        if transcript:
+            t_path = pathlib.Path(transcript)
+            if t_path.exists():
+                try:
+                    rendered = _render_trajectory(t_path)
+                    if rendered:
+                        out_path = pathlib.Path(artifacts) / "trajectory.md" if artifacts else t_path.with_suffix(".md")
+                        out_path.parent.mkdir(parents=True, exist_ok=True)
+                        out_path.write_text(rendered, encoding="utf-8")
+                        rendered_path = str(out_path)
+                except Exception as exc:
+                    print(f"  warn: failed to render {t_path}: {exc}", file=sys.stderr)
+
+        if artifacts:
+            lines.append(f"- artifacts: [`{artifacts}`]({artifacts})")
+        if rendered_path:
+            lines.append(f"- trajectory (readable): [`{rendered_path}`]({rendered_path})")
+        if transcript:
+            lines.append(f"- trajectory (raw JSONL): [`{transcript}`]({transcript})")
+        if verifier_summary:
+            lines.append(f"- verifier said: {verifier_summary}")
+        lines.append("")
+        block = _read_result_block(artifacts)
         if block:
             lines.append("```")
             lines.append(block)

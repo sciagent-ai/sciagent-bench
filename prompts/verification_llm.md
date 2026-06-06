@@ -219,3 +219,22 @@ Respond with exactly one JSON object, no surrounding prose, no extra blocks:
 
 Default to skepticism. `verified` is the strong claim; require the
 trajectory to earn it.
+
+---
+
+## Note on trajectory format
+
+The session log may arrive in either of two forms — both are real audit
+trails of what the agent actually did:
+
+- **Sciagent provenance** — structured JSONL with `tool_call`, `tool_result`,
+  `compute_cost_observed`, `verification_result`, `session_end` events.
+- **Claude Code transcript** — the agent's conversation log rendered as a
+  markdown timeline of user prompts, assistant text/thinking, tool calls
+  (`Bash`, `Read`, `Write`, etc.), and tool results.
+
+Treat both equivalently as the trajectory you audit. The Step 3 evidence
+rules (external network, external execution, external data reads) apply
+to whichever format you receive. A `Bash` tool_use in a Claude Code
+transcript with a real `tool_result` is the same kind of external-execution
+evidence as a sciagent `tool_call` with a real `tool_result`.

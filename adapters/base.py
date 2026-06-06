@@ -53,8 +53,10 @@ class CellResult:
     user_asks: int
     wall_seconds: float
     notes: str
+    verifier_summary: str
     artifacts_dir: pathlib.Path
     raw_provenance_log: Optional[pathlib.Path]
+    transcript_path: Optional[pathlib.Path]
 
     def as_csv_row(self) -> dict:
         """Flat dict suitable for csv.DictWriter."""
@@ -75,8 +77,10 @@ class CellResult:
             "user_asks": self.user_asks,
             "wall_seconds": f"{self.wall_seconds:.2f}",
             "notes": self.notes,
+            "verifier_summary": self.verifier_summary,
             "artifacts_dir": str(self.artifacts_dir),
             "raw_provenance_log": str(self.raw_provenance_log) if self.raw_provenance_log else "",
+            "transcript_path": str(self.transcript_path) if self.transcript_path else "",
         }
 
 
@@ -101,8 +105,10 @@ CSV_FIELDS = [
     "user_asks",
     "wall_seconds",
     "notes",
+    "verifier_summary",
     "artifacts_dir",
     "raw_provenance_log",
+    "transcript_path",
 ]
 
 

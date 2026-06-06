@@ -42,8 +42,10 @@ class _ToyAdapter(AdapterBase):
             user_asks=0,
             wall_seconds=0.1,
             notes="",
+            verifier_summary="",
             artifacts_dir=workdir,
             raw_provenance_log=None,
+            transcript_path=None,
         )
 
 

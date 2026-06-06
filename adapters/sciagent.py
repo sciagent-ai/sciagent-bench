@@ -12,6 +12,7 @@ import os
 import pathlib
 import shutil
 import subprocess
+import sys
 import time
 from typing import Optional
 
@@ -19,7 +20,32 @@ from .base import AdapterBase, CellResult, score_from_verdict
 from . import verifier_invoker
 
 
+def _render_provenance_text(path: Optional["pathlib.Path"]) -> Optional[str]:
+    """Render a sciagent provenance JSONL to readable markdown for the
+    bench-side verifier (verifier-OFF cells)."""
+    if path is None or not path.exists():
+        return None
+    try:
+        import sys as _sys
+        _root = pathlib.Path(__file__).resolve().parent.parent
+        if str(_root) not in _sys.path:
+            _sys.path.insert(0, str(_root))
+        from tools.render_transcript import _read_jsonl, render_sciagent_provenance
+        events = list(_read_jsonl(path))
+        if not events:
+            return None
+        return render_sciagent_provenance(events)
+    except Exception:
+        return None
+
+
 SESSIONS_ROOT = pathlib.Path.home() / ".sciagent" / "sessions"
+
+
+def _short_reasoning(reasoning: str, limit: int = 240) -> str:
+    """Single-line, CSV-safe snippet of the verifier's reasoning."""
+    s = " ".join((reasoning or "").split())
+    return s if len(s) <= limit else s[: limit - 1] + "…"
 
 
 def _read_yaml(path: pathlib.Path) -> dict:
@@ -96,8 +122,25 @@ def _extract_result_block(stdout_text: str) -> str:
     return "\n".join(out).strip()
 
 
-def parse_provenance(log_path: pathlib.Path) -> dict:
+def parse_provenance(
+    log_path: pathlib.Path,
+    *,
+    agent_path: str = "main",
+    breakdown: Optional[list] = None,
+    visited: Optional[set] = None,
+) -> dict:
     """Walk a provenance.jsonl and roll up the fields a CellResult needs.
+
+    Recursively follows subagent_completed → child session logs so subagent
+    cost/tokens are correctly counted in the parent's totals. (Sciagent
+    writes each subagent's tool_call/tool_result events to its own
+    ~/.sciagent/sessions/<child_session_id>/provenance.jsonl, not the
+    parent log — without this recursion the bench undercounts subagent
+    spend by 5-10x.)
+
+    Set `breakdown` to an output list to also accumulate a per-tool-call
+    row model — each row keyed by (agent_path, seq, tool_name) with its
+    own token/cost split. Used to write cost_breakdown.csv.
 
     Returns a dict with: cost_llm_usd, cost_compute_usd, cost_storage_usd,
     tokens_in, tokens_out, iterations, tool_calls, user_asks, wall_seconds,
@@ -105,6 +148,14 @@ def parse_provenance(log_path: pathlib.Path) -> dict:
     verification_result event; if none is present the caller decides whether
     to invoke the bench-side verifier.
     """
+    if visited is None:
+        visited = set()
+    log_path = pathlib.Path(log_path).resolve()
+    if log_path in visited:
+        # Defend against cycles (shouldn't happen, but safe).
+        return _empty_rollup()
+    visited.add(log_path)
+
     cost_llm = 0.0
     cost_compute = 0.0
     cost_storage = 0.0
@@ -119,7 +170,12 @@ def parse_provenance(log_path: pathlib.Path) -> dict:
     session_end_tokens_out: Optional[int] = None
     verdict: Optional[str] = None
     confidence: float = 0.0
+    verifier_reasoning: str = ""
+    verifier_issues: list = []
     saw_tool_result_with_cost = False
+    # Map subagent spawn_event_id -> subagent_name so we can label the
+    # recursive call. (subagent_completed events carry both.)
+    spawn_names: dict = {}
 
     for ev in _iter_events(log_path):
         kind = ev.get("event_kind")
@@ -130,29 +186,88 @@ def parse_provenance(log_path: pathlib.Path) -> dict:
         elif kind == "tool_result":
             ck = ev.get("cost_kind")
             cu = ev.get("cost_usd")
+            row_cost = 0.0
             if cu is not None:
                 saw_tool_result_with_cost = True
+                row_cost = float(cu)
                 if ck == "llm":
-                    cost_llm += float(cu)
+                    cost_llm += row_cost
                 elif ck == "compute":
-                    cost_compute += float(cu)
+                    cost_compute += row_cost
                 elif ck == "storage":
-                    cost_storage += float(cu)
+                    cost_storage += row_cost
                 else:
-                    cost_llm += float(cu)
-            if ev.get("tokens_in"):
-                tokens_in += int(ev["tokens_in"])
-            if ev.get("tokens_out"):
-                tokens_out += int(ev["tokens_out"])
+                    cost_llm += row_cost
+            row_tin = int(ev.get("tokens_in") or 0)
+            row_tout = int(ev.get("tokens_out") or 0)
+            tokens_in += row_tin
+            tokens_out += row_tout
+            if breakdown is not None and (row_cost or row_tin or row_tout):
+                breakdown.append({
+                    "agent": agent_path,
+                    "seq": ev.get("seq"),
+                    "tool": ev.get("tool_name", ""),
+                    "ts": ev.get("ts", ""),
+                    "tokens_in": row_tin,
+                    "tokens_out": row_tout,
+                    "cost_usd": f"{row_cost:.6f}",
+                    "cost_kind": ck or "",
+                    "duration_ms": ev.get("duration_ms", ""),
+                    "model": ev.get("model", ""),
+                    "success": ev.get("success", ""),
+                })
         elif kind == "compute_cost_observed":
             source = (ev.get("cost_source") or "").lower()
             cu = ev.get("cost_usd")
             if cu is None:
                 continue
+            row_cost = float(cu)
             if "storage" in source:
-                cost_storage += float(cu)
+                cost_storage += row_cost
             else:
-                cost_compute += float(cu)
+                cost_compute += row_cost
+            if breakdown is not None:
+                breakdown.append({
+                    "agent": agent_path,
+                    "seq": ev.get("seq"),
+                    "tool": "compute_cost_observed",
+                    "ts": ev.get("ts", ""),
+                    "tokens_in": 0,
+                    "tokens_out": 0,
+                    "cost_usd": f"{row_cost:.6f}",
+                    "cost_kind": "storage" if "storage" in source else "compute",
+                    "duration_ms": "",
+                    "model": "",
+                    "success": "",
+                })
+        elif kind == "subagent_spawned":
+            spawn_names[ev.get("event_id")] = ev.get("subagent_name", "?")
+        elif kind == "subagent_completed":
+            # Recurse into the child session's own log. This is where
+            # the subagent's actual cost lives — the parent log only has
+            # the summary event with tokens_used.
+            child_id = ev.get("child_session_id")
+            sub_name = (
+                ev.get("subagent_name")
+                or spawn_names.get(ev.get("spawn_event_id"))
+                or "subagent"
+            )
+            if child_id:
+                child_log = SESSIONS_ROOT / child_id / "provenance.jsonl"
+                if child_log.exists():
+                    child = parse_provenance(
+                        child_log,
+                        agent_path=f"{agent_path}/{sub_name}",
+                        breakdown=breakdown,
+                        visited=visited,
+                    )
+                    cost_llm += child.get("cost_llm_usd", 0.0)
+                    cost_compute += child.get("cost_compute_usd", 0.0)
+                    cost_storage += child.get("cost_storage_usd", 0.0)
+                    tokens_in += int(child.get("tokens_in") or 0)
+                    tokens_out += int(child.get("tokens_out") or 0)
+                    tool_calls += int(child.get("tool_calls") or 0)
+                    user_asks += int(child.get("user_asks") or 0)
         elif kind == "session_end":
             iterations = ev.get("iterations")
             wall_seconds = float(ev.get("wall_seconds") or 0.0)
@@ -165,6 +280,13 @@ def parse_provenance(log_path: pathlib.Path) -> dict:
                 confidence = float(ev.get("confidence", 0.0))
             except (TypeError, ValueError):
                 confidence = 0.0
+            evidence = ev.get("evidence") or {}
+            verifier_reasoning = (
+                evidence.get("evidence_summary")
+                or ev.get("reasoning")
+                or ""
+            )
+            verifier_issues = list(ev.get("issues") or [])
 
     if not saw_tool_result_with_cost and session_end_cost is not None:
         cost_llm = float(session_end_cost)
@@ -185,7 +307,36 @@ def parse_provenance(log_path: pathlib.Path) -> dict:
         "wall_seconds": wall_seconds,
         "verdict": verdict,
         "confidence": confidence,
+        "reasoning": verifier_reasoning,
+        "issues": verifier_issues,
     }
+
+
+def _empty_rollup() -> dict:
+    return {
+        "cost_llm_usd": 0.0, "cost_compute_usd": 0.0, "cost_storage_usd": 0.0,
+        "tokens_in": None, "tokens_out": None, "iterations": None,
+        "tool_calls": 0, "user_asks": 0, "wall_seconds": 0.0,
+        "verdict": None, "confidence": 0.0, "reasoning": "", "issues": [],
+    }
+
+
+COST_BREAKDOWN_FIELDS = [
+    "agent", "seq", "tool", "ts",
+    "tokens_in", "tokens_out", "cost_usd", "cost_kind",
+    "duration_ms", "model", "success",
+]
+
+
+def write_cost_breakdown(rows: list, out_path: pathlib.Path) -> None:
+    """Persist a per-tool-call cost breakdown next to the cell artifacts."""
+    import csv
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with out_path.open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=COST_BREAKDOWN_FIELDS)
+        w.writeheader()
+        for r in rows:
+            w.writerow({k: r.get(k, "") for k in COST_BREAKDOWN_FIELDS})
 
 
 class SciagentAdapter(AdapterBase):
@@ -222,8 +373,23 @@ class SciagentAdapter(AdapterBase):
 
         t0 = time.monotonic()
         stdout_path = workdir / "stdout.txt"
-        with stdout_path.open("w", encoding="utf-8") as out:
-            proc = subprocess.run(cmd, stdout=out, stderr=subprocess.STDOUT, text=True)
+
+        # Wrap with macOS `script` so output is BOTH captured to file AND
+        # echoed to the terminal — needed because sciagent uses
+        # prompt_toolkit's pt_prompt for ask_user / _pause_for_user (DATA
+        # gate), which reads from /dev/tty. Without seeing the question
+        # text on the terminal, the user would be answering blind.
+        # `script` creates a pty for the child, the user sees output
+        # normally, and the typescript is written to stdout_path.
+        if sys.stdout.isatty() and shutil.which("script"):
+            wrapped = ["script", "-q", str(stdout_path), *cmd]
+            proc = subprocess.run(wrapped, text=True)
+        else:
+            # Non-interactive (e.g. running under tmux-detached or piped):
+            # capture only, no terminal echo. ask_user will hang in this
+            # mode — caller's responsibility to know.
+            with stdout_path.open("w", encoding="utf-8") as out:
+                proc = subprocess.run(cmd, stdout=out, stderr=subprocess.STDOUT, text=True)
         wall = time.monotonic() - t0
         stdout_text = stdout_path.read_text(encoding="utf-8", errors="replace")
 
@@ -257,19 +423,28 @@ class SciagentAdapter(AdapterBase):
                 user_asks=0,
                 wall_seconds=wall,
                 notes="",
+                verifier_summary="",
                 artifacts_dir=workdir,
                 raw_provenance_log=None,
+                transcript_path=None,
             )
 
-        rollup = parse_provenance(copied_log)
+        # Per-tool-call cost breakdown; parse_provenance fills it in-place
+        # while it walks parent + recursive subagent logs.
+        breakdown_rows: list = []
+        rollup = parse_provenance(copied_log, breakdown=breakdown_rows)
+        write_cost_breakdown(breakdown_rows, workdir / "cost_breakdown.csv")
         verdict = rollup["verdict"]
         confidence = rollup["confidence"]
+        verifier_reasoning = rollup.get("reasoning") or ""
+        verifier_issues = rollup.get("issues") or []
 
         # Verifier-OFF cells emit no verification_result event — fall back
         # to the bench-side post-hoc verifier so scoring is uniform across
         # the four matrix cells.
         if verdict is None and result_block:
             verifier_model = _resolve_verifier_model(recipe_yaml, llm)
+            trajectory_text = _render_provenance_text(copied_log)
             v = verifier_invoker.verify(
                 task_prompt=task_spec["prompt"],
                 claim_text=result_block,
@@ -277,13 +452,27 @@ class SciagentAdapter(AdapterBase):
                 session_log_path=copied_log,
                 verifier_model=verifier_model,
                 verification_criteria=task_spec.get("verification_criteria") or {},
+                trajectory_text=trajectory_text,
             )
             verdict = v["verdict"]
             confidence = v["confidence"]
+            verifier_reasoning = v.get("reasoning") or ""
+            verifier_issues = list(v.get("issues") or [])
 
         verdict = verdict or "none"
         score = score_from_verdict(verdict, confidence)
         cost_total = rollup["cost_llm_usd"] + rollup["cost_compute_usd"] + rollup["cost_storage_usd"]
+
+        evidence_payload = {
+            "verdict": verdict,
+            "confidence": confidence,
+            "issues": verifier_issues,
+            "reasoning": verifier_reasoning,
+        }
+        (workdir / "verifier_evidence.json").write_text(
+            json.dumps(evidence_payload, indent=2), encoding="utf-8"
+        )
+        verifier_summary = _short_reasoning(verifier_reasoning)
 
         return CellResult(
             success=success,
@@ -302,6 +491,8 @@ class SciagentAdapter(AdapterBase):
             user_asks=rollup["user_asks"],
             wall_seconds=rollup["wall_seconds"] or wall,
             notes="",
+            verifier_summary=verifier_summary,
             artifacts_dir=workdir,
             raw_provenance_log=copied_log,
+            transcript_path=copied_log,
         )

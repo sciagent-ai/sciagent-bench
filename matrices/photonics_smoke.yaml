@@ -3,6 +3,9 @@
 # Per DESIGN_BENCH.md §5.6 — Claude Code raw vs +sky+registry isolates the
 # registry/cloud bits; sciagent verifier-ON vs verifier-OFF isolates
 # mid-session verifier feedback; cross-family-verifier answers R1.
+#
+# Single-cell sanity run: only cc-bare is active. Uncomment the others
+# after the bare cell completes cleanly and you've eyeballed the artifacts.
 cells:
   - id: photonics__cc-bare__sonnet
     task: photonics
@@ -22,14 +25,23 @@ cells:
     adapter_config: {recipe: recipes/anthropic-single-family.yaml}
     llm: anthropic/claude-sonnet-4-6
 
-  - id: photonics__sciagent-verifier-off__sonnet
-    task: photonics
-    adapter: sciagent
-    adapter_config: {recipe: recipes/anthropic-no-verifier.yaml}
-    llm: anthropic/claude-sonnet-4-6
+  # - id: photonics__sciagent-verifier-off__sonnet
+  #   task: photonics
+  #   adapter: sciagent
+  #   adapter_config: {recipe: recipes/anthropic-no-verifier.yaml}
+  #   llm: anthropic/claude-sonnet-4-6
 
-  - id: photonics__sciagent-cross-family-verifier__sonnet
-    task: photonics
-    adapter: sciagent
-    adapter_config: {recipe: recipes/anthropic-cross-family-verifier.yaml}
-    llm: anthropic/claude-sonnet-4-6
+  # - id: photonics__sciagent-cross-family-verifier__sonnet
+  #   task: photonics
+  #   adapter: sciagent
+  #   adapter_config: {recipe: recipes/anthropic-cross-family-verifier.yaml}
+  #   llm: anthropic/claude-sonnet-4-6
+
+  # Optional Opus upper-bound reference (~5x Sonnet cost). Not in the
+  # 5-cell ablation matrix — included as a separate "best raw Claude
+  # Code can do" data point. Uncomment to run.
+  # - id: photonics__cc-bare__opus
+  #   task: photonics
+  #   adapter: claude_code
+  #   adapter_config: {with_sky: false, with_registry: false}
+  #   llm: anthropic/claude-opus-4-7
