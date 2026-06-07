@@ -13,17 +13,17 @@ cells:
     adapter_config: {with_sky: false, with_registry: false}
     llm: anthropic/claude-sonnet-4-6
 
-  - id: photonics__cc-sky-registry__sonnet
-    task: photonics
-    adapter: claude_code
-    adapter_config: {with_sky: true, with_registry: true}
-    llm: anthropic/claude-sonnet-4-6
+  # - id: photonics__cc-sky-registry__sonnet
+  #   task: photonics
+  #   adapter: claude_code
+  #   adapter_config: {with_sky: true, with_registry: true}
+  #   llm: anthropic/claude-sonnet-4-6
 
-  - id: photonics__sciagent-verifier-on__sonnet
-    task: photonics
-    adapter: sciagent
-    adapter_config: {recipe: recipes/anthropic-single-family.yaml}
-    llm: anthropic/claude-sonnet-4-6
+  # - id: photonics__sciagent-verifier-on__sonnet
+  #   task: photonics
+  #   adapter: sciagent
+  #   adapter_config: {recipe: recipes/anthropic-single-family.yaml}
+  #   llm: anthropic/claude-sonnet-4-6
 
   # - id: photonics__sciagent-verifier-off__sonnet
   #   task: photonics

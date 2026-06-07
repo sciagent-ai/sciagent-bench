@@ -134,22 +134,24 @@ def _extract_result_block(text: str) -> str:
     return last_assistant_text
 
 
-def extract_claude_cost_breakdown(transcript_path: Optional[pathlib.Path]) -> list:
-    """Per-turn cost breakdown from a Claude Code session transcript.
+def extract_claude_cost_breakdown(
+    transcript_path: Optional[pathlib.Path],
+    model_usage: Optional[dict] = None,
+) -> list:
+    """Per-turn cost breakdown from a Claude Code session transcript, plus
+    a synthetic summary row per non-main model that Claude Code used
+    internally (Haiku for auto-compaction, etc).
 
     The transcript at ~/.claude/projects/<encoded-cwd>/<sid>.jsonl has one
-    line per event; assistant message events carry a `usage` dict with
-    input_tokens / output_tokens / cache_read_input_tokens /
-    cache_creation_input_tokens / service_tier. We emit one row per
-    assistant turn (and per tool_use within that turn) so we can see
-    which actions cost what.
+    line per assistant turn — that's the Sonnet usage and what the agent
+    visibly did. Claude Code ALSO uses Haiku for out-of-band operations
+    (auto-compaction summaries, auto-memory extraction); those don't
+    appear as assistant message events but ARE in the final result event's
+    top-level `modelUsage` dict.
 
-    Computed cost uses Sonnet 4.6 published pricing per 1M tokens:
-      input  $3.00 ; output  $15.00
-      cache_read  $0.30 ; cache_create  $3.75
-
-    For other models (Haiku, Opus), the calculator could be extended;
-    today we assume Sonnet since that's what every cc-* cell pins.
+    Cost numbers fall back to a per-token pricing table if usage data
+    has no recorded `costUSD`. Claude Code's own `costUSD` is preferred
+    when available (it captures any discounts and exact pricing).
     """
     PRICING_PER_M = {
         # model_prefix : (input, output, cache_read, cache_create)
@@ -157,68 +159,105 @@ def extract_claude_cost_breakdown(transcript_path: Optional[pathlib.Path]) -> li
         "claude-opus-4-7":   (15.00, 75.00, 1.50, 18.75),
         "claude-haiku-4-5":  (1.00,  5.00, 0.10, 1.25),
     }
-    def price(model: str, usage: dict) -> float:
+    def _price(model: str, usage: dict, keys: tuple) -> float:
+        """Compute cost from a usage block using the per-token pricing
+        table. `keys` is (input, output, cache_read, cache_create) field
+        names — they differ between per-turn usage (snake_case) and the
+        result event's modelUsage (camelCase)."""
+        ki, ko, kcr, kcc = keys
         for prefix, (pi, po, pcr, pcc) in PRICING_PER_M.items():
             if prefix in (model or ""):
                 return (
-                    (usage.get("input_tokens", 0) or 0) * pi / 1e6
-                    + (usage.get("output_tokens", 0) or 0) * po / 1e6
-                    + (usage.get("cache_read_input_tokens", 0) or 0) * pcr / 1e6
-                    + (usage.get("cache_creation_input_tokens", 0) or 0) * pcc / 1e6
+                    (usage.get(ki, 0) or 0) * pi / 1e6
+                    + (usage.get(ko, 0) or 0) * po / 1e6
+                    + (usage.get(kcr, 0) or 0) * pcr / 1e6
+                    + (usage.get(kcc, 0) or 0) * pcc / 1e6
                 )
         return 0.0
 
     rows: list = []
-    if transcript_path is None or not transcript_path.exists():
-        return rows
-    turn = 0
-    try:
-        with transcript_path.open("r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    ev = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                if ev.get("type") != "assistant":
-                    continue
-                msg = ev.get("message") or {}
-                usage = msg.get("usage") or {}
-                model = msg.get("model", "")
-                ts = ev.get("timestamp", "")
-                turn += 1
-                # Identify tool_uses in this assistant turn so we can label
-                # which tool the cost is attributed to (best-effort: take
-                # the first tool_use name; thinking-only turns label as "_thinking").
-                tool_label = "_text"
-                for blk in (msg.get("content") or []):
-                    if not isinstance(blk, dict):
+    if transcript_path is not None and transcript_path.exists():
+        turn = 0
+        try:
+            with transcript_path.open("r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
                         continue
-                    bt = blk.get("type")
-                    if bt == "tool_use":
-                        tool_label = blk.get("name", "?")
-                        break
-                    if bt == "thinking" and tool_label == "_text":
-                        tool_label = "_thinking"
-                rows.append({
-                    "agent": "main",
-                    "seq": turn,
-                    "tool": tool_label,
-                    "ts": ts,
-                    "tokens_in": usage.get("input_tokens", 0) or 0,
-                    "tokens_out": usage.get("output_tokens", 0) or 0,
-                    "cache_read": usage.get("cache_read_input_tokens", 0) or 0,
-                    "cache_create": usage.get("cache_creation_input_tokens", 0) or 0,
-                    "cost_usd": f"{price(model, usage):.6f}",
-                    "cost_kind": "llm",
-                    "duration_ms": "",
-                    "model": model,
-                    "success": "",
-                })
-    except OSError:
-        return rows
+                    try:
+                        ev = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    if ev.get("type") != "assistant":
+                        continue
+                    msg = ev.get("message") or {}
+                    usage = msg.get("usage") or {}
+                    model = msg.get("model", "")
+                    ts = ev.get("timestamp", "")
+                    turn += 1
+                    # Identify tool_uses in this assistant turn so we can label
+                    # which tool the cost is attributed to (best-effort: take
+                    # the first tool_use name; thinking-only turns label as "_thinking").
+                    tool_label = "_text"
+                    for blk in (msg.get("content") or []):
+                        if not isinstance(blk, dict):
+                            continue
+                        bt = blk.get("type")
+                        if bt == "tool_use":
+                            tool_label = blk.get("name", "?")
+                            break
+                        if bt == "thinking" and tool_label == "_text":
+                            tool_label = "_thinking"
+                    rows.append({
+                        "agent": "main",
+                        "seq": turn,
+                        "tool": tool_label,
+                        "ts": ts,
+                        "tokens_in": usage.get("input_tokens", 0) or 0,
+                        "tokens_out": usage.get("output_tokens", 0) or 0,
+                        "cache_read": usage.get("cache_read_input_tokens", 0) or 0,
+                        "cache_create": usage.get("cache_creation_input_tokens", 0) or 0,
+                        "cost_usd": f"{_price(model, usage, ('input_tokens', 'output_tokens', 'cache_read_input_tokens', 'cache_creation_input_tokens')):.6f}",
+                        "cost_kind": "llm",
+                        "duration_ms": "",
+                        "model": model,
+                        "success": "",
+                    })
+        except OSError:
+            pass
+
+    # Synthetic rows for models in modelUsage that aren't the main agent
+    # model (i.e., Claude Code's internal Haiku for auto-compaction,
+    # auto-memory, etc.). Sonnet's per-turn cost is already captured above.
+    if model_usage:
+        main_models = {r["model"] for r in rows if r.get("model")}
+        for model, mu in (model_usage or {}).items():
+            if model in main_models:
+                # Reconcile with our per-turn estimate later if needed;
+                # for now skip duplicate accounting.
+                continue
+            # Prefer Claude Code's own costUSD if present; fall back to
+            # our pricing table.
+            cost_authoritative = mu.get("costUSD")
+            if cost_authoritative is None:
+                cost = _price(model, mu, ("inputTokens", "outputTokens", "cacheReadInputTokens", "cacheCreationInputTokens"))
+            else:
+                cost = float(cost_authoritative)
+            rows.append({
+                "agent": "claude_internal",
+                "seq": "",
+                "tool": "_internal_" + model,
+                "ts": "",
+                "tokens_in": int(mu.get("inputTokens", 0) or 0),
+                "tokens_out": int(mu.get("outputTokens", 0) or 0),
+                "cache_read": int(mu.get("cacheReadInputTokens", 0) or 0),
+                "cache_create": int(mu.get("cacheCreationInputTokens", 0) or 0),
+                "cost_usd": f"{cost:.6f}",
+                "cost_kind": "llm",
+                "duration_ms": "",
+                "model": model,
+                "success": "",
+            })
     return rows
 
 
@@ -255,15 +294,40 @@ def parse_claude_session_summary(stdout_text: str) -> dict:
     result_text: Optional[str] = None
     session_id: Optional[str] = None
 
+    def _sum_input_with_caches(usage: dict) -> int:
+        """Total input the model billed against — fresh input + cache_read
+        + cache_create. Matches sciagent's tokens_in semantics so the bench's
+        CSV column is consistent across adapters. (Anthropic's cache_read
+        is cheap but still counts as model-processed input volume; the
+        bench should report it.)"""
+        return (
+            int(usage.get("input_tokens", 0) or 0)
+            + int(usage.get("cache_read_input_tokens", 0) or 0)
+            + int(usage.get("cache_creation_input_tokens", 0) or 0)
+        )
+
+    model_usage: Optional[dict] = None  # captured for breakdown extraction
+
     stripped = stdout_text.strip()
     # Format 1: single buffered JSON blob (`--output-format json`).
     try:
         payload = json.loads(stripped)
         if isinstance(payload, dict) and payload.get("type") == "result":
             cost_usd = payload.get("total_cost_usd") or payload.get("cost_usd")
-            usage = payload.get("usage") or {}
-            tokens_in = usage.get("input_tokens") or payload.get("input_tokens")
-            tokens_out = usage.get("output_tokens") or payload.get("output_tokens")
+            model_usage = payload.get("modelUsage")
+            # Prefer modelUsage tokens (covers Haiku + Sonnet) when present.
+            if model_usage:
+                tokens_in = sum(
+                    int((mu.get("inputTokens") or 0))
+                    + int((mu.get("cacheReadInputTokens") or 0))
+                    + int((mu.get("cacheCreationInputTokens") or 0))
+                    for mu in model_usage.values()
+                )
+                tokens_out = sum(int((mu.get("outputTokens") or 0)) for mu in model_usage.values())
+            else:
+                usage = payload.get("usage") or {}
+                tokens_in = _sum_input_with_caches(usage) or payload.get("input_tokens")
+                tokens_out = usage.get("output_tokens") or payload.get("output_tokens")
             num_turns = payload.get("num_turns")
             result_text = payload.get("result")
             session_id = payload.get("session_id")
@@ -292,9 +356,19 @@ def parse_claude_session_summary(stdout_text: str) -> dict:
                 last_result = ev
         if last_result is not None:
             cost_usd = last_result.get("total_cost_usd") or last_result.get("cost_usd")
-            usage = last_result.get("usage") or {}
-            tokens_in = usage.get("input_tokens") or last_result.get("input_tokens")
-            tokens_out = usage.get("output_tokens") or last_result.get("output_tokens")
+            model_usage = last_result.get("modelUsage")
+            if model_usage:
+                tokens_in = sum(
+                    int((mu.get("inputTokens") or 0))
+                    + int((mu.get("cacheReadInputTokens") or 0))
+                    + int((mu.get("cacheCreationInputTokens") or 0))
+                    for mu in model_usage.values()
+                )
+                tokens_out = sum(int((mu.get("outputTokens") or 0)) for mu in model_usage.values())
+            else:
+                usage = last_result.get("usage") or {}
+                tokens_in = _sum_input_with_caches(usage) or last_result.get("input_tokens")
+                tokens_out = usage.get("output_tokens") or last_result.get("output_tokens")
             num_turns = last_result.get("num_turns")
             result_text = last_result.get("result")
             session_id = last_result.get("session_id") or session_id
@@ -323,6 +397,7 @@ def parse_claude_session_summary(stdout_text: str) -> dict:
         "num_turns": int(num_turns) if num_turns is not None else None,
         "result_text": result_text,
         "session_id": session_id,
+        "model_usage": model_usage,
     }
 
 
@@ -457,7 +532,7 @@ class ClaudeCodeAdapter(AdapterBase):
 
         # Per-turn cost breakdown from the transcript's assistant message
         # `usage` dicts. Lets the user analyze "what did each tool cost".
-        cc_rows = extract_claude_cost_breakdown(transcript_path)
+        cc_rows = extract_claude_cost_breakdown(transcript_path, model_usage=summary.get("model_usage"))
         write_claude_cost_breakdown(cc_rows, workdir / "cost_breakdown.csv")
 
         if timeout_hit:
