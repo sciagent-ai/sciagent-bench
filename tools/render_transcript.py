@@ -57,6 +57,21 @@ def _fmt_args(args, n: int = 240) -> str:
     return _truncate(s, n)
 
 
+def _as_text(value) -> str:
+    """Sciagent provenance fields like `output_summary` and `evidence_summary`
+    are sometimes strings and sometimes dicts (structured tool results from
+    e.g. `service_detail`). Normalize both to a string the verifier prompt
+    can read."""
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value
+    try:
+        return json.dumps(value, ensure_ascii=False, indent=2)
+    except (TypeError, ValueError):
+        return str(value)
+
+
 def render_claude_transcript(events: list, tool_output_chars: int = 800,
                              thinking_chars: int = 400) -> str:
     out: list[str] = []
@@ -152,7 +167,7 @@ def render_sciagent_provenance(events: list, tool_output_chars: int = 800) -> st
                 f"({ev.get('duration_ms','?')}ms, ${ev.get('cost_usd') or 0:.4f}) _{ts}_\n"
             )
             out.append("```")
-            out.append(_truncate((ev.get("output_summary") or "").strip(), tool_output_chars))
+            out.append(_truncate(_as_text(ev.get("output_summary")).strip(), tool_output_chars))
             out.append("```")
             out.append("")
         elif kind == "verification_result":
@@ -161,7 +176,9 @@ def render_sciagent_provenance(events: list, tool_output_chars: int = 800) -> st
                 f"**{ev.get('verdict')}** @ {ev.get('confidence',0):.2f} _{ts}_\n"
             )
             ev_block = ev.get("evidence") or {}
-            es = ev_block.get("evidence_summary") or ev.get("reasoning") or ""
+            es = _as_text(
+                ev_block.get("evidence_summary") or ev.get("reasoning")
+            )
             if es:
                 out.append("```")
                 out.append(_truncate(es.strip(), tool_output_chars * 2))

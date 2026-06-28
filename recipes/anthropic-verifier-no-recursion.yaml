@@ -1,0 +1,15 @@
+# Recipe: anthropic-verifier-no-recursion
+#
+# Same as anthropic-single-family.yaml, but flips off the new CLI default
+# verifier_include_child_sessions. Used to capture the pre-Phase-1
+# behavior — verifier sees only the parent provenance log, not the
+# subagent child logs. This is the "before" condition for the recursion
+# ablation finding.
+agent:
+  model: anthropic/claude-sonnet-4-6
+orchestrator:
+  scientific_model: anthropic/claude-sonnet-4-6
+  coding_model:     anthropic/claude-sonnet-4-6
+  fast_model:       anthropic/claude-haiku-4-5-20251001
+  verifier_model:   anthropic/claude-sonnet-4-6
+  verifier_include_child_sessions: false

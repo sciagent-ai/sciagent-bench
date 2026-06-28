@@ -21,26 +21,6 @@ import time
 from typing import Optional
 
 from .base import AdapterBase, CellResult, score_from_verdict
-from . import verifier_invoker
-
-
-def _render_transcript_text(path: Optional[pathlib.Path]) -> Optional[str]:
-    """Render a Claude Code transcript JSONL to readable markdown for the
-    verifier. Returns None if no transcript exists."""
-    if path is None or not path.exists():
-        return None
-    try:
-        import sys as _sys
-        _root = pathlib.Path(__file__).resolve().parent.parent
-        if str(_root) not in _sys.path:
-            _sys.path.insert(0, str(_root))
-        from tools.render_transcript import _read_jsonl, render_claude_transcript
-        events = list(_read_jsonl(path))
-        if not events:
-            return None
-        return render_claude_transcript(events)
-    except Exception:
-        return None
 
 
 REGISTRY_SRC = pathlib.Path(
@@ -53,11 +33,15 @@ _CLAUDE_PROJECTS = pathlib.Path.home() / ".claude" / "projects"
 def _locate_claude_transcript(cwd: pathlib.Path, session_id: Optional[str]) -> Optional[pathlib.Path]:
     """Claude Code persists per-session transcripts at
     ~/.claude/projects/<encoded-cwd>/<session-id>.jsonl where <encoded-cwd>
-    is the cwd with '/' replaced by '-'. Returns the path if it exists.
+    is the cwd with both '/' AND '_' replaced by '-'. (Earlier versions of
+    this helper only replaced '/', which silently failed for any cell whose
+    workdir contained '_' — i.e. every cell in this matrix.) Returns the
+    path if it exists.
     """
     if not session_id:
         return None
-    encoded = str(cwd.resolve()).replace("/", "-")
+    raw = str(cwd.resolve())
+    encoded = raw.replace("/", "-").replace("_", "-")
     candidate = _CLAUDE_PROJECTS / encoded / f"{session_id}.jsonl"
     return candidate if candidate.exists() else None
 
@@ -66,21 +50,6 @@ _REGISTRY_NOTE = (
     "If your task needs a containerized scientific service, you can launch "
     "one via 'sky launch --image ghcr.io/sciagent-ai/<service-name> ...'."
 )
-
-
-def _write_verifier_evidence(workdir: pathlib.Path, v: dict) -> None:
-    """Persist the verifier's full output (verdict + confidence + issues +
-    reasoning) next to the cell's result.txt so a reviewer can see what
-    the verifier saw without re-running it."""
-    (workdir / "verifier_evidence.json").write_text(
-        json.dumps(v, indent=2), encoding="utf-8"
-    )
-
-
-def _short_reasoning(reasoning: str, limit: int = 240) -> str:
-    """Single-line, CSV-safe snippet of the verifier's reasoning."""
-    s = " ".join((reasoning or "").split())
-    return s if len(s) <= limit else s[: limit - 1] + "…"
 
 
 def _extract_result_block(text: str) -> str:
@@ -402,12 +371,9 @@ def parse_claude_session_summary(stdout_text: str) -> dict:
 
 
 class ClaudeCodeAdapter(AdapterBase):
-    def __init__(self, with_sky: bool = False, with_registry: bool = False, verifier_model: Optional[str] = None):
+    def __init__(self, with_sky: bool = False, with_registry: bool = False):
         self.with_sky = with_sky
         self.with_registry = with_registry
-        # Same family as the agent by default — set explicitly when running
-        # a cross-family verifier study.
-        self.verifier_model = verifier_model
 
     def run(
         self,
@@ -424,7 +390,7 @@ class ClaudeCodeAdapter(AdapterBase):
             return CellResult(
                 success=False,
                 error="with_sky=True but 'sky' not on PATH (activate venvtest)",
-                verdict="none",
+                verdict="",
                 confidence=0.0,
                 score=0.0,
                 cost_llm_usd=0.0,
@@ -542,27 +508,12 @@ class ClaudeCodeAdapter(AdapterBase):
             success = (rc == 0)
             error = None if success else f"claude exited {rc}"
 
-        verifier_model = self.verifier_model or llm
-        verdict = "none"
+        # Bench no longer runs a verifier; cc-bare cells are judged post-hoc
+        # by the Claude Code labeler from result.txt + the transcript.
+        verdict = ""
         confidence = 0.0
+        score = 0.0
         verifier_summary = ""
-        if result_text:
-            trajectory_text = _render_transcript_text(transcript_path)
-            v = verifier_invoker.verify(
-                task_prompt=task_spec["prompt"],
-                claim_text=result_text,
-                workdir=workdir,
-                session_log_path=transcript_path,
-                verifier_model=verifier_model,
-                verification_criteria=task_spec.get("verification_criteria") or {},
-                trajectory_text=trajectory_text,
-            )
-            verdict = v["verdict"]
-            confidence = v["confidence"]
-            _write_verifier_evidence(workdir, v)
-            verifier_summary = _short_reasoning(v.get("reasoning", ""))
-
-        score = score_from_verdict(verdict, confidence)
         cost_llm = summary["cost_usd"]
 
         return CellResult(

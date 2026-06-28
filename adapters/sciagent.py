@@ -17,26 +17,6 @@ import time
 from typing import Optional
 
 from .base import AdapterBase, CellResult, score_from_verdict
-from . import verifier_invoker
-
-
-def _render_provenance_text(path: Optional["pathlib.Path"]) -> Optional[str]:
-    """Render a sciagent provenance JSONL to readable markdown for the
-    bench-side verifier (verifier-OFF cells)."""
-    if path is None or not path.exists():
-        return None
-    try:
-        import sys as _sys
-        _root = pathlib.Path(__file__).resolve().parent.parent
-        if str(_root) not in _sys.path:
-            _sys.path.insert(0, str(_root))
-        from tools.render_transcript import _read_jsonl, render_sciagent_provenance
-        events = list(_read_jsonl(path))
-        if not events:
-            return None
-        return render_sciagent_provenance(events)
-    except Exception:
-        return None
 
 
 SESSIONS_ROOT = pathlib.Path.home() / ".sciagent" / "sessions"
@@ -46,40 +26,6 @@ def _short_reasoning(reasoning: str, limit: int = 240) -> str:
     """Single-line, CSV-safe snippet of the verifier's reasoning."""
     s = " ".join((reasoning or "").split())
     return s if len(s) <= limit else s[: limit - 1] + "…"
-
-
-def _read_yaml(path: pathlib.Path) -> dict:
-    """Minimal YAML reader — uses PyYAML if available, falls back to a
-    tiny key:value parser for the flat recipes we ship.
-    """
-    try:
-        import yaml
-        return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    except ImportError:
-        out: dict = {}
-        current: dict = out
-        stack = [(0, out)]
-        for raw in path.read_text(encoding="utf-8").splitlines():
-            if not raw.strip() or raw.lstrip().startswith("#"):
-                continue
-            indent = len(raw) - len(raw.lstrip())
-            key, _, val = raw.strip().partition(":")
-            while stack and indent < stack[-1][0]:
-                stack.pop()
-            current = stack[-1][1]
-            val = val.strip()
-            if val == "":
-                new: dict = {}
-                current[key] = new
-                stack.append((indent + 2, new))
-            else:
-                current[key] = val
-        return out
-
-
-def _resolve_verifier_model(recipe: dict, fallback: str) -> str:
-    orch = recipe.get("orchestrator") or {}
-    return orch.get("verifier_model") or recipe.get("agent", {}).get("model") or fallback
 
 
 def _latest_session_log(skip: Optional[pathlib.Path]) -> Optional[pathlib.Path]:
@@ -359,7 +305,6 @@ class SciagentAdapter(AdapterBase):
         if not recipe_path.is_absolute():
             bench_root = pathlib.Path(__file__).resolve().parent.parent
             recipe_path = (bench_root / recipe_path).resolve()
-        recipe_yaml = _read_yaml(recipe_path) if recipe_path.exists() else {}
 
         prev_log = _latest_session_log(skip=None)
         cmd = [
@@ -409,7 +354,7 @@ class SciagentAdapter(AdapterBase):
             return CellResult(
                 success=False,
                 error=error or "no provenance log emitted",
-                verdict="none",
+                verdict="",
                 confidence=0.0,
                 score=0.0,
                 cost_llm_usd=0.0,
@@ -434,44 +379,14 @@ class SciagentAdapter(AdapterBase):
         breakdown_rows: list = []
         rollup = parse_provenance(copied_log, breakdown=breakdown_rows)
         write_cost_breakdown(breakdown_rows, workdir / "cost_breakdown.csv")
-        verdict = rollup["verdict"]
+        # Verdict/confidence come only from verification_result events the
+        # CLI verifier emitted into provenance; the bench never invokes its
+        # own verifier. Verifier-OFF cells leave these fields empty.
+        verdict = rollup["verdict"] or ""
         confidence = rollup["confidence"]
         verifier_reasoning = rollup.get("reasoning") or ""
-        verifier_issues = rollup.get("issues") or []
-
-        # Verifier-OFF cells emit no verification_result event — fall back
-        # to the bench-side post-hoc verifier so scoring is uniform across
-        # the four matrix cells.
-        if verdict is None and result_block:
-            verifier_model = _resolve_verifier_model(recipe_yaml, llm)
-            trajectory_text = _render_provenance_text(copied_log)
-            v = verifier_invoker.verify(
-                task_prompt=task_spec["prompt"],
-                claim_text=result_block,
-                workdir=workdir,
-                session_log_path=copied_log,
-                verifier_model=verifier_model,
-                verification_criteria=task_spec.get("verification_criteria") or {},
-                trajectory_text=trajectory_text,
-            )
-            verdict = v["verdict"]
-            confidence = v["confidence"]
-            verifier_reasoning = v.get("reasoning") or ""
-            verifier_issues = list(v.get("issues") or [])
-
-        verdict = verdict or "none"
-        score = score_from_verdict(verdict, confidence)
+        score = score_from_verdict(verdict, confidence) if verdict else 0.0
         cost_total = rollup["cost_llm_usd"] + rollup["cost_compute_usd"] + rollup["cost_storage_usd"]
-
-        evidence_payload = {
-            "verdict": verdict,
-            "confidence": confidence,
-            "issues": verifier_issues,
-            "reasoning": verifier_reasoning,
-        }
-        (workdir / "verifier_evidence.json").write_text(
-            json.dumps(evidence_payload, indent=2), encoding="utf-8"
-        )
         verifier_summary = _short_reasoning(verifier_reasoning)
 
         return CellResult(

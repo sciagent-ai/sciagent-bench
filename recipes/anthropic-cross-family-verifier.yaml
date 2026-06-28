@@ -1,12 +1,19 @@
 # Recipe: anthropic-cross-family-verifier
-# Cross-family ablation: Anthropic main + OpenAI o4-mini verifier.
+# Cross-family ablation: Anthropic main + OpenAI gpt-5.4 verifier.
 # Directly answers original-review R1 on same-model vs different-model verification.
-# Verifier choice rationale: o4-mini is reasoning-tuned ($0.55/$2.20 per M),
-# cross-family from Anthropic, and pre-validated as verifier in openai-single-family.yaml.
+#
+# Verifier choice rationale: gpt-5.4 is OpenAI's scientific-tier GA model
+# (the bench's chosen equivalent of Sonnet 4.6 per
+# recipes/openai-single-family.yaml). Cross-family from Anthropic and matched
+# in capability tier to the agent — what we want for an apples-to-apples
+# cross-family check, not a smaller/cheaper proxy. Previous choice was
+# o4-mini (coding/fast tier) — swapped out because the ablation question is
+# "does verifier provider matter holding capability constant", not "does a
+# weaker verifier matter".
 agent:
   model: anthropic/claude-sonnet-4-6
 orchestrator:
   scientific_model: anthropic/claude-sonnet-4-6
   coding_model:     anthropic/claude-sonnet-4-6
   fast_model:       anthropic/claude-haiku-4-5-20251001
-  verifier_model:   openai/o4-mini   # cross-family
+  verifier_model:   openai/gpt-5.4   # cross-family, scientific tier
