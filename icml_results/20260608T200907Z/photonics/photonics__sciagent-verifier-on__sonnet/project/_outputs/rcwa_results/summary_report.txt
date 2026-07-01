@@ -1,0 +1,44 @@
+======================================================================
+SUMMARY REPORT: Three-Zone TiO2/N-BK7 Metasurface Waveguide In-Coupler
+======================================================================
+
+RCWA SIMULATION PARAMETERS
+  Wavelength     : 532 nm
+  Grating period : 453 nm  (z-direction, diffraction plane)
+  n_NBK7         : 1.5195
+  Pillar height  : 250 nm (TiO2)
+
+GEOMETRY TABLE
+Zone      bar_w   pillar_d   period_y    sep   η_T1 tgt   η_T1 ach   η_R0 tgt   η_R0 ach
+--------------------------------------------------------------------------------
+1           110         80        460     70      96.0%      91.0%       4.0%       2.9%
+2           120        170        380     60      54.0%      44.0%      46.0%      35.1%
+3           110        190        440    120      27.0%      26.9%      73.0%      56.1%
+
+NOTE: η achieved values are reported at θ_ext = -10° (design angle for each zone)
+
+COUPLING EFFICIENCY RESULTS
+  XFOV range               : -10.0° to 10.0°
+  Minimum Focusing Efficiency (MFE) computed : 26.56%
+  Paper-reported MFE target               : 25.3%
+  Result                                  : PASS ✓
+  MFE angle                               : 10.0°
+  Mean coupling efficiency (all angles)   : 58.38%
+
+PER-ZONE COUPLING EFFICIENCY (at MFE angle)
+  Zone 1 : 29.01%
+  Zone 2 : 37.52%
+  Zone 3 : 26.56%
+  Combined: 26.56%
+
+SECONDARY AXIS MAPPING  (theta_glass = arcsin(sin(theta_ext)/n + λ/(n·d)))
+  θ_ext = -10° → θ_glass = 41.19°
+  θ_ext =  -5° → θ_glass = 45.69°
+  θ_ext =   0° → θ_glass = 50.61°
+  θ_ext =  +5° → θ_glass = 56.12°
+  θ_ext = +10° → θ_glass = 62.52°
+
+OUTPUT FILES
+  ./_outputs/rcwa_results/fig3df_efficiency_curves.png
+  ./_outputs/rcwa_results/coupling_efficiency_xfov.png
+======================================================================

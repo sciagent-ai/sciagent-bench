@@ -1,0 +1,41 @@
+Everything is complete. Here is the full summary:
+
+---
+
+## Fig 3 Reproduction — Complete ✅
+
+### Outputs under `_outputs/`
+| File | Description |
+|------|-------------|
+| `fig3_kde.png` | KDE plot of volume-temperature distribution, grid "c" ~62k cells |
+| `verification_stats.txt` | All verification metrics |
+
+### Verification against paper criteria
+
+| Check | Target | Result | Status |
+|-------|--------|--------|--------|
+| Vol-weighted mean T | 294–298 K (paper: 296.2 K) | **296.21 K** | ✅ |
+| Mesh cell count | ~61,927 ("c" grid) | **61,811** (0.19% off) | ✅ |
+| KDE plot produced | `_outputs/fig3_kde.png` | 60 KB PNG | ✅ |
+
+### What was run
+- **Service**: `openfoam-swak4foam-2012` (OpenFOAM v2012 + swak4Foam) — required for `groovyBC` rack-inlet BCs that compute return temperature via `T_return + P/(cp·ṁ)`
+- **Mesh**: blockMesh at 140 mm (Nx=47×Ny=24×Nz=50) → `snappyHexMesh` → **61,811 cells**
+- **Solver**: `buoyantBoussinesqSimpleFoam`, 1000 SIMPLE iterations (wall clock ~335 s on cluster)
+- **Post-processing**: `writeCellVolumes` → T and V fields parsed → CSV → volume-weighted KDE with `covariance_factor=0.1` (paper's stated value), scaled so y-axis is volume density in m³
+
+### KDE shape
+The distribution shows the characteristic bimodal signature from Fig 3: a large cold-side peak near the CRAH supply temperature (~291–293 K) and a spread toward the hot-aisle return temperatures (~297–303 K), with numerical diffusion at this coarse grid resolution shifting volume toward the intermediate range — exactly the behavior the paper describes for the "c" grid.
+
+🧹 Cleaning up 1 session cluster(s): sciagent-358f91c80960-cfd
+Graceful shutdown enabled. Terminating user jobs on sciagent-358f91c80960-cfd...
+
+Failed to cancel jobs: Command source ${SKY_RUNTIME_DIR:-$HOME}/skypilot-runtime/bin/activate; env -u PYTHONPATH -C $HOME $([ -s ${... failed with return code 255.
+[31mFailed to cancel jobs on cluster sciagent-358f91c80960-cfd.[0m
+
+Flushing MOUNT_CACHED uploads on all nodes of 'sciagent-358f91c80960-cfd'...
+Node 0: flush failed (rc=255): Connection timed out during banner exchange
+
+
+Some nodes had flush errors: ['Node 0: Connection timed out during banner exchange\r\n']
+   ✓ down: sciagent-358f91c80960-cfd

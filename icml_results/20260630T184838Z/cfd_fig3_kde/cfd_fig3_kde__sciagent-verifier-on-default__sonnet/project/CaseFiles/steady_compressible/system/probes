@@ -1,0 +1,344 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+
+// --------------------------------------------------------------------------
+
+T_hot_crac1
+{
+    type            surfaceFieldValue;
+    libs            ("libfieldFunctionObjects.so");
+
+    log             false;
+    writeControl    timeStep;
+    writeInterval   1;
+    writeFields     false;
+
+    writeArea       true;
+    surfaceFormat   none;
+
+    regionType      patch;
+    
+    name            crac01_outlet;
+    operation       areaAverage;
+
+    fields
+    (
+        T p_rgh
+    );
+}
+T_hot_crac2
+{
+    $T_hot_crac1;
+    name            crac02_outlet;
+}
+T_hot_crac3
+{
+    $T_hot_crac1;
+    name            crac03_outlet;
+}
+T_hot_crac4
+{
+    $T_hot_crac1;
+    name            crac04_outlet;
+}
+
+//
+
+T_cold_crac1
+{
+    $T_hot_crac1;
+    name            crac01_inlet;
+}
+T_cold_crac2
+{
+    $T_hot_crac1;
+    name            crac02_inlet;
+}
+T_cold_crac3
+{
+    $T_hot_crac1;
+    name            crac03_inlet;
+}
+T_cold_crac4
+{
+    $T_hot_crac1;
+    name            crac04_inlet;
+}
+
+//
+
+T_h_rack1
+{
+    $T_hot_crac1;
+    name            rack01_inlet;
+}
+T_h_rack2
+{
+    $T_hot_crac1;
+    name            rack02_inlet;
+}
+T_h_rack3
+{
+    $T_hot_crac1;
+    name            rack03_inlet;
+}
+T_h_rack4
+{
+    $T_hot_crac1;
+    name            rack04_inlet;
+}
+T_h_rack5
+{
+    $T_hot_crac1;
+    name            rack05_inlet;
+}
+T_h_rack6
+{
+    $T_hot_crac1;
+    name            rack06_inlet;
+}
+T_h_rack7
+{
+    $T_hot_crac1;
+    name            rack07_inlet;
+}
+T_h_rack8
+{
+    $T_hot_crac1;
+    name            rack08_inlet;
+}
+T_h_rack9
+{
+    $T_hot_crac1;
+    name            rack09_inlet;
+}
+T_h_rack10
+{
+    $T_hot_crac1;
+    name            rack10_inlet;
+}
+
+//
+
+T_c_rack1
+{
+    $T_hot_crac1;
+    name            rack01_outlet;
+}
+T_c_rack2
+{
+    $T_hot_crac1;
+    name            rack02_outlet;
+}
+T_c_rack3
+{
+    $T_hot_crac1;
+    name            rack03_outlet;
+}
+T_c_rack4
+{
+    $T_hot_crac1;
+    name            rack04_outlet;
+}
+T_c_rack5
+{
+    $T_hot_crac1;
+    name            rack05_outlet;
+}
+T_c_rack6
+{
+    $T_hot_crac1;
+    name            rack06_outlet;
+}
+T_c_rack7
+{
+    $T_hot_crac1;
+    name            rack07_outlet;
+}
+T_c_rack8
+{
+    $T_hot_crac1;
+    name            rack08_outlet;
+}
+T_c_rack9
+{
+    $T_hot_crac1;
+    name            rack09_outlet;
+}
+T_c_rack10
+{
+    $T_hot_crac1;
+    name            rack10_outlet;
+}
+
+// --------------------------------------------------------------------------
+
+dm_c_crac1
+{
+    $T_hot_crac1;
+    name            crac01_inlet;
+
+    operation       sum;
+
+    fields
+    (
+        phi                 // sum direct of field
+    );
+}
+dm_c_crac2
+{
+    $dm_c_crac1;
+    name            crac02_inlet;
+}
+dm_c_crac3
+{
+    $dm_c_crac1;
+    name            crac03_inlet;
+}
+dm_c_crac4
+{
+    $dm_c_crac1;
+    name            crac04_inlet;
+}
+
+//
+
+dm_h_crac1
+{
+    $dm_c_crac1;
+    name            crac01_outlet;
+}
+dm_h_crac2
+{
+    $dm_c_crac1;
+    name            crac02_outlet;
+}
+dm_h_crac3
+{
+    $dm_c_crac1;
+    name            crac03_outlet;
+}
+dm_h_crac4
+{
+    $dm_c_crac1;
+    name            crac04_outlet;
+}
+//
+
+dm_hole
+{
+    $dm_c_crac1;
+    name            hole;
+}
+
+//
+
+dm_h_rack1
+{
+    $dm_c_crac1;
+    name            rack01_inlet;
+}
+dm_h_rack2
+{
+    $dm_c_crac1;
+    name            rack02_inlet;
+}
+dm_h_rack3
+{
+    $dm_c_crac1;
+    name            rack03_inlet;
+}
+dm_h_rack4
+{
+    $dm_c_crac1;
+    name            rack04_inlet;
+}
+dm_h_rack5
+{
+    $dm_c_crac1;
+    name            rack05_inlet;
+}
+dm_h_rack6
+{
+    $dm_c_crac1;
+    name            rack06_inlet;
+}
+dm_h_rack7
+{
+    $dm_c_crac1;
+    name            rack07_inlet;
+}
+dm_h_rack8
+{
+    $dm_c_crac1;
+    name            rack08_inlet;
+}
+dm_h_rack9
+{
+    $dm_c_crac1;
+    name            rack09_inlet;
+}
+dm_h_rack10
+{
+    $dm_c_crac1;
+    name            rack10_inlet;
+}
+
+//
+
+dm_c_rack1
+{
+    $dm_c_crac1;
+    name            rack01_outlet;
+}
+dm_c_rack2
+{
+    $dm_c_crac1;
+    name            rack02_outlet;
+}
+dm_c_rack3
+{
+    $dm_c_crac1;
+    name            rack03_outlet;
+}
+dm_c_rack4
+{
+    $dm_c_crac1;
+    name            rack04_outlet;
+}
+dm_c_rack5
+{
+    $dm_c_crac1;
+    name            rack05_outlet;
+}
+dm_c_rack6
+{
+    $dm_c_crac1;
+    name            rack06_outlet;
+}
+dm_c_rack7
+{
+    $dm_c_crac1;
+    name            rack07_outlet;
+}
+dm_c_rack8
+{
+    $dm_c_crac1;
+    name            rack08_outlet;
+}
+dm_c_rack9
+{
+    $dm_c_crac1;
+    name            rack09_outlet;
+}
+dm_c_rack10
+{
+    $dm_c_crac1;
+    name            rack10_outlet;
+}

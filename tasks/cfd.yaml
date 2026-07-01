@@ -1,0 +1,52 @@
+id: cfd
+title: "Micro data-center AC return-temperature validation (cfd.pdf, reduced)"
+prompt: |
+  Reduced-scope reproduction of the CFD4DC validation in cfd.pdf:
+  predict only the two air-conditioner return-face temperatures
+  (AC1, AC2) on the coarsest mesh and the steady-state scenario A
+  baseline. Build an OpenFOAM model of the two-rack micro data
+  center in Section 3.2 (4.86 x 4.10 m, 9 active servers with the
+  power / temperature / length values in Tables 2 and A.1, two LG
+  split air conditioners at 32 m^3/min, 90 m^3/h ventilation) and
+  run buoyantBoussinesqSimpleFoam with the RNG k-epsilon model
+  and the boundary conditions in Table 1. Use mesh "a" from Table 3
+  (0.58M cells, 0.2 m base cell) — the coarsest variant — and cap
+  the solver at 10K iterations (paper says stabilization is reached
+  around 10K). Server interiors are porous Darcy-Forchheimer zones
+  with a fixed temperature jump (Eqs 7-8). Pick the appropriate
+  OpenFOAM-based service from the registry (Table 1 lists groovyBC
+  at the AC outlets, so swak4Foam support is required).
+  Verify: MAE of predicted AC1 + AC2 return-face temperatures vs
+  the measured values in Table 2 (AC1=15.1 C, AC2=10.8 C for
+  scenario A) must be <= 4.0 C (paper RNG k-eps scenario A: 3.17 C
+  per Table 4), plus a bar plot of measured vs predicted AC return
+  temperatures.
+inputs:
+  - path: ./project/cfd.pdf
+    source: /Users/shrutibadhwar/Documents/2026/testpackage/sciagent-tasks/nowtasks/cfd.pdf
+verification_criteria:
+  key_value: ac_return_temperature_mae_celsius
+  comparator: "<="
+  threshold: 4.0
+  paper_value: 3.17
+  required_figure: "ac_return_temp_measured_vs_predicted.png"
+budget:
+  # Calibrated against the live cfd_fig3_kde run (62k cells + 1000
+  # iter, pre-staged case files): that took ~4-5 h end-to-end even
+  # though the solver step alone was ~5 min. Reasons: agent
+  # overhead, container cold-start on SkyPilot, snappyHexMesh,
+  # post-processing, verifier subagents.
+  # This reduced cfd.yaml is ~9.4x more cells (0.58M vs 62k) and
+  # 10x more iterations (10K vs 1k) → solver wall time ~6-8 h. Add
+  # geometry reconstruction from Fig 6 + Table A.1 (case files NOT
+  # pre-staged here, unlike cfd_fig3_kde) for another ~2-4 h of
+  # agent turns. The matched-ABI openfoam-swak4foam-2012 image is
+  # amd64-only, so this routes via SkyPilot/AWS.
+  wall_time_seconds: 57600
+  cost_usd: 35.00
+  # cc-bare needs many turns for STL build, snappyHexMesh, BC
+  # dictionaries, solver-job polling on AWS, post-processing,
+  # plotting, report.
+  max_turns: 250
+services_needed:
+  - openfoam-swak4foam

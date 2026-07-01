@@ -1,0 +1,232 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       polyBoundaryMesh;
+    location    "constant/polyMesh";
+    object      boundary;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+30
+(
+    crac01_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          350;
+        startFace       178492;
+    }
+    crac01_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          126;
+        startFace       178842;
+    }
+    crac02_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          375;
+        startFace       178968;
+    }
+    crac02_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          119;
+        startFace       179343;
+    }
+    crac03_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          375;
+        startFace       179462;
+    }
+    crac03_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          119;
+        startFace       179837;
+    }
+    crac04_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          350;
+        startFace       179956;
+    }
+    crac04_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          126;
+        startFace       180306;
+    }
+    rack01_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          120;
+        startFace       180432;
+    }
+    rack01_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          108;
+        startFace       180552;
+    }
+    rack02_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          49;
+        startFace       180660;
+    }
+    rack02_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          36;
+        startFace       180709;
+    }
+    rack03_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          120;
+        startFace       180745;
+    }
+    rack03_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          108;
+        startFace       180865;
+    }
+    rack04_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          112;
+        startFace       180973;
+    }
+    rack04_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          96;
+        startFace       181085;
+    }
+    rack05_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          133;
+        startFace       181181;
+    }
+    rack05_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          126;
+        startFace       181314;
+    }
+    rack06_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          126;
+        startFace       181440;
+    }
+    rack06_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          126;
+        startFace       181566;
+    }
+    rack07_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          108;
+        startFace       181692;
+    }
+    rack07_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          127;
+        startFace       181800;
+    }
+    rack08_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          108;
+        startFace       181927;
+    }
+    rack08_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          127;
+        startFace       182035;
+    }
+    rack09_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          108;
+        startFace       182162;
+    }
+    rack09_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          126;
+        startFace       182270;
+    }
+    rack10_inlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          126;
+        startFace       182396;
+    }
+    rack10_outlet
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          126;
+        startFace       182522;
+    }
+    walls
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          13389;
+        startFace       182648;
+    }
+    hole
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          1;
+        startFace       196037;
+    }
+)
+
+// ************************************************************************* //

@@ -1,0 +1,30 @@
+id: cfd_fig3_kde
+title: "Barestrand 2021 Fig 3 KDE reproduction (datacenter Boussinesq, 62k grid)"
+prompt: |
+  Reproduce Fig 3 (typical Boussinesq, 62k grid) from Manuscript.pdf
+  on datacenter temperature distribution. Cap the solver at 1000
+  iterations so wall clock stays under ~60 min on a small instance.
+  The KDE shape is what matters, not residual convergence. Identify
+  the OpenFOAM environment and boundary conditions from
+  Manuscript.pdf and the case files in CaseFiles/. Pull all
+  intermediate and final results back into the project folder.
+  Verify: volume-weighted mean temperature in [294, 298] K (paper:
+  296.2 K), snappyHexMesh "c" grid resolves to ~62k cells (paper:
+  61,927), and produce the Fig 3 KDE plot under _outputs/.
+inputs:
+  - path: ./project/Manuscript.pdf
+    source: /Users/shrutibadhwar/Documents/2026/conference/AI4Xtalk/results/casestudy_fluidmechanics_sciagent_48/Manuscript.pdf
+  - path: ./project/CaseFiles
+    source: /Users/shrutibadhwar/Documents/2026/conference/AI4Xtalk/results/casestudy_fluidmechanics_sciagent_48/CaseFiles
+verification_criteria:
+  key_value: volume_weighted_mean_temperature_kelvin
+  comparator: "in"
+  threshold: [294.0, 298.0]
+  paper_value: 296.2
+  required_figure: "_outputs/fig3_kde.png"
+budget:
+  wall_time_seconds: 21600
+  cost_usd: 15.00
+  max_turns: 200
+services_needed:
+  - openfoam-swak4foam

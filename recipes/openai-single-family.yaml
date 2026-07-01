@@ -1,27 +1,28 @@
 # Recipe: openai-single-family
 #
-# Varies: provider (all four role models on OpenAI).
+# Single-provider OpenAI cell: agent + verifier both OpenAI scientific tier.
+# Mirror of anthropic-single-family.yaml (sonnet-4-6 main + sonnet-4-6 verifier).
+#
 # Held fixed at sciagent defaults (NOT ablated in this cell):
-#   - DATA gate ON, EXEC gate ON, LLM verification ON (BUT see note below)
-#   - verifier is same family as main (o4-mini)
+#   - DATA gate ON, EXEC gate ON, LLM verification ON
+#   - verifier is same family AND same capability tier as main
 #   - registry: default catalog
 #   - compute tools: loaded (unused for tasks that don't need clusters)
 #
-# Model picks as of 2026-05-29:
-#   - gpt-4.1 family is yesterday's tier — the 2026-05-29 DBAASP smoke showed
-#     gpt-4.1 giving up at the first 403 instead of inspecting the page JS for
-#     the real endpoint. gpt-5.4 is the current GA equivalent of Sonnet 4.6.
-#   - gpt-5.5 / gpt-5.5-Pro are newer but often tier-5+ gated; using 5.4 here.
-#   - o4-mini is the cheap reasoning-tuned verifier.
-#
-# NOTE on verifier_model: today `sciagent run "task"` routes through
-# AgentLoop directly and skips the verification gate (which lives on
-# TaskOrchestrator.execute_all). This field is wired but unread until
-# sciagent's verification gate fires on single-task runs too.
+# Model picks (per sciagent-cli/docs/configuration.md, updated 2026-06-29
+# to list gpt-5.4 as the bench-validated GA scientific-tier OpenAI model):
+#   - openai/gpt-5.4 is bench-validated as the current GA equivalent of
+#     Sonnet 4-6. gpt-4.1 was rejected by the 2026-05-29 DBAASP smoke
+#     ("yesterday's tier"). gpt-5.5 / gpt-5.5-Pro are tier-5+ gated.
+#   - Coding / fast roles use openai/gpt-5.4-mini.
+#   - Verifier uses openai/gpt-5.4 (same as agent) — capability-matched
+#     so the ablation question is "does verifier provider matter
+#     holding capability constant", not "does a weaker verifier matter".
 agent:
   model: openai/gpt-5.4
 orchestrator:
   scientific_model: openai/gpt-5.4
   coding_model:     openai/gpt-5.4-mini
   fast_model:       openai/gpt-5.4-mini
-  verifier_model:   openai/o4-mini
+  verifier_model:   openai/gpt-5.4   # capability-matched to agent
+  vision_model:     openai/gpt-5.4   # keep family pure; otherwise falls back to anthropic opus

@@ -1,0 +1,10 @@
+{
+  "verdict": "insufficient",
+  "confidence": 0.95,
+  "issues": [
+    "No session log was provided. The input header explicitly states '(none \u2014 this cell produced no audit trail)'. There is no trajectory to audit.",
+    "Without a session log, there is no way to verify any external tool executions, S4 RCWA runs, optimization loops, or file outputs.",
+    "All specific numerical claims (MFE=25.04%, per-zone efficiencies, geometry parameters) appear only in the agent's final prose with zero supporting tool_result evidence."
+  ],
+  "reasoning": "This is a compute_or_simulation task requiring S4 RCWA execution and optimization. The session log is explicitly absent ('none \u2014 this cell produced no audit trail'), meaning there is zero trajectory to audit. All claimed results \u2014 MFE=25.04%, per-zone efficiencies, output files \u2014 exist only in the agent's final claim text with no supporting external evidence whatsoever. The verdict is insufficient by default per the instructions, and the complete absence of any audit trail makes this the clearest possible case of insufficient evidence."
+}

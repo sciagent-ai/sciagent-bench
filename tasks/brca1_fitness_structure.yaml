@@ -1,0 +1,39 @@
+id: brca1_fitness_structure
+title: "BRCA1 mutation fitness vs AlphaFold structure (Findlay 2018 + AF-P38398)"
+prompt: |
+  Analyze how BRCA1 mutation fitness scores correlate with protein
+  structure using the pre-downloaded data in ./project/_data/.
+
+  Data provided:
+    _data/BRCA1_HUMAN_Findlay_2018.csv  Deep mutational scanning
+                                        fitness scores (1,837 mutations)
+    _data/AF-P38398-F1-model_v6.pdb     AlphaFold predicted structure
+                                        (1,863 residues)
+
+  Steps: parse the fitness data and extract mutation positions; load
+  the AlphaFold PDB and extract per-residue features (secondary
+  structure from phi/psi, relative solvent accessibility, pLDDT
+  B-factor); map fitness scores to structural positions; compute
+  mean fitness by secondary-structure type, by solvent-accessibility
+  bin, and by known functional domain (RING 1-109, BRCT 1642-1863);
+  produce a fitness-vs-position plot colored by structural class.
+
+  Verify: 1,837 mutations parsed, mapping success rate >= 0.95
+  (paper run: 1.00), and a statistically significant buried-vs-
+  exposed fitness difference (paper run: 0.50, p < 0.001). Outputs
+  in _outputs/.
+inputs:
+  - path: ./project/_data
+    source: /Users/shrutibadhwar/Documents/2026/conference/AI4Xtalk/results/casestudy_bioinformatics_4_10_defaultanthropic_codechanges/_data
+verification_criteria:
+  key_value: mapping_success_rate
+  comparator: ">="
+  threshold: 0.95
+  paper_value: 1.00
+  required_figure: "_outputs/brca1_structure_fitness.png"
+budget:
+  wall_time_seconds: 3600
+  cost_usd: 2.00
+  max_turns: 100
+services_needed:
+  - biopython

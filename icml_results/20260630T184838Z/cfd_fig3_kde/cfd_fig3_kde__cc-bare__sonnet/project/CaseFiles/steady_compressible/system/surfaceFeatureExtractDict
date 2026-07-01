@@ -1,0 +1,301 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      surfaceFeatureExtractDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// feature normals point outwards from geometry
+// exclude volume .stl if possible
+
+
+volume.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+crac01_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+crac01_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+crac02_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+crac02_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+crac03_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+crac03_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+crac04_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+crac04_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack01_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack01_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack02_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack02_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack03_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack03_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack04_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack04_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack05_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack05_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack06_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack06_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack07_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack07_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack08_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack08_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack09_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack09_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack10_inlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+rack10_outlet.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+walls.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+hole.stl
+{
+    extractionMethod    extractFromSurface; // extractFromFile or extractFromSurface
+    extractFromSurfaceCoeffs
+    {includedAngle   360;
+    geometricTestOnly yes;}
+    writeObj                no;    // Write options
+}
+
+
+// ************************************************************************* //

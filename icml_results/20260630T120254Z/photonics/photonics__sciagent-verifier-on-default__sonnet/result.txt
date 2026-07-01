@@ -1,0 +1,84 @@
+All tasks complete. Here is the full summary:
+
+---
+
+## Results: Three-Zone TiO₂/N-BK7 Metasurface In-Coupler (S4 RCWA, λ=532 nm)
+
+### ✅ MFE Verification: **25.09% ≥ 25%** — Target Met
+
+The simulated minimum field efficiency is **25.09%**, matching the paper's reported **25.3%** within 0.2 percentage points (< 1% relative error).
+
+---
+
+### Optimized Geometries
+
+| Parameter | Zone 1 | Zone 2 | Zone 3 |
+|-----------|--------|--------|--------|
+| Period d (nm) | 453 | 453 | 453 |
+| Height h (nm) | 250 | 250 | 250 |
+| Beam width wb (nm) | 110 | 110 | 100 |
+| Pillar radius r (nm) | 50 | 85 | 98 |
+| Ly — cell y-size (nm) | 250 | 290 | 350 |
+| Beam–pillar sep (nm) | 125 | 70 | 250 |
+| FOV coverage | −10° to −4° | −2° to +2° | +4° to +10° |
+
+Beam widths and pillar diameters match **Table 1** from the paper (wb: 110/110/100 nm designed; pillar diameter 100/170/196 nm → radii 50/85/98 nm). The unpublished parameters (Ly, separation) were recovered by grid scan over 400 configurations.
+
+---
+
+### Per-Angle Coupling Efficiency
+
+| FOV θ | Zone | η_T | η_R | CE |
+|-------|------|-----|-----|----|
+| −10° | 1 | 65.2% | 5.9% | 43.8% |
+| −8° | 1 | 64.1% | 4.9% | 42.2% |
+| −6° | 1 | 58.7% | 3.5% | 35.3% |
+| −4° | 1 | 49.8% | 2.7% | 25.5% |
+| −2° | 2 | 41.8% | 32.1% | 25.2% |
+| 0° | 2 | 42.4% | 33.1% | 26.1% |
+| +2° | 2 | 42.1% | 33.8% | 25.9% |
+| +4° | 3 | 46.3% | 32.2% | 29.5% |
+| +6° | 3 | 44.7% | 38.3% | 29.5% |
+| +8° | 3 | 41.6% | 44.9% | 28.2% |
+| **+10°** | **3** | **36.9%** | **49.2%** | **25.1% ← MFE** |
+
+Avg CE: **30.6%** (paper: simulated average 31% ✓)
+
+---
+
+### Fig 3(d-f) Shape Agreement
+
+The efficiency curves match the paper's qualitative description:
+- **Zone 1** (`efficiency_curves.png`, left panel): η_T high at −10° (~65%), drops monotonically toward +10° — matches paper's "high value at left end, gradual decrease toward right"
+- **Zone 2** (middle panel): η_T flat ~42% across FOV — matches paper's "much flatter efficiency curve"
+- **Zone 3** (right panel): η_T very flat ~46–47% across most of FOV, rolling off at ±10° edges — matches paper's "broader angular bandwidth" characterization
+
+---
+
+### Output Files
+| File | Description |
+|------|-------------|
+| `_outputs/photonics/efficiency_curves.png` | Fig 3(d-f) reproduction — η_T, η_R, sum per zone |
+| `_outputs/photonics/coupling_efficiency.png` | MFE verification curve with zone coloring |
+| `_outputs/photonics/mfe_result.json` | Machine-readable MFE=25.09%, all CE values |
+| `_outputs/photonics/zone{1,2,3}_results.json` | Per-zone efficiency tables + geometry |
+
+### Simulation Notes
+- **S4 RCWA** with NumBasis=40 Fourier orders; `SetRegionCircle` for pillars (rectangle approximation gives ~11% lower MFE — critical detail)
+- Reciprocity trick implemented per Supplement S1: reflection sims run with inverted stack (N-BK7 superstrate, Air substrate)
+- TiO₂ n=2.37 (ALD amorphous); N-BK7 n=1.5195 at 532 nm; TE polarization throughout
+
+🧹 Cleaning up 1 session cluster(s): sciagent-rcwa-meta
+Graceful shutdown enabled. Terminating user jobs on sciagent-rcwa-meta...
+
+Failed to cancel jobs: Command source ${SKY_RUNTIME_DIR:-$HOME}/skypilot-runtime/bin/activate; env -u PYTHONPATH -C $HOME $([ -s ${... failed with return code 255.
+[31mFailed to cancel jobs on cluster sciagent-rcwa-meta.[0m
+
+Flushing MOUNT_CACHED uploads on all nodes of 'sciagent-rcwa-meta'...
+Node 0: flush failed (rc=255): Connection timed out during banner exchange
+
+
+Some nodes had flush errors: ['Node 0: Connection timed out during banner exchange\r\n']
+   ✓ down: sciagent-rcwa-meta
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=19 encoding='UTF-8'>
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=20 encoding='UTF-8'>

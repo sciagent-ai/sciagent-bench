@@ -28,3 +28,4 @@ orchestrator:
   coding_model:     xai/grok-4.3
   fast_model:       xai/grok-4.3
   verifier_model:   xai/grok-4.3
+  vision_model:     xai/grok-4.3   # only live xAI model — same as every other role

@@ -1,0 +1,47 @@
+## ✅ BRCA1 Fitness–Structure Analysis Complete
+
+All outputs are in `_outputs/`:
+
+| File | Description |
+|------|-------------|
+| `fitness_vs_position.png` | Scatter plot, fitness vs residue position, colored by SS class, RING/BRCT domains shaded |
+| `summary.json` | All computed statistics |
+| `fitness_structure_mapped.csv` | Per-mutation table with structural annotations |
+
+---
+
+### Key Results
+
+**Verification (all passed):**
+- ✅ **1,837 mutations** parsed (exact match)
+- ✅ **Mapping rate: 1.00** (100%, target ≥ 0.95)
+- ✅ **Buried vs exposed p = 1.48×10⁻⁴** (< 0.001; U = 11,268)
+
+**Fitness by Secondary Structure:**
+| SS Class | Mean DMS Score |
+|----------|---------------|
+| Helix | −0.624 |
+| Sheet | −0.668 |
+| Coil | −0.567 |
+
+Sheet residues are most sensitive to mutation, likely because they form the core β-strands of the BRCT fold.
+
+**Fitness by Solvent Accessibility (8 Å neighbor-count proxy):**
+| Accessibility | Mean DMS Score |
+|--------------|---------------|
+| Buried | **−1.497** |
+| Exposed | −0.591 |
+
+Buried residues tolerate mutations far less (Δ = 0.91 score units) — consistent with their role in maintaining the hydrophobic core.
+
+**Fitness by Functional Domain:**
+| Domain | Residues | Mean DMS Score |
+|--------|----------|---------------|
+| RING | 1–109 | −0.705 |
+| BRCT | 1642–1863 | −0.582 |
+| Other | rest | −0.030 |
+
+Both functional domains show substantially lower fitness than the intrinsically disordered linker region — reflecting their critical structural and enzymatic roles.
+
+🧹 Cleaning up 1 session cluster(s): brca1-analysis
+   ✓ down: brca1-analysis

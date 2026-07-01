@@ -1,0 +1,260 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    location    "0";
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0.1 0.1 0.1);
+
+boundaryField
+{
+    crac01_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 2.475065;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    crac01_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -2.475065;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    crac02_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 2.323136;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    crac02_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -2.323136;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    crac03_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 2.325181;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    crac03_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -2.325181;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    crac04_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 2.426534;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    crac04_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -2.426534;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack01_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 1.19;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack01_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -1.19;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack02_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 0.605;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack02_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -0.605;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack03_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 0.826;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack03_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -0.826;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack04_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 0.438;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack04_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -0.438;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack05_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 0.31;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack05_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -0.31;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack06_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 0.353;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack06_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -0.353;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack07_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 0.453;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack07_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -0.453;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack08_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 0.24;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack08_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -0.24;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack09_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 0.223;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack09_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -0.223;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack10_inlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant 0.243;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    rack10_outlet
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    constant -0.243;
+        rhoInlet        1.205;
+        extrapolateProfile 0;
+        value           uniform (0 0 0);
+    }
+    walls
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+    hole
+    {
+        type            zeroGradient;
+    }
+}
+
+
+// ************************************************************************* //

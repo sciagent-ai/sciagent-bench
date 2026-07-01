@@ -1,0 +1,16 @@
+solid "Surface"
+   facet normal 0 0 -1
+      outer loop
+         vertex 3.383 1.389 2.92
+         vertex 3.865 1.389 2.92
+         vertex 3.383 0.1 2.92
+      endloop
+   endfacet
+   facet normal 0 0 -1
+      outer loop
+         vertex 3.383 0.1 2.92
+         vertex 3.865 1.389 2.92
+         vertex 3.865 0.1 2.92
+      endloop
+   endfacet
+endsolid

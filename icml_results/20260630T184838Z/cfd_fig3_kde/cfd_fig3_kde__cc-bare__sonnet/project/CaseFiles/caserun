@@ -1,0 +1,145 @@
+#!/bin/bash
+
+# ___ adjust these as necessary ___
+# paste here the foamExec path for openfoam binaries
+exec=/home/$USER/OpenFOAM/OpenFOAM-v2012/bin/tools/foamExec
+solver=buoyantBoussinesqPimpleFoam
+steadyCase="../A0_0_init_v10_ke"
+time=21000
+# ___ end ___
+
+mfile='machines'
+nmesh=$(awk '$1=="numberOfSubdomains" {print substr($2, 1, length($2)-2)} ' system/meshParDict)
+
+nprocs=$(awk '$1=="numberOfSubdomains" {print substr($2, 1, length($2)-2)} ' system/decomposeParDict)
+#nprocs=286
+
+
+# USAGE: (example)
+# . caserun -0b -2 -2b -2e -3
+
+while :; do
+    case $1 in
+        -seq) echo "seq"
+            . caserun -0b -1
+            . caserun -0b -2 -2d
+            . caserun -0 -0a -2a -2eN -3N -4 5
+        ;;
+        -0|--clean) echo "clean"
+            rm -r processor*
+        ;;
+        -0a|--cleanPost) echo "cleanPost"
+            rm -r postProcessing
+        ;;
+        -0b|--fullClean) echo "fullClean"
+            rm -r processor*
+            rm -r postProcessing
+            rm -r 0
+        ;;
+        -1|--mesh) echo "mesh"
+            rm -r constant/polyMesh/
+            # put .stl in triSurface
+            blockMesh | tee logs/log1_blockMesh
+            surfaceFeatureExtract | tee logs/log1_features
+            rm -r processor*
+            decomposePar -decomposeParDict system/meshParDict | tee logs/log1_decompose
+            mpirun -np $nmesh renumberMesh -decomposeParDict system/meshParDict -overwrite -parallel | tee logs/log1_rnM
+            mpirun -np $nmesh snappyHexMesh -decomposeParDict system/meshParDict -overwrite -parallel | tee logs/log1_snappy
+            # renumbering ought to help here
+#            mpirun -np $nmesh renumberMesh -decomposeParDict system/meshParDict -overwrite -parallel | tee logs/log2e_rnM
+            reconstructParMesh -constant -fullMatch | tee logs/log1_reconstruct
+            rm -r processor*
+            checkMesh | tee logs/log1_check
+        ;;
+        -2|--bc) echo "bc"
+            rm -r 0
+            cp -r 0.org 0
+        ;;
+        -2a|--decPar) echo "decPar0"
+            decomposePar -time 0 | tee logs/log2_decPar
+        ;;
+        -2aL|--decParL) echo "decPar"
+            decomposePar -time 0 -decomposeParDict system/meshParDict | tee logs/log2_decPar
+        ;;
+        -2b|--decFieldsLatest) echo "decFieldsLatest"
+            decomposePar -latestTime -fields | tee logs/log2_decFieldsLatest
+        ;;
+        -2d|--mapFields) echo "mapFields"
+        # do this before decompose
+            mapFields $steadyCase -sourceTime $time -consistent | tee logs/log2d_mapFields
+            find 0/ -type f -not -name 'alphat' -not -name 'epsilon' -not -name 'k' -not -name 'nut' -not -name 'omega' -not -name 'p_rgh' -not -name 'T' -not -name 'U' -not -name 'p' -delete
+        ;;
+        -2dL|--mapFieldsLocal) echo "mapFieldsLocal"
+            
+            mpirun -np $nmesh mapFieldsPar $steadyCase -sourceTime $time -consistent -parallel -decomposeParDict system/meshParDict | tee logs/log2d_mapFields
+#            mapFieldsPar ../A0_0_init_final -sourceTime 10000 -consistent
+        ;;
+        -2dN|--mapFieldsNodes) echo "mapFieldsNodes"
+            mpirun --mca btl_tcp_if_exclude virbr0,lo --hostfile $mfile -np $nmesh $exec mapFieldsPar $steadyCase -sourceTime $time -consistent -parallel | tee logs/log2e_rnM
+        ;;
+        -2e|--rnMesh) echo "rnMesh"
+            renumberMesh -overwrite | tee logs/log2e_rnM
+        ;;
+        -2eL|--rnMeshLocal) echo "rnMeshLocal"
+            mpirun -np $nmesh renumberMesh -overwrite -parallel | tee logs/log2e_rnMeshPar
+        ;;
+        -2eN|--rnMeshNodes) echo "rnMeshNodes"
+            # can be done twice for better numbering it seems
+            mpirun --mca btl_tcp_if_exclude virbr0,lo --hostfile $mfile -np $nprocs $exec renumberMesh -overwrite -parallel | tee logs/log2e_rnMeshNodes
+        ;;
+        -2fN|--redParNodes) echo "redParNodes"
+            # https://www.openfoam.com/documentation/guides/latest/man/redistributePar.html
+# --mca btl_tcp_if_exclude virbr0,lo
+            mpirun --hostfile $mfile -np $nprocs $exec redistributePar -overwrite -parallel | tee logs/log2e_rnM
+        ;;
+        -3|--solver) echo "localSolver"
+#            mpirun -np $nprocs buoyantBoussinesqSimpleFoam -parallel > logs/log3_solver 2>&1 &
+            mpirun -np $nmesh $solver -parallel > logs/log3_solver 2>&1 &
+            disown
+        ;;
+        -3N|--clustSolver) echo "clustSolver"
+#            rm -r postProcessing
+# --mca btl_tcp_if_exclude virbr0,lo
+# --bind-to core
+# --mca coll_fca_enable 1 --mca coll_fca_np 0
+# --mca coll_hcoll_enable 1
+            mpirun --mca coll_hcoll_enable 1 --mca coll_fca_enable 1 --mca coll_fca_np 0 --hostfile $mfile -np $nprocs $exec $solver -parallel > logs/log3_solver 2>&1 &
+            disown
+        ;;
+        -4|--resPlot) echo "resPlot" # takes 1 argument!
+#            pyFoamPlotWatcher.py logs/log3_solver
+            shift
+            ( cd logs ; sleep $1 ; gnuplot ../residuals)
+        ;;
+        -4a|--tail) echo "tailLog" 
+            tail -f logs/log3_solver
+        ;;
+        -5|--recPar) echo "recPar"
+#            reconstruct before postprocessing
+#            reconstructParMesh -constant -fullMatch | tee logs/log1_reconstruct
+#            reconstructPar -case . -latestTime -withZero | tee logs/log4_rP_latest
+            reconstructPar -case . -latestTime | tee logs/log4_rP_latest
+#            reconstructPar -case . -time 60 | tee logs/log4_rP
+#            reconstructPar -case . | tee logs/log4_rP
+#            reconstructPar -case . -latestTime -fields '(alphat epsilon k nut p p_rgh phi static(p) T total(p) turbulenceProperties:I turbulenceProperties:L U yPlus epsilonMean epsilonPrime2Mean kMean kPrime2Mean p_rghMean p_rghPrime2Mean TMean TPrime2Mean UMean UPrime2Mean)'
+
+        ;;
+        -5b|--post) echo "post"
+            # postProcess -func yPlus -latestTime
+            # postProcess -func wallShearStress -latestTime
+            # postProcess -func vorticity -latestTime
+            # postProcess -func "grad(U)" -latestTime
+            # buoyantBoussinesqSimpleFoam -postProcess -func staticPressure -latestTime
+            # buoyantBoussinesqSimpleFoam -postProcess -func totalPressureIncompressible -latestTime
+            # postProcess -func "patchAverage(TMean,name=crac01_outlet)" -latestTime
+            # postProcess -func "patchAverage(TMean,name=crac02_outlet)" -latestTime
+            # postProcess -func "patchAverage(TMean,name=crac03_outlet)" -latestTime
+            # postProcess -func "patchAverage(TMean,name=crac04_outlet)" -latestTime
+            # postProcess -func "grad(p_rgh)" -latestTime
+            # postProcess -func "grad('total(p)')" -latestTime
+            postProcess -latestTime -fields '(U p_rgh phi T)' | tee tempcalc
+        ;;
+        *) break
+    esac
+    shift
+done

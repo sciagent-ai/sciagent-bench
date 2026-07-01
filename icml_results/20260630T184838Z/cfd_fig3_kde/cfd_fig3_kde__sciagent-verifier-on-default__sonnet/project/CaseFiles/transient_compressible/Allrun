@@ -1,0 +1,31 @@
+# MESHING
+
+rm -r constant/polyMesh/
+# put .stl in triSurface
+blockMesh | tee logs/log1_blockMesh
+surfaceFeatureExtract | tee logs/log1_features
+rm -r processor*
+decomposePar -decomposeParDict system/meshParDict | tee logs/log1_decompose
+mpirun -np $nmesh renumberMesh -decomposeParDict system/meshParDict -overwrite -parallel | tee logs/log1_rnM
+mpirun -np $nmesh snappyHexMesh -decomposeParDict system/meshParDict -overwrite -parallel | tee logs/log1_snappy
+# renumbering ought to help here
+#            mpirun -np $nmesh renumberMesh -decomposeParDict system/meshParDict -overwrite -parallel | tee logs/log2e_rnM
+reconstructParMesh -constant -fullMatch | tee logs/log1_reconstruct
+rm -r processor*
+checkMesh | tee logs/log1_check
+
+# PREPPING
+
+rm -r 0
+cp -r 0.org 0
+rm -r postprocessing
+renumberMesh -overwrite | tee logs/log2e_rnM
+
+# MAPPING
+
+mapFields $steadyCase -sourceTime $time -consistent
+
+# RUNNING
+
+buoyantPimpleFoam
+

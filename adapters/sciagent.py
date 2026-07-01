@@ -319,6 +319,14 @@ class SciagentAdapter(AdapterBase):
         t0 = time.monotonic()
         stdout_path = workdir / "stdout.txt"
 
+        # Hard wall-clock bound on the cell. sciagent has its own
+        # ``orchestrator.max_wall_seconds`` (passed above), but a hung LLM
+        # stream or wedged tool can sit past that without the orchestrator
+        # ever getting a chance to check the clock. The +300 s buffer lets
+        # sciagent's in-process budget fire first and write a clean
+        # session_end; if that fails we still kill the process.
+        subproc_timeout = budget.get("wall_time_seconds", 1800) + 300
+
         # Wrap with macOS `script` so output is BOTH captured to file AND
         # echoed to the terminal — needed because sciagent uses
         # prompt_toolkit's pt_prompt for ask_user / _pause_for_user (DATA
@@ -326,15 +334,46 @@ class SciagentAdapter(AdapterBase):
         # text on the terminal, the user would be answering blind.
         # `script` creates a pty for the child, the user sees output
         # normally, and the typescript is written to stdout_path.
-        if sys.stdout.isatty() and shutil.which("script"):
-            wrapped = ["script", "-q", str(stdout_path), *cmd]
-            proc = subprocess.run(wrapped, text=True)
-        else:
-            # Non-interactive (e.g. running under tmux-detached or piped):
-            # capture only, no terminal echo. ask_user will hang in this
-            # mode — caller's responsibility to know.
-            with stdout_path.open("w", encoding="utf-8") as out:
-                proc = subprocess.run(cmd, stdout=out, stderr=subprocess.STDOUT, text=True)
+        try:
+            if sys.stdout.isatty() and shutil.which("script"):
+                wrapped = ["script", "-q", str(stdout_path), *cmd]
+                proc = subprocess.run(wrapped, text=True, timeout=subproc_timeout)
+            else:
+                # Non-interactive (e.g. running under tmux-detached or piped):
+                # capture only, no terminal echo. ask_user will hang in this
+                # mode — caller's responsibility to know.
+                with stdout_path.open("w", encoding="utf-8") as out:
+                    proc = subprocess.run(
+                        cmd, stdout=out, stderr=subprocess.STDOUT, text=True,
+                        timeout=subproc_timeout,
+                    )
+        except subprocess.TimeoutExpired:
+            # sciagent exceeded its own budget AND the buffer — return a
+            # synthetic failure so the matrix sweep keeps moving instead of
+            # wedging on this cell.
+            wall = time.monotonic() - t0
+            return CellResult(
+                success=False,
+                error=f"sciagent wall-clock timeout after {subproc_timeout}s",
+                verdict="",
+                confidence=0.0,
+                score=0.0,
+                cost_llm_usd=0.0,
+                cost_compute_usd=0.0,
+                cost_storage_usd=0.0,
+                cost_total_usd=0.0,
+                tokens_in=None,
+                tokens_out=None,
+                iterations=None,
+                tool_calls=None,
+                user_asks=0,
+                wall_seconds=wall,
+                notes="",
+                verifier_summary="",
+                artifacts_dir=workdir,
+                raw_provenance_log=None,
+                transcript_path=None,
+            )
         wall = time.monotonic() - t0
         stdout_text = stdout_path.read_text(encoding="utf-8", errors="replace")
 

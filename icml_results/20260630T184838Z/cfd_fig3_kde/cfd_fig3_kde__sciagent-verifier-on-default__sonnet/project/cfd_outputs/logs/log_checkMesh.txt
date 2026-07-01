@@ -1,0 +1,143 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2012                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _d5c32f18-20260127 OPENFOAM=2012 patch=260127
+Arch   : "LSB;label=32;scalar=64"
+Exec   : checkMesh
+Date   : Jun 30 2026
+Time   : 19:05:32
+Host   : ip-172-31-34-251
+PID    : 33557
+I/O    : uncollated
+Case   : /workspace/case
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Overriding DebugSwitches according to controlDict
+    GAMGAgglomeration 1;
+
+Overriding OptimisationSwitches according to controlDict
+    fileHandler (unregistered)
+    maxThreadFileBufferSize 1e+09;
+
+    maxMasterFileBufferSize 1e+09;
+
+Overriding fileHandler to collated
+I/O    : collated (maxThreadFileBufferSize 1e+09)
+         Threading activated since maxThreadFileBufferSize > 0.
+         Requires large enough buffer to collect all data or thread support 
+         enabled in MPI. If thread support cannot be enabled, deactivate
+         threading by setting maxThreadFileBufferSize to 0 in
+         OpenFOAM etc/controlDict
+--> FOAM Warning : 
+    From static Foam::instantList Foam::timeSelector::select0(Foam::Time&, const Foam::argList&)
+    in file db/Time/timeSelector.C at line 258
+    No time specified or available, selecting 'constant'
+Create mesh for time = constant
+
+Time = constant
+
+Mesh stats
+    points:           76268
+    faces:            199330
+    internal faces:   181162
+    cells:            61811
+    faces per cell:   6.155733
+    boundary patches: 30
+    point zones:      0
+    face zones:       0
+    cell zones:       0
+
+Overall number of cells of each type:
+    hexahedra:     57511
+    prisms:        164
+    wedges:        0
+    pyramids:      0
+    tet wedges:    22
+    tetrahedra:    0
+    polyhedra:     4114
+    Breakdown of polyhedra by number of faces:
+        faces   number of cells
+            5   69
+            6   1362
+            7   28
+            8   46
+            9   2001
+           12   564
+           15   44
+
+Checking topology...
+    Boundary definition OK.
+    Cell to face addressing OK.
+    Point usage OK.
+    Upper triangular ordering OK.
+    Face vertices OK.
+    Number of regions: 1 (OK).
+
+Checking patch topology for multiply connected surfaces...
+                   Patch    Faces   Points                  Surface topology
+            crac01_inlet      350      390  ok (non-closed singly connected)
+           crac01_outlet      126      152  ok (non-closed singly connected)
+            crac02_inlet      375      416  ok (non-closed singly connected)
+           crac02_outlet      119      144  ok (non-closed singly connected)
+            crac03_inlet      375      416  ok (non-closed singly connected)
+           crac03_outlet      119      144  ok (non-closed singly connected)
+            crac04_inlet      350      390  ok (non-closed singly connected)
+           crac04_outlet      126      152  ok (non-closed singly connected)
+            rack01_inlet      120      147  ok (non-closed singly connected)
+           rack01_outlet      108      133  ok (non-closed singly connected)
+            rack02_inlet       49       64  ok (non-closed singly connected)
+           rack02_outlet       36       49  ok (non-closed singly connected)
+            rack03_inlet      120      147  ok (non-closed singly connected)
+           rack03_outlet      108      133  ok (non-closed singly connected)
+            rack04_inlet      112      136  ok (non-closed singly connected)
+           rack04_outlet       96      119  ok (non-closed singly connected)
+            rack05_inlet      133      160  ok (non-closed singly connected)
+           rack05_outlet      126      152  ok (non-closed singly connected)
+            rack06_inlet      126      152  ok (non-closed singly connected)
+           rack06_outlet      126      152  ok (non-closed singly connected)
+            rack07_inlet      108      133  ok (non-closed singly connected)
+           rack07_outlet      126      152  ok (non-closed singly connected)
+            rack08_inlet      108      133  ok (non-closed singly connected)
+           rack08_outlet      126      152  ok (non-closed singly connected)
+            rack09_inlet      108      133  ok (non-closed singly connected)
+           rack09_outlet      126      152  ok (non-closed singly connected)
+            rack10_inlet      126      152  ok (non-closed singly connected)
+           rack10_outlet      126      152  ok (non-closed singly connected)
+                   walls    14013    15132  ok (non-closed singly connected)
+                    hole        1        4  ok (non-closed singly connected)
+
+Checking faceZone topology for multiply connected surfaces...
+    No faceZones found.
+
+Checking basic cellZone addressing...
+    No cellZones found.
+
+Checking geometry...
+    Overall domain bounding box (-3.853852e-05 -0.000639476 -2.196336e-07) (6.5 3.2 7)
+    Mesh has 3 geometric (non-empty/wedge) directions (1 1 1)
+    Mesh has 3 solution (non-empty) directions (1 1 1)
+    Boundary openness (-6.425694e-17 -8.622608e-16 9.837991e-18) OK.
+    Max cell openness = 2.934619e-16 OK.
+    Max aspect ratio = 6.805225 OK.
+    Minimum face area = 0.0004393708. Maximum face area = 0.02605829.  Face area magnitudes OK.
+    Min volume = 4.995372e-05. Max volume = 0.003547533.  Total volume = 117.5916.  Cell volumes OK.
+    Mesh non-orthogonality Max: 48.09801 average: 4.045226
+    Non-orthogonality check OK.
+    Face pyramids OK.
+    Max skewness = 2.751662 OK.
+    Coupled point location match (average 0) OK.
+
+Mesh OK.
+
+End
+

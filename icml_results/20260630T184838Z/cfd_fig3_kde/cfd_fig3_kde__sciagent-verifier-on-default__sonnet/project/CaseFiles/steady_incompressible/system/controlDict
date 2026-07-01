@@ -1,0 +1,129 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1806                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+libs
+(
+    "libdistributed.so" // for correct wall distance methods
+    "libgroovyBC.so" 
+    "libswakFunctionObjects.so" 
+);
+
+application     buoyantBoussinesqSimpleFoam;
+
+startFrom       startTime;  //latestTime;//startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         1000;
+
+deltaT          1;
+
+writeControl    timeStep;
+
+writeInterval   1000;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  7; // increased from 6 to reconstruct mesh
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+
+functions
+{   
+    #include "probes"
+
+    fieldMinMax1
+    {
+        type        fieldMinMax;
+        libs        ("libfieldFunctionObjects.so");
+        writeToFile no;
+        log         yes;
+        location    yes;
+        mode        component;
+        fields      (U T p_rgh);
+    }
+
+    turbulenceFields1
+    {
+        type            turbulenceFields;
+        libs            (fieldFunctionObjects);
+        writeControl    writeTime;
+
+        // Either field or fields entries
+        fields          (nuEff R devReff L I);
+    }
+
+    yPlus
+    {
+        type            yPlus;
+        libs            ("libfieldFunctionObjects.so");
+        writeControl    writeTime;
+    }
+
+    staticPressure
+    {
+        type            pressure;
+        libs            ("libfieldFunctionObjects.so");
+        mode            static;
+        writeControl    writeTime;
+
+        rho         rhoInf;
+        rhoInf      1.205;
+    }
+
+    totalPressure
+    {
+        type            pressure;
+        libs            ("libfieldFunctionObjects.so");
+        mode            total;
+        writeControl    writeTime;
+
+        rho         rhoInf;
+        rhoInf      1.205;
+    }
+
+}
+
+DebugSwitches 
+{ 
+    // Print GAMG residuals of coarse-level solver 
+//    GAMG  1; 
+    // Print some statistics on the agglomeration 
+    GAMGAgglomeration 1; 
+
+//    lduMatrix 2;
+} 
+OptimisationSwitches
+{
+    //- Parallel IO file handler
+    //  uncollated (default), collated or masterUncollated
+    fileHandler collated;
+
+    maxThreadFileBufferSize 1e9; // v1712 default is 0;
+    maxMasterFileBufferSize 1e9;
+}

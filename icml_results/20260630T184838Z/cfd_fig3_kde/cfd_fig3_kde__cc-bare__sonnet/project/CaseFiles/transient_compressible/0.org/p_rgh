@@ -1,0 +1,87 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1806                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p_rgh;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [1 -1 -2 0 0 0 0];
+
+internalField   uniform 101325;
+
+/*
+fixedFluxPressure. This boundary condition is used for pressure in situations where zeroGradient is generally used, but where body forces such as gravity and surface tension are present in the solution equations. The condition adjusts the gradient accordingly.
+*/
+
+
+boundaryField
+{
+
+    walls
+    {
+        type            fixedFluxPressure;
+    }
+
+    hole
+    {
+        type            fixedValue;
+        value           $internalField;
+    }
+//
+    crac01_outlet
+    {
+        type            fixedFluxPressure;
+    }
+    crac02_outlet
+    {
+        type            fixedFluxPressure;
+    }
+    crac03_outlet
+    {
+        type            fixedFluxPressure;
+    }
+    crac04_outlet
+    {
+        type            fixedFluxPressure;
+    }
+//
+    crac01_inlet
+    {
+        type            fixedFluxPressure;
+    }
+    crac02_inlet
+    {
+        type            fixedFluxPressure;
+    }
+    crac03_inlet
+    {
+        type            fixedFluxPressure;
+    }
+    crac04_inlet
+    {
+        type            fixedFluxPressure;
+    }
+//
+    "rack.*_inlet"
+    {
+        type            fixedFluxPressure;
+    }
+    "rack.*_outlet"
+    {
+        type            fixedFluxPressure;
+    }
+    
+}
+
+
+
+// ************************************************************************* //

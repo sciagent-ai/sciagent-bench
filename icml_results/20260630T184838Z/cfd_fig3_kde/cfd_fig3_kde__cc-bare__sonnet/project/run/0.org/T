@@ -1,0 +1,79 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1806                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 291.45;
+
+// Fixed rack-inlet temperatures: T_CRAH + P_rack/(Cp*mdot)
+// Rack 1:  291.45 + 6208/(1006*1.190) = 296.63 K
+// Rack 2:  291.45 + 3263/(1006*0.605) = 296.81 K
+// Rack 3:  291.45 + 5458/(1006*0.826) = 298.02 K
+// Rack 4:  291.45 + 3983/(1006*0.438) = 300.49 K
+// Rack 5:  291.45 + 3463/(1006*0.310) = 302.56 K
+// Rack 6:  291.45 + 4036/(1006*0.353) = 302.81 K
+// Rack 7:  291.45 + 3982/(1006*0.453) = 300.19 K
+// Rack 8:  291.45 + 2014/(1006*0.240) = 299.79 K
+// Rack 9:  291.45 + 2057/(1006*0.223) = 300.62 K
+// Rack 10: 291.45 + 2178/(1006*0.243) = 300.35 K
+
+boundaryField
+{
+
+    walls
+    {
+        type            zeroGradient;
+    }
+
+    hole
+    {
+        type            zeroGradient;
+    }
+
+    "crac.*_inlet"
+    {
+        type            fixedValue;
+        value           uniform 291.45;
+    }
+
+    "crac.*_outlet"
+    {
+        type            inletOutlet;
+        value           uniform 291.45;
+        inletValue      uniform 291.45;
+    }
+
+    "rack.*_outlet"
+    {
+        type            inletOutlet;
+        value           uniform 291.45;
+        inletValue      uniform 291.45;
+    }
+
+    rack01_inlet { type fixedValue; value uniform 296.63; }
+    rack02_inlet { type fixedValue; value uniform 296.81; }
+    rack03_inlet { type fixedValue; value uniform 298.02; }
+    rack04_inlet { type fixedValue; value uniform 300.49; }
+    rack05_inlet { type fixedValue; value uniform 302.56; }
+    rack06_inlet { type fixedValue; value uniform 302.81; }
+    rack07_inlet { type fixedValue; value uniform 300.19; }
+    rack08_inlet { type fixedValue; value uniform 299.79; }
+    rack09_inlet { type fixedValue; value uniform 300.62; }
+    rack10_inlet { type fixedValue; value uniform 300.35; }
+
+}
+
+// ************************************************************************* //

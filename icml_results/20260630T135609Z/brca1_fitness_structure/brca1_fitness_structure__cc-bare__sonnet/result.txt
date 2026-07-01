@@ -1,0 +1,26 @@
+All outputs are in `_outputs/`. Here's a summary of the results:
+
+---
+
+**Verification results — all passed**
+
+| Check | Result |
+|-------|--------|
+| V1: mutations parsed | 1,837 ✓ |
+| V2: mapping success rate | 1.0000 (100%) ✓ |
+| V3: buried vs. exposed p-value | p = 1.33×10⁻⁵³ (< 0.001) ✓ |
+
+**Key findings**
+
+*Secondary structure:* Helix residues tolerate mutations least well (mean −0.661), followed by sheet (−0.587), with coil/loop positions most tolerant (−0.347). This pattern reflects that structured regions have tighter packing constraints.
+
+*Solvent accessibility:* Buried residues show the most deleterious fitness effect (mean −0.977) vs. intermediate (−0.562) vs. exposed (−0.233). The buried–exposed Δmean of −0.744 is highly significant (t = −16.2, p = 1.33×10⁻⁵³), consistent with the paper's expected Δ ≈ 0.50 direction (buried < exposed).
+
+*Functional domains:* The RING domain (residues 1–109) shows slightly more deleterious mean fitness (−0.705) than the BRCT domains (−0.583); the small "Other" category (62 mutations in linker regions) is nearly neutral (−0.030).
+
+**Outputs in `_outputs/`**
+- `fitness_vs_position.png` — fitness along the sequence colored by secondary structure, with pLDDT sub-panel
+- `fitness_by_ss.png` — boxplots by helix/sheet/coil
+- `fitness_by_rsa.png` — boxplots by buried/intermediate/exposed
+- `fitness_by_domain.png` — boxplots by RING/BRCT/Other
+- `brca1_fitness_structure.csv` — full merged table with all per-mutation annotations

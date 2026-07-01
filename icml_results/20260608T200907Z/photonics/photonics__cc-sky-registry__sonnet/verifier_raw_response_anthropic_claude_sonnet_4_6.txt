@@ -1,0 +1,29 @@
+```json
+{
+    "verdict": "insufficient",
+    "confidence": 0.97,
+    "issues": [
+        "The session terminated with an API error ('Claude's response exceeded the 32000 output token maximum') before any simulation code was written, executed, or results produced.",
+        "No S4 RCWA simulation was ever run — no compute_run, no bash execution of any simulation binary, no tool_result containing diffraction efficiency numbers.",
+        "No optimization of nano-beam/nano-pillar geometry was performed.",
+        "No efficiency_vs_angle_per_zone.png was generated.",
+        "No MFE value was computed or verified.",
+        "The claimed result field itself is the API error message, not a scientific result."
+    ],
+    "supporting_facts": [
+        "PDF was read (turns 11-16), confirming the agent had access to the paper.",
+        "The agent extracted parameters in its thinking blocks (turns 17-20), but this is internal reasoning, not external evidence."
+    ],
+    "fabrication_indicators": [
+        "Form-only response (Step 4, pattern 6): The agent read the PDF and began planning in thinking blocks, then hit a token-limit error and produced no actual simulation work. The session ended with zero computational output."
+    ],
+    "missing_evidence": [
+        "No S4 RCWA simulation execution (required for code_execution/compute_or_simulation task).",
+        "No tool_result containing diffraction efficiency values or MFE >= 0.25.",
+        "No efficiency_vs_angle_per_zone.png file generated or referenced.",
+        "No compute_run or bash invocation of any simulation tool.",
+        "No optimization loop results."
+    ],
+    "reasoning": "This is a mixed compute_or_simulation + analysis task requiring S4 RCWA execution and geometry optimization. The agent only read the PDF (turns 11-16) and performed internal reasoning in thinking blocks, then crashed with a token-limit API error before writing any simulation code or running any computation. The claimed result is literally the error message itself. There is zero external evidence of simulation execution, optimization, MFE computation, or figure generation — all required steps are entirely absent."
+}
+```

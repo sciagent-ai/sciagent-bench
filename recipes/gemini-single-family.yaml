@@ -24,3 +24,4 @@ orchestrator:
   coding_model:     gemini/gemini-3.5-flash
   fast_model:       gemini/gemini-2.5-flash-lite
   verifier_model:   gemini/gemini-2.5-flash
+  vision_model:     gemini/gemini-3.1-pro-preview   # keep family pure; Gemini 3 is multimodal-native

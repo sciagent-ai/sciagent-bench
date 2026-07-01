@@ -1,0 +1,14 @@
+(Stopped by user)
+
+🧹 Cleaning up 1 session cluster(s): sciagent-88753ff4b751-rcwa
+Graceful shutdown enabled. Terminating user jobs on sciagent-88753ff4b751-rcwa...
+
+Failed to cancel jobs: Command source ${SKY_RUNTIME_DIR:-$HOME}/skypilot-runtime/bin/activate; env -u PYTHONPATH -C $HOME $([ -s ${... failed with return code 255.
+[31mFailed to cancel jobs on cluster sciagent-88753ff4b751-rcwa.[0m
+
+Flushing MOUNT_CACHED uploads on all nodes of 'sciagent-88753ff4b751-rcwa'...
+Node 0: flush failed (rc=255): Connection timed out during banner exchange
+
+
+Some nodes had flush errors: ['Node 0: Connection timed out during banner exchange\r\n']
+   ✓ down: sciagent-88753ff4b751-rcwa

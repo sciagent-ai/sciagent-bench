@@ -1,0 +1,3 @@
+agent,seq,tool,ts,tokens_in,tokens_out,cache_read,cache_create,cost_usd,cost_kind,duration_ms,model,success
+claude_internal,,_internal_claude-haiku-4-5-20251001,,537,36,0,0,0.000717,llm,,claude-haiku-4-5-20251001,
+claude_internal,,_internal_claude-sonnet-4-6,,20,128767,280256,36830,2.153754,llm,,claude-sonnet-4-6,

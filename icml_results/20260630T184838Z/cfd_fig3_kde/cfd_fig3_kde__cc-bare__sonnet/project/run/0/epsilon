@@ -1,0 +1,205 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      epsilon;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -3 0 0 0 0];
+
+internalField   uniform 0.001;
+
+boundaryField
+{
+    crac01_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    crac01_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    crac02_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    crac02_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    crac03_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    crac03_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    crac04_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    crac04_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    rack01_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    rack01_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    rack02_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    rack02_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    rack03_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    rack03_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    rack04_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    rack04_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    rack05_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    rack05_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    rack06_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    rack06_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    rack07_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    rack07_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    rack08_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    rack08_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    rack09_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    rack09_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    rack10_inlet
+    {
+        type            turbulentMixingLengthDissipationRateInlet;
+        mixingLength    0.1;
+        value           uniform 0.001;
+    }
+    rack10_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.001;
+        value           uniform 0.001;
+    }
+    walls
+    {
+        type            epsilonWallFunction;
+        lowReCorrection on;
+        value           uniform 0.001;
+    }
+    hole
+    {
+        type            zeroGradient;
+    }
+}
+
+
+// ************************************************************************* //

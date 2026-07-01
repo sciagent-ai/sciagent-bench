@@ -1,0 +1,16 @@
+# Recipe: openai-verifier-no-recursion
+#
+# OpenAI mirror of anthropic-verifier-no-recursion.yaml. Same as
+# openai-single-family but flips off verifier_include_child_sessions so
+# the verifier sees only the parent provenance log, not the subagent
+# child logs. This is the "before" condition for the recursion
+# engineering finding when the agent family is OpenAI.
+agent:
+  model: openai/gpt-5.4
+orchestrator:
+  scientific_model: openai/gpt-5.4
+  coding_model:     openai/gpt-5.4-mini
+  fast_model:       openai/gpt-5.4-mini
+  verifier_model:   openai/gpt-5.4
+  vision_model:     openai/gpt-5.4
+  verifier_include_child_sessions: false

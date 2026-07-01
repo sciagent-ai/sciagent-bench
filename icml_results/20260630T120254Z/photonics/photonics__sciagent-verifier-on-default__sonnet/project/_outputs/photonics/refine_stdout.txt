@@ -1,0 +1,194 @@
+======================================================================
+REFINED RCWA scan | lambda=532.0 nm d=453.0 nm h=250.0 nm NumBasis=30
+Zone-specific merit | extended Zone3 sep up to 350 nm
+======================================================================
+
+============================================================
+Zone 1 grid scan (35 configs) [zone-specific merit]
+============================================================
+  Ly=  300 sep=    0: mean_T=0.562 mean_R=0.221 worst_T=0.392 score=0.03204
+  Ly=  300 sep=   50: mean_T=0.337 mean_R=0.180 worst_T=0.172 score=0.09682
+  Ly=  300 sep=  100: mean_T=0.501 mean_R=0.158 worst_T=0.384 score=0.06083
+  Ly=  300 sep=  150: mean_T=0.625 mean_R=0.221 worst_T=0.561 score=0.03776
+  Ly=  300 sep=  200: mean_T=0.788 mean_R=0.216 worst_T=0.771 score=0.09079
+  Ly=  400 sep=    0: mean_T=0.630 mean_R=0.310 worst_T=0.467 score=0.01439
+  Ly=  400 sep=   50: mean_T=0.539 mean_R=0.188 worst_T=0.407 score=0.04492
+  Ly=  400 sep=  100: mean_T=0.530 mean_R=0.187 worst_T=0.417 score=0.04581
+  Ly=  400 sep=  150: mean_T=0.683 mean_R=0.234 worst_T=0.616 score=0.04523
+  Ly=  400 sep=  200: mean_T=0.814 mean_R=0.229 worst_T=0.790 score=0.09880
+  Ly=  453 sep=    0: mean_T=0.704 mean_R=0.310 worst_T=0.542 score=0.03183
+  Ly=  453 sep=   50: mean_T=0.607 mean_R=0.200 worst_T=0.466 score=0.04313
+  Ly=  453 sep=  100: mean_T=0.593 mean_R=0.208 worst_T=0.478 score=0.03854
+  Ly=  453 sep=  150: mean_T=0.700 mean_R=0.243 worst_T=0.630 score=0.04723
+  Ly=  453 sep=  200: mean_T=0.823 mean_R=0.240 worst_T=0.796 score=0.10049
+  Ly=  500 sep=    0: mean_T=0.749 mean_R=0.294 worst_T=0.586 score=0.05082
+  Ly=  500 sep=   50: mean_T=0.634 mean_R=0.174 worst_T=0.499 score=0.05812
+  Ly=  500 sep=  100: mean_T=0.593 mean_R=0.170 worst_T=0.497 score=0.05475
+  Ly=  500 sep=  150: mean_T=0.669 mean_R=0.200 worst_T=0.610 score=0.05404
+  Ly=  500 sep=  200: mean_T=0.768 mean_R=0.198 worst_T=0.733 score=0.08845
+  Ly=  600 sep=    0: mean_T=0.738 mean_R=0.268 worst_T=0.571 score=0.05274
+  Ly=  600 sep=   50: mean_T=0.515 mean_R=0.129 worst_T=0.356 score=0.07456
+  Ly=  600 sep=  100: mean_T=0.515 mean_R=0.158 worst_T=0.391 score=0.05995
+  Ly=  600 sep=  150: mean_T=0.644 mean_R=0.211 worst_T=0.561 score=0.04447
+  Ly=  600 sep=  200: mean_T=0.743 mean_R=0.207 worst_T=0.685 score=0.07449
+  Ly=  700 sep=    0: mean_T=0.689 mean_R=0.237 worst_T=0.518 score=0.04582
+  Ly=  700 sep=   50: mean_T=0.348 mean_R=0.130 worst_T=0.237 score=0.11416
+  Ly=  700 sep=  100: mean_T=0.353 mean_R=0.161 worst_T=0.244 score=0.09598
+  Ly=  700 sep=  150: mean_T=0.606 mean_R=0.213 worst_T=0.526 score=0.03801
+  Ly=  700 sep=  200: mean_T=0.713 mean_R=0.208 worst_T=0.653 score=0.06327
+  Ly=  800 sep=    0: mean_T=0.719 mean_R=0.266 worst_T=0.545 score=0.04670
+  Ly=  800 sep=   50: mean_T=0.562 mean_R=0.147 worst_T=0.418 score=0.06432
+  Ly=  800 sep=  100: mean_T=0.498 mean_R=0.173 worst_T=0.378 score=0.05428
+  Ly=  800 sep=  150: mean_T=0.592 mean_R=0.220 worst_T=0.505 score=0.03429
+  Ly=  800 sep=  200: mean_T=0.699 mean_R=0.215 worst_T=0.627 score=0.05641
+
+  Zone 1 BEST: Ly=400.0 nm sep=0.0 nm score=0.01439
+  Zone-angles eta_T = ['0.752', '0.699', '0.600', '0.467']
+  eta_R = ['0.014', '0.024', '0.097', '0.190', '0.298', '0.409', '0.508', '0.593', '0.660']
+  Wrote zone1_results.json
+
+============================================================
+Zone 2 grid scan (35 configs) [zone-specific merit]
+============================================================
+  Ly=  300 sep=    0: mean_T=0.120 mean_R=0.307 worst_T=0.056 score=0.16729
+  Ly=  300 sep=   50: mean_T=0.124 mean_R=0.337 worst_T=0.109 score=0.14317
+  Ly=  300 sep=  100: mean_T=0.280 mean_R=0.401 worst_T=0.238 score=0.04162
+  Ly=  300 sep=  150: mean_T=0.002 mean_R=0.784 worst_T=0.001 score=0.26063
+  Ly=  300 sep=  200: mean_T=0.176 mean_R=0.760 worst_T=0.169 score=0.10659
+  Ly=  400 sep=    0: mean_T=0.031 mean_R=0.318 worst_T=0.019 score=0.23176
+  Ly=  400 sep=   50: mean_T=0.236 mean_R=0.091 worst_T=0.222 score=0.24464
+  Ly=  400 sep=  100: mean_T=0.065 mean_R=0.263 worst_T=0.044 score=0.22989
+  Ly=  400 sep=  150: mean_T=0.001 mean_R=0.706 worst_T=0.001 score=0.23060
+  Ly=  400 sep=  200: mean_T=0.194 mean_R=0.670 worst_T=0.193 score=0.06704
+  Ly=  453 sep=    0: mean_T=0.022 mean_R=0.326 worst_T=0.009 score=0.23730
+  Ly=  453 sep=   50: mean_T=0.140 mean_R=0.129 worst_T=0.111 score=0.26545
+  Ly=  453 sep=  100: mean_T=0.068 mean_R=0.278 worst_T=0.052 score=0.21706
+  Ly=  453 sep=  150: mean_T=0.018 mean_R=0.733 worst_T=0.015 score=0.22236
+  Ly=  453 sep=  200: mean_T=0.137 mean_R=0.701 worst_T=0.121 score=0.11144
+  Ly=  500 sep=    0: mean_T=0.017 mean_R=0.192 worst_T=0.002 score=0.32090
+  Ly=  500 sep=   50: mean_T=0.048 mean_R=0.050 worst_T=0.043 score=0.40969
+  Ly=  500 sep=  100: mean_T=0.102 mean_R=0.331 worst_T=0.096 score=0.16118
+  Ly=  500 sep=  150: mean_T=0.055 mean_R=0.680 worst_T=0.045 score=0.17108
+  Ly=  500 sep=  200: mean_T=0.169 mean_R=0.650 worst_T=0.161 score=0.07713
+  Ly=  600 sep=    0: mean_T=0.018 mean_R=0.040 worst_T=0.005 score=0.45241
+  Ly=  600 sep=   50: mean_T=0.154 mean_R=0.057 worst_T=0.100 score=0.32471
+  Ly=  600 sep=  100: mean_T=0.154 mean_R=0.201 worst_T=0.147 score=0.19761
+  Ly=  600 sep=  150: mean_T=0.054 mean_R=0.381 worst_T=0.041 score=0.18457
+  Ly=  600 sep=  200: mean_T=0.152 mean_R=0.363 worst_T=0.120 score=0.11516
+  Ly=  700 sep=    0: mean_T=0.072 mean_R=0.178 worst_T=0.010 score=0.28801
+  Ly=  700 sep=   50: mean_T=0.095 mean_R=0.087 worst_T=0.073 score=0.33588
+  Ly=  700 sep=  100: mean_T=0.088 mean_R=0.085 worst_T=0.063 score=0.34427
+  Ly=  700 sep=  150: mean_T=0.068 mean_R=0.198 worst_T=0.054 score=0.26742
+  Ly=  700 sep=  200: mean_T=0.187 mean_R=0.189 worst_T=0.166 score=0.18805
+  Ly=  800 sep=    0: mean_T=0.066 mean_R=0.046 worst_T=0.029 score=0.40386
+  Ly=  800 sep=   50: mean_T=0.127 mean_R=0.063 worst_T=0.104 score=0.33380
+  Ly=  800 sep=  100: mean_T=0.116 mean_R=0.048 worst_T=0.114 score=0.35421
+  Ly=  800 sep=  150: mean_T=0.072 mean_R=0.082 worst_T=0.060 score=0.35760
+  Ly=  800 sep=  200: mean_T=0.163 mean_R=0.079 worst_T=0.141 score=0.29427
+
+  Zone 2 BEST: Ly=300.0 nm sep=100.0 nm score=0.04162
+  Zone-angles eta_T = ['0.323', '0.281', '0.238']
+  eta_R = ['0.087', '0.191', '0.287', '0.375', '0.448', '0.506', '0.546', '0.576', '0.597']
+  Wrote zone2_results.json
+
+============================================================
+Zone 3 grid scan (70 configs) [zone-specific merit]
+============================================================
+  Ly=  300 sep=    0: mean_T=0.143 mean_R=0.217 worst_T=0.136 score=0.23706
+  Ly=  300 sep=   50: mean_T=0.060 mean_R=0.372 worst_T=0.036 score=0.18400
+  Ly=  300 sep=  100: mean_T=0.025 mean_R=0.305 worst_T=0.003 score=0.25505
+  Ly=  300 sep=  150: mean_T=0.040 mean_R=0.823 worst_T=0.026 score=0.15130
+  Ly=  300 sep=  200: mean_T=0.080 mean_R=0.836 worst_T=0.069 score=0.12365
+  Ly=  300 sep=  225: mean_T=0.205 mean_R=0.691 worst_T=0.189 score=0.02445
+  Ly=  300 sep=  250: mean_T=0.243 mean_R=0.361 worst_T=0.168 score=0.09850
+  Ly=  300 sep=  275: mean_T=0.574 mean_R=0.181 worst_T=0.407 score=0.27038
+  Ly=  300 sep=  300: mean_T=0.454 mean_R=0.331 worst_T=0.270 score=0.11268
+  Ly=  300 sep=  350: mean_T=0.143 mean_R=0.217 worst_T=0.136 score=0.23706
+  Ly=  350 sep=    0: mean_T=0.205 mean_R=0.355 worst_T=0.171 score=0.11142
+  Ly=  350 sep=   50: mean_T=0.305 mean_R=0.430 worst_T=0.272 score=0.05057
+  Ly=  350 sep=  100: mean_T=0.220 mean_R=0.441 worst_T=0.200 score=0.06163
+  Ly=  350 sep=  150: mean_T=0.041 mean_R=0.315 worst_T=0.031 score=0.23211
+  Ly=  350 sep=  200: mean_T=0.089 mean_R=0.256 worst_T=0.061 score=0.24137
+  Ly=  350 sep=  225: mean_T=0.238 mean_R=0.638 worst_T=0.236 score=0.01268
+  Ly=  350 sep=  250: mean_T=0.367 mean_R=0.468 worst_T=0.332 score=0.03345
+  Ly=  350 sep=  275: mean_T=0.484 mean_R=0.273 worst_T=0.405 score=0.15970
+  Ly=  350 sep=  300: mean_T=0.268 mean_R=0.382 worst_T=0.192 score=0.08004
+  Ly=  350 sep=  350: mean_T=0.196 mean_R=0.378 worst_T=0.185 score=0.10015
+  Ly=  400 sep=    0: mean_T=0.007 mean_R=0.310 worst_T=0.004 score=0.26345
+  Ly=  400 sep=   50: mean_T=0.108 mean_R=0.112 worst_T=0.099 score=0.35980
+  Ly=  400 sep=  100: mean_T=0.292 mean_R=0.352 worst_T=0.279 score=0.09222
+  Ly=  400 sep=  150: mean_T=0.065 mean_R=0.737 worst_T=0.033 score=0.11257
+  Ly=  400 sep=  200: mean_T=0.085 mean_R=0.741 worst_T=0.070 score=0.09479
+  Ly=  400 sep=  225: mean_T=0.153 mean_R=0.661 worst_T=0.146 score=0.04427
+  Ly=  400 sep=  250: mean_T=0.261 mean_R=0.394 worst_T=0.256 score=0.07340
+  Ly=  400 sep=  275: mean_T=0.341 mean_R=0.108 worst_T=0.275 score=0.29379
+  Ly=  400 sep=  300: mean_T=0.191 mean_R=0.098 worst_T=0.118 score=0.33807
+  Ly=  400 sep=  350: mean_T=0.160 mean_R=0.300 worst_T=0.094 score=0.17086
+  Ly=  453 sep=    0: mean_T=0.016 mean_R=0.259 worst_T=0.010 score=0.29329
+  Ly=  453 sep=   50: mean_T=0.042 mean_R=0.122 worst_T=0.021 score=0.39952
+  Ly=  453 sep=  100: mean_T=0.180 mean_R=0.316 worst_T=0.051 score=0.16018
+  Ly=  453 sep=  150: mean_T=0.106 mean_R=0.574 worst_T=0.043 score=0.08666
+  Ly=  453 sep=  200: mean_T=0.202 mean_R=0.581 worst_T=0.145 score=0.03237
+  Ly=  453 sep=  225: mean_T=0.263 mean_R=0.502 worst_T=0.251 score=0.02939
+  Ly=  453 sep=  250: mean_T=0.297 mean_R=0.342 worst_T=0.250 score=0.09779
+  Ly=  453 sep=  275: mean_T=0.367 mean_R=0.156 worst_T=0.302 score=0.24453
+  Ly=  453 sep=  300: mean_T=0.352 mean_R=0.124 worst_T=0.309 score=0.27657
+  Ly=  453 sep=  350: mean_T=0.159 mean_R=0.246 worst_T=0.083 score=0.21359
+  Ly=  500 sep=    0: mean_T=0.019 mean_R=0.153 worst_T=0.012 score=0.38509
+  Ly=  500 sep=   50: mean_T=0.088 mean_R=0.123 worst_T=0.078 score=0.36092
+  Ly=  500 sep=  100: mean_T=0.164 mean_R=0.292 worst_T=0.118 score=0.17117
+  Ly=  500 sep=  150: mean_T=0.016 mean_R=0.504 worst_T=0.004 score=0.16321
+  Ly=  500 sep=  200: mean_T=0.101 mean_R=0.514 worst_T=0.050 score=0.10030
+  Ly=  500 sep=  225: mean_T=0.199 mean_R=0.409 worst_T=0.127 score=0.08827
+  Ly=  500 sep=  250: mean_T=0.293 mean_R=0.303 worst_T=0.223 score=0.12433
+  Ly=  500 sep=  275: mean_T=0.390 mean_R=0.254 worst_T=0.338 score=0.15856
+  Ly=  500 sep=  300: mean_T=0.379 mean_R=0.147 worst_T=0.330 score=0.25428
+  Ly=  500 sep=  350: mean_T=0.138 mean_R=0.142 worst_T=0.079 score=0.31719
+  Ly=  550 sep=    0: mean_T=0.016 mean_R=0.064 worst_T=0.008 score=0.48467
+  Ly=  550 sep=   50: mean_T=0.069 mean_R=0.138 worst_T=0.050 score=0.36070
+  Ly=  550 sep=  100: mean_T=0.196 mean_R=0.262 worst_T=0.194 score=0.17614
+  Ly=  550 sep=  150: mean_T=0.032 mean_R=0.496 worst_T=0.030 score=0.14950
+  Ly=  550 sep=  200: mean_T=0.072 mean_R=0.504 worst_T=0.053 score=0.11785
+  Ly=  550 sep=  225: mean_T=0.144 mean_R=0.409 worst_T=0.118 score=0.10931
+  Ly=  550 sep=  250: mean_T=0.229 mean_R=0.277 worst_T=0.203 score=0.15463
+  Ly=  550 sep=  275: mean_T=0.322 mean_R=0.165 worst_T=0.294 score=0.23613
+  Ly=  550 sep=  300: mean_T=0.295 mean_R=0.136 worst_T=0.262 score=0.26685
+  Ly=  550 sep=  350: mean_T=0.108 mean_R=0.063 worst_T=0.052 score=0.42286
+  Ly=  600 sep=    0: mean_T=0.022 mean_R=0.029 worst_T=0.019 score=0.51964
+  Ly=  600 sep=   50: mean_T=0.025 mean_R=0.078 worst_T=0.020 score=0.45920
+  Ly=  600 sep=  100: mean_T=0.141 mean_R=0.236 worst_T=0.131 score=0.22252
+  Ly=  600 sep=  150: mean_T=0.034 mean_R=0.415 worst_T=0.032 score=0.17862
+  Ly=  600 sep=  200: mean_T=0.065 mean_R=0.422 worst_T=0.049 score=0.15339
+  Ly=  600 sep=  225: mean_T=0.118 mean_R=0.350 worst_T=0.101 score=0.15469
+  Ly=  600 sep=  250: mean_T=0.166 mean_R=0.249 worst_T=0.150 score=0.19969
+  Ly=  600 sep=  275: mean_T=0.202 mean_R=0.139 worst_T=0.188 score=0.28476
+  Ly=  600 sep=  300: mean_T=0.226 mean_R=0.077 worst_T=0.202 score=0.34482
+  Ly=  600 sep=  350: mean_T=0.101 mean_R=0.031 worst_T=0.054 score=0.46382
+
+  Zone 3 BEST: Ly=350.0 nm sep=225.0 nm score=0.01268
+  Zone-angles eta_T = ['0.239', '0.241', '0.238', '0.236']
+  eta_R = ['0.513', '0.703', '0.677', '0.668', '0.676', '0.684', '0.673', '0.628', '0.519']
+  Wrote zone3_results.json
+
+============================================================
+MFE CALCULATION
+============================================================
+  theta_air=-10.0 zone=1 eta_T=0.752 td=41.2 eta_R=0.014 CE=0.569
+  theta_air= -8.0 zone=1 eta_T=0.699 td=42.9 eta_R=0.017 CE=0.492
+  theta_air= -6.0 zone=1 eta_T=0.600 td=44.8 eta_R=0.021 CE=0.365
+  theta_air= -4.0 zone=1 eta_T=0.467 td=46.6 eta_R=0.030 CE=0.226
+  theta_air= -2.0 zone=2 eta_T=0.323 td=48.6 eta_R=0.259 CE=0.161
+  theta_air= +0.0 zone=2 eta_T=0.281 td=50.6 eta_R=0.325 CE=0.145
+  theta_air= +2.0 zone=2 eta_T=0.238 td=52.7 eta_R=0.395 CE=0.128
+  theta_air= +4.0 zone=3 eta_T=0.239 td=55.0 eta_R=0.679 CE=0.180
+  theta_air= +6.0 zone=3 eta_T=0.241 td=57.3 eta_R=0.680 CE=0.183
+  theta_air= +8.0 zone=3 eta_T=0.238 td=59.8 eta_R=0.639 CE=0.173
+  theta_air=+10.0 zone=3 eta_T=0.236 td=62.5 eta_R=0.519 CE=0.149
+
+============================================================
+MFE = 0.1280 (12.80%)
+Meets >= 25% target: False
+Coupling eff: ['0.569', '0.492', '0.365', '0.226', '0.161', '0.145', '0.128', '0.180', '0.183', '0.173', '0.149']
+============================================================
+Wrote mfe_result.json
+SIMULATION COMPLETE

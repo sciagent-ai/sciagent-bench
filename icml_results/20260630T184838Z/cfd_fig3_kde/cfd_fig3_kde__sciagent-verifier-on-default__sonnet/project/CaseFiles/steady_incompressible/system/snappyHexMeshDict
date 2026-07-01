@@ -1,0 +1,473 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1812                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Which of the steps to run
+castellatedMesh true;
+snap            true;
+addLayers       false;
+
+
+// Geometry. Definition of all surfaces. All surfaces are of class
+// searchableSurface.
+// Surfaces are used
+// - to specify refinement for any mesh cell intersecting it
+// - to specify refinement for any mesh cell inside/outside/near
+// - to 'snap' the mesh boundary to the surface
+geometry // Load in STL files here filename.stl, patchname at end
+{
+    crac01_inlet.stl {type triSurfaceMesh; name crac01_inlet;}
+    crac01_outlet.stl {type triSurfaceMesh; name crac01_outlet;}
+    crac02_inlet.stl {type triSurfaceMesh; name crac02_inlet;}
+    crac02_outlet.stl {type triSurfaceMesh; name crac02_outlet;}
+    crac03_inlet.stl {type triSurfaceMesh; name crac03_inlet;}
+    crac03_outlet.stl {type triSurfaceMesh; name crac03_outlet;}
+    crac04_inlet.stl {type triSurfaceMesh; name crac04_inlet;}
+    crac04_outlet.stl {type triSurfaceMesh; name crac04_outlet;}
+    rack01_inlet.stl {type triSurfaceMesh; name rack01_inlet;}
+    rack01_outlet.stl {type triSurfaceMesh; name rack01_outlet;}
+    rack02_inlet.stl {type triSurfaceMesh; name rack02_inlet;}
+    rack02_outlet.stl {type triSurfaceMesh; name rack02_outlet;}
+    rack03_inlet.stl {type triSurfaceMesh; name rack03_inlet;}
+    rack03_outlet.stl {type triSurfaceMesh; name rack03_outlet;}
+    rack04_inlet.stl {type triSurfaceMesh; name rack04_inlet;}
+    rack04_outlet.stl {type triSurfaceMesh; name rack04_outlet;}
+    rack05_inlet.stl {type triSurfaceMesh; name rack05_inlet;}
+    rack05_outlet.stl {type triSurfaceMesh; name rack05_outlet;}
+    rack06_inlet.stl {type triSurfaceMesh; name rack06_inlet;}
+    rack06_outlet.stl {type triSurfaceMesh; name rack06_outlet;}
+    rack07_inlet.stl {type triSurfaceMesh; name rack07_inlet;}
+    rack07_outlet.stl {type triSurfaceMesh; name rack07_outlet;}
+    rack08_inlet.stl {type triSurfaceMesh; name rack08_inlet;}
+    rack08_outlet.stl {type triSurfaceMesh; name rack08_outlet;}
+    rack09_inlet.stl {type triSurfaceMesh; name rack09_inlet;}
+    rack09_outlet.stl {type triSurfaceMesh; name rack09_outlet;}
+    rack10_inlet.stl {type triSurfaceMesh; name rack10_inlet;}
+    rack10_outlet.stl {type triSurfaceMesh; name rack10_outlet;}
+    volume.stl {type triSurfaceMesh; name volume;}
+    walls.stl {type triSurfaceMesh; name walls;}
+    hole.stl {type triSurfaceMesh; name hole;}
+};
+
+
+// Settings for the castellatedMesh generation.
+castellatedMeshControls
+{
+
+    // Refinement parameters
+    // ~~~~~~~~~~~~~~~~~~~~~
+
+    // If local number of cells is >= maxLocalCells on any processor
+    // switches from from refinement followed by balancing
+    // (current method) to (weighted) balancing before refinement.
+    maxLocalCells 1000000;
+
+    // Overall cell limit (approximately). Refinement will stop immediately
+    // upon reaching this number so a refinement level might not complete.
+    // Note that this is the number of cells before removing the part which
+    // is not 'visible' from the keepPoint. The final number of cells might
+    // actually be a lot less.
+    maxGlobalCells 8000000;
+
+    // The surface refinement loop might spend lots of iterations refining just a
+    // few cells. This setting will cause refinement to stop if <= minimumRefine
+    // are selected for refinement. Note: it will at least do one iteration
+    // (unless the number of cells to refine is 0)
+    minRefinementCells 10;
+
+    // Allow a certain level of imbalance during refining
+    // (since balancing is quite expensive)
+    // Expressed as fraction of perfect balance (= overall number of cells /
+    // nProcs). 0=balance always.
+    maxLoadUnbalance 0.10;
+
+
+    // Number of buffer layers between different levels.
+    // 1 means normal 2:1 refinement restriction, larger means slower
+    // refinement.
+    nCellsBetweenLevels 1; // expansion factor between each high & low refinement zone
+
+
+
+    // Explicit feature edge refinement
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    // Specifies a level for any cell intersected by its edges.
+    // This is a featureEdgeMesh, read from constant/triSurface for now.
+    features // taken from STL from each .eMesh file created by "SurfaceFeatureExtract" command
+    (
+        /*
+        {file "crac01_inlet.eMesh"; level 1;} 
+        {file "crac01_outlet.eMesh"; level 1;} 
+        {file "crac02_inlet.eMesh"; level 1;} 
+        {file "crac02_outlet.eMesh"; level 1;} 
+        {file "crac03_inlet.eMesh"; level 1;} 
+        {file "crac03_outlet.eMesh"; level 1;} 
+        {file "crac04_inlet.eMesh"; level 1;} 
+        {file "crac04_outlet.eMesh"; level 1;} 
+        {file "rack01_inlet.eMesh"; level 1;} 
+        {file "rack01_outlet.eMesh"; level 1;} 
+        {file "rack02_inlet.eMesh"; level 1;} 
+        {file "rack02_outlet.eMesh"; level 1;} 
+        {file "rack03_inlet.eMesh"; level 1;} 
+        {file "rack03_outlet.eMesh"; level 1;} 
+        {file "rack04_inlet.eMesh"; level 1;} 
+        {file "rack04_outlet.eMesh"; level 1;} 
+        {file "rack05_inlet.eMesh"; level 1;} 
+        {file "rack05_outlet.eMesh"; level 1;} 
+        {file "rack06_inlet.eMesh"; level 1;} 
+        {file "rack06_outlet.eMesh"; level 1;} 
+        {file "rack07_inlet.eMesh"; level 1;} 
+        {file "rack07_outlet.eMesh"; level 1;} 
+        {file "rack08_inlet.eMesh"; level 1;} 
+        {file "rack08_outlet.eMesh"; level 1;} 
+        {file "rack09_inlet.eMesh"; level 1;} 
+        {file "rack09_outlet.eMesh"; level 1;} 
+        {file "rack10_inlet.eMesh"; level 1;} 
+        {file "rack10_outlet.eMesh"; level 1;} 
+        {file "volume.eMesh"; level 1;} 
+        {file "walls.eMesh"; level 1;} 
+        */
+
+    );
+
+// Optional angle to detect small-large cell situation
+    // perpendicular to the surface. Is the angle of face w.r.t.
+    // the local surface normal. Use on flat(ish) surfaces only.
+    // Otherwise leave out or set to negative number.
+    // perpendicularAngle 10;
+ 
+    // Optional faceZone and (for closed surface) cellZone with
+    // how to select the cells that are in the cellZone
+    // (inside / outside / specified insidePoint)
+    // The orientation of the faceZone is
+    //  - if on cellZone(s) : point out of (minimum) cellZone
+    //  - if freestanding   : oriented according to surface
+ 
+    // faceZone sphere;
+    // cellZone sphere;
+    // cellZoneInside inside;    // outside/insidePoint
+    // insidePoint    (1 1 1);   // if (cellZoneInside == insidePoint)
+ 
+    // Optional specification of what to do with faceZone faces:
+    //      internal : keep them as internal faces (default)
+    //      baffle   : create baffles from them. This gives more
+    //                 freedom in mesh motion
+    //      boundary : create free-standing boundary faces (baffles
+    //                 but without the shared points)
+    // faceType baffle;
+
+
+
+    // Surface based refinement
+    // ~~~~~~~~~~~~~~~~~~~~~~~~
+
+    // Specifies two levels for every surface. The first is the minimum level,
+    // every cell intersecting a surface gets refined up to the minimum level.
+    // The second level is the maximum level. Cells that 'see' multiple
+    // intersections where the intersections make an
+    // angle > resolveFeatureAngle get refined up to the maximum level.
+
+    refinementSurfaces // Surface-wise min and max refinement level
+    {
+        
+        walls {level (0 0);}
+        hole {level (1 1);}
+        
+        crac01_inlet {level (1 1);}
+        crac01_outlet {level (1 1);}
+        crac02_inlet {level (1 1);}
+        crac02_outlet {level (1 1);}
+        crac03_inlet {level (1 1);}
+        crac03_outlet {level (1 1);}
+        crac04_inlet {level (1 1);}
+        crac04_outlet {level (1 1);}
+
+        rack01_inlet {level (1 1);}
+        rack01_outlet {level (1 1);}
+        rack02_inlet {level (1 1);}
+        rack02_outlet {level (1 1);}
+        rack03_inlet {level (1 1);}
+        rack03_outlet {level (1 1);}
+        rack04_inlet {level (1 1);}
+        rack04_outlet {level (1 1);}
+        rack05_inlet {level (1 1);}
+        rack05_outlet {level (1 1);}
+        rack06_inlet {level (1 1);}
+        rack06_outlet {level (1 1);}
+        rack07_inlet {level (1 1);}
+        rack07_outlet {level (1 1);}
+        rack08_inlet {level (1 1);}
+        rack08_outlet {level (1 1);}
+        rack09_inlet {level (1 1);}
+        rack09_outlet {level (1 1);}
+        rack10_inlet {level (1 1);}
+        rack10_outlet {level (1 1);}
+        //volume {level (1 1);}
+        
+    }
+
+    // Resolve sharp angles
+    resolveFeatureAngle 5; // lower = effectively sharper edges
+
+
+    // Region-wise refinement
+    // ~~~~~~~~~~~~~~~~~~~~~~
+
+    // Specifies refinement level for cells in relation to a SURFACE. One of
+    // three modes
+    // - distance. 'levels' specifies per distance to the surface the
+    //   wanted refinement level. The distances need to be specified in
+    //   descending order.
+    // - inside. 'levels' is only one entry and only the level is used. All
+    //   cells inside the surface get refined up to the level. The surface
+    //   needs to be closed for this to be possible.
+    // - outside. Same but cells outside.
+
+    refinementRegions        
+        {
+//            volume {
+//                mode distance; 
+//                //levels ((0.25 1)); // dependent of geometry and relevance of physics influence
+//                levels ((0.3 1)); // dependent of geometry and relevance of physics influence
+//            } // In descending levels of fine-ness
+            
+            "crac.*_outlet" {
+                mode distance; 
+                levels ( 
+//                    (0.1 2) 
+                    (0.3 1)
+                );
+            }
+            /*
+            ".*rack.*" {
+                mode distance;
+                levels (
+//                    (0.1 2) 
+                    (0.3 1)
+                );
+            }
+            */
+        }   // was ((0.001 4) (0.003 3) (0.01 2))
+
+
+    // Mesh selection
+    // ~~~~~~~~~~~~~~
+
+    // After refinement patches get added for all refinementSurfaces and
+    // all cells intersecting the surfaces get put into these patches. The
+    // section reachable from the locationInMesh is kept.
+    // NOTE: This point should never be on a face, always inside a cell, even
+    // after refinement.
+    locationInMesh (0.05 0.05 0.05);
+
+
+    // Whether any faceZones (as specified in the refinementSurfaces)
+    // are only on the boundary of corresponding cellZones or also allow
+    // free-standing zone faces. Not used if there are no faceZones.
+    allowFreeStandingZoneFaces false;
+}
+
+
+
+// Settings for the snapping.
+snapControls
+{
+    //- Number of patch smoothing iterations before finding correspondence
+    //  to surface
+    nSmoothPatch 1;// typically 3 maybe 1 for DC?
+
+    nSmoothInternal 50;
+    //- Relative distance for points to be attracted by surface feature point
+    //  or edge. True distance is this factor times local
+    //  maximum edge length.
+    tolerance 2; // default motorbike 2
+
+    //- Number of mesh displacement relaxation iterations.
+    nSolveIter 30; // typically 30-300
+
+    //- Maximum number of snapping relaxation iterations. Should stop
+    //  before upon reaching a correct mesh.
+    nRelaxIter 5; // typically 5
+
+    releasePoints false;
+    
+    // Feature snapping
+
+        //- Number of feature edge snapping iterations.
+        //  Leave out altogether to disable.
+        nFeatureSnapIter 10; // default is 10
+
+        //nFaceSplitInterval 5;
+
+        // Implicit algorithm behaves correctly on simple meshes without sharp corners and baffles.
+
+        //- Detect (geometric only) features by sampling the surface
+        //  (default=false).
+        implicitFeatureSnap false;
+
+        //- Use castellatedMeshControls::features (default = true)
+        explicitFeatureSnap true;
+
+        //- Detect points on multiple surfaces (only for explicitFeatureSnap)
+        multiRegionFeatureSnap true;
+
+        strictRegionSnap true;
+}
+
+
+
+// Settings for the layer addition.
+addLayersControls
+{
+    // Are the thickness parameters below relative to the undistorted
+    // size of the refined cell outside layer (true) or absolute sizes (false).
+    relativeSizes false; // IMPORTANT
+
+    nL 5;
+
+    // Per final patch (so not geometry!) the layer information
+    layers
+    {
+        crac01_inlet{ nSurfaceLayers $nL; }
+        crac01_outlet{ nSurfaceLayers $nL; }
+        crac02_inlet{ nSurfaceLayers $nL; }
+        crac02_outlet{ nSurfaceLayers $nL; }
+        crac03_inlet{ nSurfaceLayers $nL; }
+        crac03_outlet{ nSurfaceLayers $nL; }
+        crac04_inlet{ nSurfaceLayers $nL; }
+        crac04_outlet{ nSurfaceLayers $nL; }
+
+        rack01_inlet{ nSurfaceLayers $nL; }
+        rack01_outlet{ nSurfaceLayers $nL; }
+        rack02_inlet{ nSurfaceLayers $nL; }
+        rack02_outlet{ nSurfaceLayers $nL; }
+        rack03_inlet{ nSurfaceLayers $nL; }
+        rack03_outlet{ nSurfaceLayers $nL; }
+        rack04_inlet{ nSurfaceLayers $nL; }
+        rack04_outlet{ nSurfaceLayers $nL; }
+        rack05_inlet{ nSurfaceLayers $nL; }
+        rack05_outlet{ nSurfaceLayers $nL; }
+        rack06_inlet{ nSurfaceLayers $nL; }
+        rack06_outlet{ nSurfaceLayers $nL; }
+        rack07_inlet{ nSurfaceLayers $nL; }
+        rack07_outlet{ nSurfaceLayers $nL; }
+        rack08_inlet{ nSurfaceLayers $nL; }
+        rack08_outlet{ nSurfaceLayers $nL; }
+        rack09_inlet{ nSurfaceLayers $nL; }
+        rack09_outlet{ nSurfaceLayers $nL; }
+        rack10_inlet{ nSurfaceLayers $nL; }
+        rack10_outlet{ nSurfaceLayers $nL; }
+
+        walls{ nSurfaceLayers $nL; }
+    }
+
+    // Expansion factor for layer mesh
+    expansionRatio 1.3;
+
+    // Wanted thickness of final added cell layer. If multiple layers
+    // is the thickness of the layer furthest away from the wall.
+    // Relative to undistorted size of cell outside layer.
+    // See relativeSizes parameter.
+    // finalLayerThickness 0.01; // 0.01 default?
+    //thickness 0.055;
+    firstLayerThickness     0.005;
+
+    // Minimum thickness of cell layer. If for any reason layer
+    // cannot be above minThickness do not add layer.
+    // Relative to undistorted size of cell outside layer.
+    minThickness 0.00001; // 0.001 default?
+
+    // If points get not extruded do nGrow layers of connected faces that are
+    // also not grown. This helps convergence of the layer addition process
+    // close to features.
+    nGrow 0; //useful when using several cell zones, default is 1
+
+    // Advanced settings --------------------------------------------------------------
+
+    meshShrinker    displacementMotionSolver;
+    
+    solver          displacementLaplacian;
+    displacementLaplacianCoeffs
+    {
+        diffusivity     quadratic inverseDistance 1(wall);
+    }
+    // When not to extrude surface. 0 is flat surface, 90 is when two faces
+    // are perpendicular
+    featureAngle 360; // "normal" outward from fluid domain
+
+    // At non-patched sides allow mesh to slip if extrusion direction makes
+    // angle larger than slipFeatureAngle.
+    slipFeatureAngle 5;
+
+    // Maximum number of snapping relaxation iterations. Should stop
+    // before upon reaching a correct mesh.
+    nRelaxIter 3;
+
+    layerTerminationAngle -180;
+
+    // Number of smoothing iterations of surface normals
+    nSmoothSurfaceNormals 3;
+    // Number of smoothing iterations of interior mesh movement direction
+    nSmoothNormals 3;
+    // Smooth layer thickness over surface patches
+    nSmoothThickness 0;
+
+
+    // Stop layer growth on highly warped cells
+    maxFaceThicknessRatio .5; //default 0.5
+    // Reduce layer growth where ratio thickness to medial distance is large
+    maxThicknessToMedialRatio .5; // default 0.3
+    // Angle used to pick up medial axis points
+    minMedialAxisAngle 360; // when to deal with corners, similar to featureangle
+
+
+    // Create buffer region for new layer terminations
+    nBufferCellsNoExtrude 0;
+
+
+    // Overall max number of layer addition iterations. The mesher will exit
+    // if it reaches this number of iterations; possibly with an illegal
+    // mesh.
+    nLayerIter 50;
+}
+
+
+
+// Generic mesh quality settings. At any undoable phase these determine
+// where to undo.
+meshQualityControls
+{
+    #include "meshQualityDict"
+    // Advanced
+
+    //- Number of error distribution iterations
+    nSmoothScale 4;
+    //- Amount to scale back displacement at error points
+    errorReduction 0.75;
+}
+
+
+// Advanced
+
+debug 0; // write output mesh files for the corresponding mesh stages
+
+
+// Merge tolerance. Is fraction of overall bounding box of initial mesh.
+// Note: the write tolerance needs to be higher than this.
+mergeTolerance 1e-6;
+
+
+// ************************************************************************* //

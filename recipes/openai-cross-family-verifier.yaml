@@ -1,0 +1,18 @@
+# Recipe: openai-cross-family-verifier
+# Cross-family ablation, mirrored: OpenAI main + Anthropic claude-sonnet-4-6 verifier.
+# Counterpart to anthropic-cross-family-verifier.yaml (Anthropic main + OpenAI verifier).
+# Together they answer the symmetric question — does verifier provider
+# matter regardless of which way the cross-family axis goes?
+#
+# Verifier choice rationale: claude-sonnet-4-6 is Anthropic's scientific-tier
+# GA model (and the agent's family in anthropic-single-family.yaml). Cross-
+# family from OpenAI and matched in capability tier to the gpt-5.4 agent —
+# apples-to-apples cross-family check, not a smaller/cheaper proxy.
+agent:
+  model: openai/gpt-5.4
+orchestrator:
+  scientific_model: openai/gpt-5.4
+  coding_model:     openai/gpt-5.4-mini
+  fast_model:       openai/gpt-5.4-mini
+  verifier_model:   anthropic/claude-sonnet-4-6   # cross-family, scientific tier
+  vision_model:     openai/gpt-5.4   # agent-family vision; not the cross-family axis

@@ -1,0 +1,176 @@
+{
+  "_metadata": {
+    "description": "Photonics parameters for three-zone metasurface AR waveguide in-coupler",
+    "primary_reference": "Goodsell et al. 2024, Opt. Express 32(6), 9967-9981. DOI: 10.1364/OE.515544",
+    "adapting_reference": "Xiong et al. 2025, Opt. Mater. Express 15(12), 3129-3140. DOI: 10.1364/OME.576634",
+    "generated": "2026-06-30",
+    "notes": "Goodsell 2024 full-text is behind Optica paywall (JS-gated, no open-access PDF found). Per-zone efficiency targets marked REQUIRES_PAPER_ACCESS are from the paper body/Fig 2(e) and could not be scraped. All refractive index values are analytically computed from verified Sellmeier coefficients or sourced from peer-reviewed datasets."
+  },
+
+  "waveguide_geometry": {
+    "material": "N-BK7",
+    "thickness_mm": 0.5,
+    "pupil_size_mm": "3 x 3",
+    "in_coupler_size_mm": "3 x 3",
+    "wavelength_nm": 532,
+    "wavelength_um": 0.532,
+    "FOV_deg": "20 x 20",
+    "num_zones": 3,
+    "source": "Goodsell et al. 2024 abstract and Xiong et al. 2025 paper description",
+    "confidence": "HIGH - stated in paper abstracts and Optica news release"
+  },
+
+  "per_zone_efficiency_targets": {
+    "_status": "REQUIRES_PAPER_ACCESS",
+    "_note": "Exact values are in Goodsell 2024 Fig 2(e) / body text. Paper is paywalled; Optica pages return JavaScript loading screen and no open-access PDF was found via Unpaywall, Semantic Scholar, or arXiv. Values below are PLACEHOLDERS derived from the theoretical framework described in the abstract.",
+    "_framework_summary": "Goodsell 2024 derives a framework where per-zone efficiency targets are computed from irradiance maps, efficiency maps, and MTF constraints. The architecture meets the fundamental in-coupling efficiency limit while achieving diffraction-limited MTF to 30 cycles/deg (20/20 vision), computed 2000x faster than commercial ray tracers.",
+    "zone_1": {
+      "eta_T_plus1": "REQUIRES_PAPER_ACCESS",
+      "eta_R_0": "REQUIRES_PAPER_ACCESS",
+      "zone_width_mm": "REQUIRES_PAPER_ACCESS",
+      "description": "Zone closest to waveguide edge (smallest field angle contribution)"
+    },
+    "zone_2": {
+      "eta_T_plus1": "REQUIRES_PAPER_ACCESS",
+      "eta_R_0": "REQUIRES_PAPER_ACCESS",
+      "zone_width_mm": "REQUIRES_PAPER_ACCESS",
+      "description": "Middle zone"
+    },
+    "zone_3": {
+      "eta_T_plus1": "REQUIRES_PAPER_ACCESS",
+      "eta_R_0": "REQUIRES_PAPER_ACCESS",
+      "zone_width_mm": "REQUIRES_PAPER_ACCESS",
+      "description": "Zone closest to center (largest field angle contribution)"
+    },
+    "overall_average_efficiency": {
+      "measured_percent": 30,
+      "simulated_percent": 31,
+      "source": "Xiong et al. 2025 via Optica news release",
+      "confidence": "HIGH"
+    },
+    "edge_field_efficiency": {
+      "angle_deg": -10,
+      "measured_percent": 17,
+      "simulated_percent": 25.3,
+      "source": "Xiong et al. 2025 via Optica news release",
+      "confidence": "HIGH"
+    }
+  },
+
+  "refractive_indices": {
+    "N_BK7_at_532nm": {
+      "n": 1.5195,
+      "wavelength_nm": 532,
+      "wavelength_um": 0.532,
+      "computation_method": "Analytical - Sellmeier equation (SCHOTT N-BK7 data sheet)",
+      "sellmeier_formula": "n^2 - 1 = B1*lam^2/(lam^2-C1) + B2*lam^2/(lam^2-C2) + B3*lam^2/(lam^2-C3)",
+      "sellmeier_coefficients": {
+        "B1": 1.03961212,
+        "B2": 0.231792344,
+        "B3": 1.01046945,
+        "C1_um2": 0.00600069867,
+        "C2_um2": 0.0200179144,
+        "C3_um2": 103.560653
+      },
+      "computation_steps": {
+        "lambda_sq": 0.283024,
+        "term1": 1.06216,
+        "term2": 0.24941,
+        "term3": -0.00277,
+        "n_sq_minus_1": 1.30880,
+        "n_sq": 2.30880,
+        "n": 1.5195
+      },
+      "reference_nd_at_589nm": 1.5168,
+      "source": "refractiveindex.info SCHOTT N-BK7 Sellmeier data",
+      "source_url": "https://refractiveindex.info/?shelf=specs&book=SCHOTT-optical&page=N-BK7",
+      "confidence": "HIGH - standard glass, analytically computed"
+    },
+
+    "TiO2_rutile_bulk_at_532nm": {
+      "n": 2.668,
+      "wavelength_nm": 532,
+      "wavelength_um": 0.532,
+      "phase": "rutile",
+      "ray": "ordinary (o-ray)",
+      "form": "bulk crystal",
+      "computation_method": "Analytical - Devore 1951 dispersion formula",
+      "dispersion_formula": "n^2 = 5.913 + 0.2441 / (lam^2 - 0.0803)",
+      "dispersion_coefficients": {
+        "A": 5.913,
+        "B": 0.2441,
+        "C_um2": 0.0803
+      },
+      "computation_steps": {
+        "lambda_sq": 0.283024,
+        "lambda_sq_minus_C": 0.202724,
+        "B_over_denom": 1.2040,
+        "n_sq": 7.117,
+        "n": 2.668
+      },
+      "wavelength_range_um": "0.43-1.53",
+      "source": "refractiveindex.info - Devore 1951, J. Opt. Soc. Am. 41, 416-419",
+      "source_url": "https://refractiveindex.info/?shelf=main&book=TiO2&page=Devore-o",
+      "confidence": "HIGH - analytically computed from peer-reviewed dataset"
+    },
+
+    "TiO2_ALD_amorphous_at_532nm": {
+      "n_range": "2.35-2.40",
+      "n_best_estimate": 2.37,
+      "wavelength_nm": 532,
+      "phase": "amorphous (as-deposited ALD)",
+      "deposition_method": "ALD (Atomic Layer Deposition)",
+      "notes": [
+        "Siefke et al. 2016 (refractiveindex.info) measured 350nm ALD TiO2 film; full tabulated data requires CSV download from refractiveindex.info (page blocked direct numerical extraction)",
+        "Vazquez-Arce et al. 2024 (Adv. Mater. Interfaces) reports n=2.15-2.18 at 632nm for H2O-based ALD TiO2; at 532nm (shorter wavelength) n is slightly higher due to normal dispersion",
+        "ACS Appl. Nano Mater. 2023 (Jang et al.) reports n=2.15 at 543nm after 15-cycle ALD treatment on TiO2 nanocrystal films",
+        "Bulk rutile n=2.668 at 532nm (computed above); ALD amorphous films are consistently lower by 0.25-0.35",
+        "Metasurface/metalens literature (e.g., Devlin, Capasso group) typically quotes n~2.35 for amorphous ALD TiO2 at visible wavelengths"
+      ],
+      "source_Siefke": "Siefke et al. 2016 - refractiveindex.info, ALD TiO2 350nm film",
+      "source_Siefke_url": "https://refractiveindex.info/?shelf=main&book=TiO2&page=Siefke",
+      "source_ACS": "ACS Applied Nano Materials 2023, DOI:10.1021/acsanm.2c04982",
+      "source_Wiley": "Vazquez-Arce et al. 2024, Adv. Mater. Interfaces, DOI:10.1002/admi.202400269",
+      "confidence": "MEDIUM - range from multiple sources; exact value at 532nm requires downloading Siefke CSV or ellipsometry data"
+    },
+
+    "TiO2_anatase_ALD_at_532nm": {
+      "n_typical": 2.50,
+      "n_range": "2.45-2.55",
+      "wavelength_nm": 532,
+      "phase": "anatase (post-anneal ALD)",
+      "notes": "Anatase TiO2 (crystallized by annealing) has higher n than amorphous; less common for room-temp ALD metasurfaces",
+      "confidence": "LOW-MEDIUM - literature range estimate"
+    }
+  },
+
+  "access_notes": {
+    "Goodsell_2024_fulltext": {
+      "doi": "10.1364/OE.515544",
+      "optica_url": "https://opg.optica.org/oe/abstract.cfm?uri=oe-32-6-9967",
+      "status": "PAYWALLED - Optica site is JavaScript-gated; all fulltext/viewmedia URLs return 202 'Please wait...' with 14 chars content",
+      "open_access": "CC BY licensed (GOLD OA per Semantic Scholar) but PDF URL resolves to same JS-gated page",
+      "recommendation": "Access via institutional subscription OR direct author contact (Jeremy Goodsell, University of Rochester)"
+    },
+    "Xiong_2025_fulltext": {
+      "doi": "10.1364/OME.576634",
+      "optica_url": "https://opg.optica.org/ome/fulltext.cfm?uri=ome-15-12-3129",
+      "status": "PAYWALLED - same JS gate",
+      "recommendation": "Access via institutional subscription; contains Fig 2(e) adapted from Goodsell 2024"
+    }
+  },
+
+  "summary_of_confirmed_values": {
+    "n_N_BK7_at_532nm": 1.5195,
+    "n_TiO2_rutile_bulk_at_532nm": 2.668,
+    "n_TiO2_ALD_amorphous_at_532nm_estimate": "2.35-2.40",
+    "waveguide_material": "N-BK7",
+    "waveguide_thickness_mm": 0.5,
+    "pupil_size_mm": "3 x 3",
+    "wavelength_nm": 532,
+    "FOV_deg": "20 x 20",
+    "num_zones": 3,
+    "overall_measured_efficiency_percent": 30,
+    "per_zone_targets": "NOT RETRIEVED - requires Goodsell 2024 full paper access"
+  }
+}

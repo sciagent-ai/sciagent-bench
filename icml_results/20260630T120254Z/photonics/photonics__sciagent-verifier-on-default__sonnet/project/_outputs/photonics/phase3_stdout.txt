@@ -1,0 +1,309 @@
+======================================================================
+Phase 3 RCWA | Circle pillars | NumBasis=35
+Zone2 scan: Ly=[200, 225, 250, 275, 300, 325, 350, 375, 400]
+Zone2 sep:  [0, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300]
+======================================================================
+
+============================================================
+Zone 1 | 35 configs | circle pillars | NumBasis=35
+============================================================
+  Ly= 300 sep=   0: mT=0.693 mR=0.205 minCE=0.324 score=0.01237
+  Ly= 300 sep=  50: mT=0.496 mR=0.174 minCE=0.127 score=0.01531
+  Ly= 300 sep= 100: mT=0.608 mR=0.198 minCE=0.235 score=0.00194
+  Ly= 300 sep= 150: mT=0.708 mR=0.262 minCE=0.415 score=0.03421
+  Ly= 300 sep= 200: mT=0.836 mR=0.256 minCE=0.665 score=0.19310
+  Ly= 350 sep=   0: mT=0.393 mR=0.235 minCE=0.177 score=0.00535
+  Ly= 350 sep=  50: mT=0.251 mR=0.157 minCE=0.047 score=0.04334
+  Ly= 350 sep= 100: mT=0.639 mR=0.201 minCE=0.274 score=0.00344
+  Ly= 350 sep= 150: mT=0.726 mR=0.257 minCE=0.437 score=0.04324
+  Ly= 350 sep= 200: mT=0.836 mR=0.253 minCE=0.649 score=0.18029
+  Ly= 400 sep=   0: mT=0.701 mR=0.309 minCE=0.295 score=0.00864
+  Ly= 400 sep=  50: mT=0.599 mR=0.204 minCE=0.209 score=0.00322
+  Ly= 400 sep= 100: mT=0.641 mR=0.210 minCE=0.279 score=0.00377
+  Ly= 400 sep= 150: mT=0.735 mR=0.260 minCE=0.446 score=0.04758
+  Ly= 400 sep= 200: mT=0.836 mR=0.256 minCE=0.639 score=0.17175
+  Ly= 453 sep=   0: mT=0.754 mR=0.315 minCE=0.367 score=0.02492
+  Ly= 453 sep=  50: mT=0.653 mR=0.221 minCE=0.261 score=0.00372
+  Ly= 453 sep= 100: mT=0.667 mR=0.236 minCE=0.309 score=0.00761
+  Ly= 453 sep= 150: mT=0.748 mR=0.267 minCE=0.460 score=0.05436
+  Ly= 453 sep= 200: mT=0.842 mR=0.265 minCE=0.644 score=0.17698
+  Ly= 500 sep=   0: mT=0.788 mR=0.334 minCE=0.418 score=0.04355
+  Ly= 500 sep=  50: mT=0.691 mR=0.232 minCE=0.308 score=0.00911
+  Ly= 500 sep= 100: mT=0.685 mR=0.238 minCE=0.331 score=0.01178
+  Ly= 500 sep= 150: mT=0.751 mR=0.263 minCE=0.461 score=0.05482
+  Ly= 500 sep= 200: mT=0.841 mR=0.261 minCE=0.634 score=0.16923
+  Ly= 600 sep=   0: mT=0.769 mR=0.305 minCE=0.388 score=0.03203
+  Ly= 600 sep=  50: mT=0.617 mR=0.182 minCE=0.212 score=0.00367
+  Ly= 600 sep= 100: mT=0.653 mR=0.219 minCE=0.275 score=0.00418
+  Ly= 600 sep= 150: mT=0.733 mR=0.259 minCE=0.416 score=0.03643
+  Ly= 600 sep= 200: mT=0.824 mR=0.256 minCE=0.583 score=0.12977
+  Ly= 700 sep=   0: mT=0.758 mR=0.224 minCE=0.354 score=0.02223
+  Ly= 700 sep=  50: mT=0.498 mR=0.118 minCE=0.126 score=0.01541
+  Ly= 700 sep= 100: mT=0.603 mR=0.177 minCE=0.242 score=0.00170
+  Ly= 700 sep= 150: mT=0.695 mR=0.231 minCE=0.377 score=0.02237
+  Ly= 700 sep= 200: mT=0.767 mR=0.227 minCE=0.482 score=0.06632
+
+  Zone 1 BEST: Ly=700 nm sep=100 nm score=0.00170
+  Zone-angles eta_T = ['0.685', '0.653', '0.586', '0.486']
+  Zone-angles theta_d = ['41.2', '42.9', '44.8', '46.6']
+  eta_R = ['0.056', '0.020', '0.041', '0.097', '0.159', '0.216', '0.268', '0.328', '0.408']
+  Wrote zone1_results.json
+
+============================================================
+Zone 2 | 117 configs | circle pillars | NumBasis=35
+============================================================
+  Ly= 200 sep=   0: mT=0.342 mR=0.233 minCE=0.056 score=0.03806
+  Ly= 200 sep=  25: mT=0.342 mR=0.233 minCE=0.056 score=0.03806
+  Ly= 200 sep=  50: mT=0.149 mR=0.331 minCE=0.060 score=0.03949
+  Ly= 200 sep=  75: mT=0.208 mR=0.304 minCE=0.081 score=0.03107
+  Ly= 200 sep= 100: mT=0.139 mR=0.480 minCE=0.064 score=0.03791
+  Ly= 200 sep= 125: mT=0.046 mR=0.690 minCE=0.025 score=0.05525
+  Ly= 200 sep= 150: mT=0.001 mR=0.849 minCE=0.000 score=0.06847
+  Ly= 200 sep= 175: mT=0.037 mR=0.899 minCE=0.029 score=0.05346
+  Ly= 200 sep= 200: mT=0.157 mR=0.813 minCE=0.125 score=0.01714
+  Ly= 200 sep= 225: mT=0.329 mR=0.633 minCE=0.235 score=0.00023
+  Ly= 200 sep= 250: mT=0.501 mR=0.423 minCE=0.341 score=0.00912
+  Ly= 200 sep= 275: mT=0.610 mR=0.281 minCE=0.428 score=0.03515
+  Ly= 200 sep= 300: mT=0.510 mR=0.385 minCE=0.348 score=0.01076
+  Ly= 225 sep=   0: mT=0.023 mR=0.257 minCE=0.001 score=0.06815
+  Ly= 225 sep=  25: mT=0.038 mR=0.343 minCE=0.009 score=0.06368
+  Ly= 225 sep=  50: mT=0.128 mR=0.243 minCE=0.040 score=0.04854
+  Ly= 225 sep=  75: mT=0.125 mR=0.221 minCE=0.027 score=0.05444
+  Ly= 225 sep= 100: mT=0.056 mR=0.398 minCE=0.013 score=0.06125
+  Ly= 225 sep= 125: mT=0.005 mR=0.604 minCE=0.001 score=0.06813
+  Ly= 225 sep= 150: mT=0.016 mR=0.752 minCE=0.007 score=0.06497
+  Ly= 225 sep= 175: mT=0.099 mR=0.796 minCE=0.069 score=0.03591
+  Ly= 225 sep= 200: mT=0.250 mR=0.719 minCE=0.181 score=0.00515
+  Ly= 225 sep= 225: mT=0.446 mR=0.550 minCE=0.314 score=0.00454
+  Ly= 225 sep= 250: mT=0.634 mR=0.339 minCE=0.457 score=0.04764
+  Ly= 225 sep= 275: mT=0.734 mR=0.199 minCE=0.551 score=0.10080
+  Ly= 225 sep= 300: mT=0.594 mR=0.291 minCE=0.416 score=0.03042
+  Ly= 250 sep=   0: mT=0.012 mR=0.131 minCE=0.000 score=0.06868
+  Ly= 250 sep=  25: mT=0.326 mR=0.632 minCE=0.246 score=0.00002
+  Ly= 250 sep=  50: mT=0.147 mR=0.221 minCE=0.045 score=0.04610
+  Ly= 250 sep=  75: mT=0.089 mR=0.170 minCE=0.011 score=0.06245
+  Ly= 250 sep= 100: mT=0.021 mR=0.327 minCE=0.002 score=0.06758
+  Ly= 250 sep= 125: mT=0.003 mR=0.523 minCE=0.000 score=0.06853
+  Ly= 250 sep= 150: mT=0.048 mR=0.660 minCE=0.022 score=0.05704
+  Ly= 250 sep= 175: mT=0.156 mR=0.700 minCE=0.099 score=0.02476
+  Ly= 250 sep= 200: mT=0.323 mR=0.630 minCE=0.219 score=0.00104
+  Ly= 250 sep= 225: mT=0.526 mR=0.472 minCE=0.365 score=0.01472
+  Ly= 250 sep= 250: mT=0.717 mR=0.273 minCE=0.545 score=0.09625
+  Ly= 250 sep= 275: mT=0.791 mR=0.156 minCE=0.613 score=0.14728
+  Ly= 250 sep= 300: mT=0.574 mR=0.286 minCE=0.391 score=0.02209
+  Ly= 275 sep=   0: mT=0.023 mR=0.087 minCE=0.000 score=0.06852
+  Ly= 275 sep=  25: mT=0.035 mR=0.107 minCE=0.001 score=0.06827
+  Ly= 275 sep=  50: mT=0.460 mR=0.302 minCE=0.278 score=0.00090
+  Ly= 275 sep=  75: mT=0.113 mR=0.184 minCE=0.019 score=0.05854
+  Ly= 275 sep= 100: mT=0.017 mR=0.308 minCE=0.001 score=0.06812
+  Ly= 275 sep= 125: mT=0.007 mR=0.489 minCE=0.001 score=0.06823
+  Ly= 275 sep= 150: mT=0.065 mR=0.617 minCE=0.029 score=0.05320
+  Ly= 275 sep= 175: mT=0.182 mR=0.654 minCE=0.112 score=0.02075
+  Ly= 275 sep= 200: mT=0.350 mR=0.589 minCE=0.233 score=0.00029
+  Ly= 275 sep= 225: mT=0.553 mR=0.441 minCE=0.384 score=0.02006
+  Ly= 275 sep= 250: mT=0.732 mR=0.259 minCE=0.561 score=0.10694
+  Ly= 275 sep= 275: mT=0.719 mR=0.194 minCE=0.509 score=0.07654
+  Ly= 275 sep= 300: mT=0.580 mR=0.094 minCE=0.337 score=0.00853
+  Ly= 300 sep=   0: mT=0.099 mR=0.083 minCE=0.022 score=0.05723
+  Ly= 300 sep=  25: mT=0.027 mR=0.150 minCE=0.002 score=0.06726
+  Ly= 300 sep=  50: mT=0.146 mR=0.071 minCE=0.016 score=0.05942
+  Ly= 300 sep=  75: mT=0.211 mR=0.153 minCE=0.051 score=0.04320
+  Ly= 300 sep= 100: mT=0.178 mR=0.395 minCE=0.081 score=0.03136
+  Ly= 300 sep= 125: mT=0.002 mR=0.499 minCE=0.000 score=0.06869
+  Ly= 300 sep= 150: mT=0.057 mR=0.611 minCE=0.026 score=0.05477
+  Ly= 300 sep= 175: mT=0.176 mR=0.644 minCE=0.110 score=0.02120
+  Ly= 300 sep= 200: mT=0.336 mR=0.586 minCE=0.229 score=0.00045
+  Ly= 300 sep= 225: mT=0.498 mR=0.461 minCE=0.349 score=0.01084
+  Ly= 300 sep= 250: mT=0.486 mR=0.407 minCE=0.336 score=0.00834
+  Ly= 300 sep= 275: mT=0.796 mR=0.092 minCE=0.609 score=0.14365
+  Ly= 300 sep= 300: mT=0.655 mR=0.091 minCE=0.450 score=0.04403
+  Ly= 325 sep=   0: mT=0.372 mR=0.308 minCE=0.041 score=0.04357
+  Ly= 325 sep=  25: mT=0.338 mR=0.470 minCE=0.061 score=0.03633
+  Ly= 325 sep=  50: mT=0.380 mR=0.301 minCE=0.085 score=0.02756
+  Ly= 325 sep=  75: mT=0.148 mR=0.103 minCE=0.011 score=0.06173
+  Ly= 325 sep= 100: mT=0.019 mR=0.255 minCE=0.002 score=0.06771
+  Ly= 325 sep= 125: mT=0.040 mR=0.435 minCE=0.008 score=0.06413
+  Ly= 325 sep= 150: mT=0.108 mR=0.553 minCE=0.046 score=0.04534
+  Ly= 325 sep= 175: mT=0.227 mR=0.586 minCE=0.129 score=0.01583
+  Ly= 325 sep= 200: mT=0.399 mR=0.528 minCE=0.250 score=0.00004
+  Ly= 325 sep= 225: mT=0.614 mR=0.390 minCE=0.411 score=0.02981
+  Ly= 325 sep= 250: mT=0.806 mR=0.202 minCE=0.614 score=0.14983
+  Ly= 325 sep= 275: mT=0.397 mR=0.131 minCE=0.132 score=0.01435
+  Ly= 325 sep= 300: mT=0.384 mR=0.363 minCE=0.127 score=0.01572
+  Ly= 350 sep=   0: mT=0.183 mR=0.214 minCE=0.024 score=0.05473
+  Ly= 350 sep=  25: mT=0.028 mR=0.409 minCE=0.001 score=0.06806
+  Ly= 350 sep=  50: mT=0.065 mR=0.219 minCE=0.009 score=0.06368
+  Ly= 350 sep=  75: mT=0.030 mR=0.124 minCE=0.000 score=0.06846
+  Ly= 350 sep= 100: mT=0.009 mR=0.210 minCE=0.000 score=0.06852
+  Ly= 350 sep= 125: mT=0.219 mR=0.482 minCE=0.024 score=0.05452
+  Ly= 350 sep= 150: mT=0.133 mR=0.579 minCE=0.061 score=0.03869
+  Ly= 350 sep= 175: mT=0.215 mR=0.589 minCE=0.122 score=0.01753
+  Ly= 350 sep= 200: mT=0.311 mR=0.573 minCE=0.185 score=0.00447
+  Ly= 350 sep= 225: mT=0.706 mR=0.346 minCE=0.523 score=0.08335
+  Ly= 350 sep= 250: mT=0.818 mR=0.185 minCE=0.668 score=0.19370
+  Ly= 350 sep= 275: mT=0.894 mR=0.121 minCE=0.785 score=0.31642
+  Ly= 350 sep= 300: mT=0.652 mR=0.295 minCE=0.403 score=0.02823
+  Ly= 375 sep=   0: mT=0.074 mR=0.182 minCE=0.016 score=0.06023
+  Ly= 375 sep=  25: mT=0.108 mR=0.205 minCE=0.024 score=0.05594
+  Ly= 375 sep=  50: mT=0.178 mR=0.077 minCE=0.036 score=0.05009
+  Ly= 375 sep=  75: mT=0.081 mR=0.048 minCE=0.004 score=0.06637
+  Ly= 375 sep= 100: mT=0.013 mR=0.151 minCE=0.001 score=0.06832
+  Ly= 375 sep= 125: mT=0.017 mR=0.278 minCE=0.001 score=0.06817
+  Ly= 375 sep= 150: mT=0.085 mR=0.321 minCE=0.024 score=0.05546
+  Ly= 375 sep= 175: mT=0.210 mR=0.323 minCE=0.090 score=0.02735
+  Ly= 375 sep= 200: mT=0.381 mR=0.318 minCE=0.207 score=0.00188
+  Ly= 375 sep= 225: mT=0.566 mR=0.247 minCE=0.345 score=0.01079
+  Ly= 375 sep= 250: mT=0.691 mR=0.115 minCE=0.457 score=0.04902
+  Ly= 375 sep= 275: mT=0.639 mR=0.038 minCE=0.389 score=0.02192
+  Ly= 375 sep= 300: mT=0.317 mR=0.118 minCE=0.103 score=0.02323
+  Ly= 400 sep=   0: mT=0.070 mR=0.243 minCE=0.017 score=0.05937
+  Ly= 400 sep=  25: mT=0.136 mR=0.232 minCE=0.033 score=0.05160
+  Ly= 400 sep=  50: mT=0.209 mR=0.090 minCE=0.049 score=0.04445
+  Ly= 400 sep=  75: mT=0.095 mR=0.030 minCE=0.007 score=0.06458
+  Ly= 400 sep= 100: mT=0.016 mR=0.122 minCE=0.001 score=0.06804
+  Ly= 400 sep= 125: mT=0.019 mR=0.268 minCE=0.002 score=0.06761
+  Ly= 400 sep= 150: mT=0.086 mR=0.350 minCE=0.028 score=0.05379
+  Ly= 400 sep= 175: mT=0.213 mR=0.360 minCE=0.102 score=0.02354
+  Ly= 400 sep= 200: mT=0.388 mR=0.337 minCE=0.220 score=0.00093
+  Ly= 400 sep= 225: mT=0.571 mR=0.229 minCE=0.346 score=0.01114
+  Ly= 400 sep= 250: mT=0.683 mR=0.086 minCE=0.441 score=0.04191
+  Ly= 400 sep= 275: mT=0.597 mR=0.028 minCE=0.331 score=0.00785
+  Ly= 400 sep= 300: mT=0.302 mR=0.136 minCE=0.097 score=0.02552
+
+  Zone 2 BEST: Ly=250 nm sep=25 nm score=0.00002
+  Zone-angles eta_T = ['0.316', '0.332', '0.331']
+  Zone-angles theta_d = ['48.6', '50.6', '52.7']
+  eta_R = ['0.659', '0.747', '0.691', '0.628', '0.586', '0.572', '0.579', '0.600', '0.623']
+  Wrote zone2_results.json
+
+============================================================
+Zone 3 | 98 configs | circle pillars | NumBasis=35
+============================================================
+  Ly= 300 sep=   0: mT=0.141 mR=0.215 minCE=0.032 score=0.05142
+  Ly= 300 sep=  25: mT=0.141 mR=0.215 minCE=0.032 score=0.05142
+  Ly= 300 sep=  50: mT=0.121 mR=0.411 minCE=0.047 score=0.04390
+  Ly= 300 sep=  75: mT=0.114 mR=0.150 minCE=0.000 score=0.06633
+  Ly= 300 sep= 100: mT=0.312 mR=0.450 minCE=0.155 score=0.00933
+  Ly= 300 sep= 125: mT=0.123 mR=0.579 minCE=0.070 score=0.03541
+  Ly= 300 sep= 150: mT=0.016 mR=0.690 minCE=0.011 score=0.06265
+  Ly= 300 sep= 175: mT=0.021 mR=0.737 minCE=0.011 score=0.06254
+  Ly= 300 sep= 200: mT=0.106 mR=0.700 minCE=0.065 score=0.03699
+  Ly= 300 sep= 225: mT=0.242 mR=0.594 minCE=0.144 score=0.01189
+  Ly= 300 sep= 250: mT=0.335 mR=0.469 minCE=0.211 score=0.00161
+  Ly= 300 sep= 275: mT=0.316 mR=0.185 minCE=0.104 score=0.02218
+  Ly= 300 sep= 300: mT=0.160 mR=0.375 minCE=0.060 score=0.03825
+  Ly= 300 sep= 325: mT=0.141 mR=0.215 minCE=0.032 score=0.05142
+  Ly= 350 sep=   0: mT=0.211 mR=0.310 minCE=0.047 score=0.04408
+  Ly= 350 sep=  25: mT=0.316 mR=0.599 minCE=0.198 score=0.00286
+  Ly= 350 sep=  50: mT=0.189 mR=0.419 minCE=0.056 score=0.03946
+  Ly= 350 sep=  75: mT=0.212 mR=0.188 minCE=0.040 score=0.04676
+  Ly= 350 sep= 100: mT=0.187 mR=0.336 minCE=0.053 score=0.04099
+  Ly= 350 sep= 125: mT=0.202 mR=0.372 minCE=0.073 score=0.03389
+  Ly= 350 sep= 150: mT=0.002 mR=0.287 minCE=0.000 score=0.06854
+  Ly= 350 sep= 175: mT=0.017 mR=0.444 minCE=0.005 score=0.06560
+  Ly= 350 sep= 200: mT=0.061 mR=0.327 minCE=0.015 score=0.06005
+  Ly= 350 sep= 225: mT=0.268 mR=0.318 minCE=0.034 score=0.04796
+  Ly= 350 sep= 250: mT=0.424 mR=0.358 minCE=0.251 score=0.00009
+  Ly= 350 sep= 275: mT=0.515 mR=0.196 minCE=0.248 score=0.00076
+  Ly= 350 sep= 300: mT=0.268 mR=0.363 minCE=0.078 score=0.03058
+  Ly= 350 sep= 325: mT=0.027 mR=0.621 minCE=0.008 score=0.06419
+  Ly= 400 sep=   0: mT=0.015 mR=0.269 minCE=0.001 score=0.06831
+  Ly= 400 sep=  25: mT=0.031 mR=0.312 minCE=0.006 score=0.06552
+  Ly= 400 sep=  50: mT=0.132 mR=0.169 minCE=0.037 score=0.04991
+  Ly= 400 sep=  75: mT=0.208 mR=0.060 minCE=0.035 score=0.04973
+  Ly= 400 sep= 100: mT=0.196 mR=0.257 minCE=0.062 score=0.03831
+  Ly= 400 sep= 125: mT=0.136 mR=0.470 minCE=0.066 score=0.03730
+  Ly= 400 sep= 150: mT=0.047 mR=0.459 minCE=0.014 score=0.06079
+  Ly= 400 sep= 175: mT=0.031 mR=0.420 minCE=0.010 score=0.06312
+  Ly= 400 sep= 200: mT=0.074 mR=0.451 minCE=0.029 score=0.05376
+  Ly= 400 sep= 225: mT=0.178 mR=0.482 minCE=0.093 score=0.02708
+  Ly= 400 sep= 250: mT=0.314 mR=0.288 minCE=0.152 score=0.01033
+  Ly= 400 sep= 275: mT=0.343 mR=0.072 minCE=0.096 score=0.02479
+  Ly= 400 sep= 300: mT=0.154 mR=0.141 minCE=0.020 score=0.05712
+  Ly= 400 sep= 325: mT=0.062 mR=0.308 minCE=0.004 score=0.06577
+  Ly= 453 sep=   0: mT=0.004 mR=0.332 minCE=0.000 score=0.06865
+  Ly= 453 sep=  25: mT=0.004 mR=0.286 minCE=0.001 score=0.06832
+  Ly= 453 sep=  50: mT=0.044 mR=0.174 minCE=0.012 score=0.06219
+  Ly= 453 sep=  75: mT=0.092 mR=0.087 minCE=0.012 score=0.06184
+  Ly= 453 sep= 100: mT=0.200 mR=0.245 minCE=0.068 score=0.03618
+  Ly= 453 sep= 125: mT=0.205 mR=0.559 minCE=0.110 score=0.02122
+  Ly= 453 sep= 150: mT=0.114 mR=0.717 minCE=0.062 score=0.03826
+  Ly= 453 sep= 175: mT=0.082 mR=0.758 minCE=0.050 score=0.04332
+  Ly= 453 sep= 200: mT=0.113 mR=0.727 minCE=0.077 score=0.03257
+  Ly= 453 sep= 225: mT=0.151 mR=0.588 minCE=0.083 score=0.03025
+  Ly= 453 sep= 250: mT=0.226 mR=0.284 minCE=0.088 score=0.02868
+  Ly= 453 sep= 275: mT=0.331 mR=0.087 minCE=0.120 score=0.01835
+  Ly= 453 sep= 300: mT=0.256 mR=0.159 minCE=0.065 score=0.03626
+  Ly= 453 sep= 325: mT=0.112 mR=0.276 minCE=0.013 score=0.06049
+  Ly= 500 sep=   0: mT=0.011 mR=0.196 minCE=0.001 score=0.06842
+  Ly= 500 sep=  25: mT=0.002 mR=0.133 minCE=0.000 score=0.06868
+  Ly= 500 sep=  50: mT=0.038 mR=0.080 minCE=0.003 score=0.06717
+  Ly= 500 sep=  75: mT=0.182 mR=0.141 minCE=0.043 score=0.04671
+  Ly= 500 sep= 100: mT=0.125 mR=0.307 minCE=0.039 score=0.04834
+  Ly= 500 sep= 125: mT=0.058 mR=0.438 minCE=0.022 score=0.05667
+  Ly= 500 sep= 150: mT=0.050 mR=0.498 minCE=0.018 score=0.05873
+  Ly= 500 sep= 175: mT=0.073 mR=0.514 minCE=0.021 score=0.05654
+  Ly= 500 sep= 200: mT=0.135 mR=0.501 minCE=0.047 score=0.04368
+  Ly= 500 sep= 225: mT=0.215 mR=0.449 minCE=0.085 score=0.02855
+  Ly= 500 sep= 250: mT=0.292 mR=0.326 minCE=0.109 score=0.02070
+  Ly= 500 sep= 275: mT=0.405 mR=0.159 minCE=0.148 score=0.01068
+  Ly= 500 sep= 300: mT=0.370 mR=0.078 minCE=0.102 score=0.02266
+  Ly= 500 sep= 325: mT=0.134 mR=0.125 minCE=0.016 score=0.05916
+  Ly= 550 sep=   0: mT=0.009 mR=0.042 minCE=0.000 score=0.06862
+  Ly= 550 sep=  25: mT=0.003 mR=0.056 minCE=0.000 score=0.06863
+  Ly= 550 sep=  50: mT=0.077 mR=0.077 minCE=0.006 score=0.06505
+  Ly= 550 sep=  75: mT=0.203 mR=0.149 minCE=0.046 score=0.04487
+  Ly= 550 sep= 100: mT=0.180 mR=0.313 minCE=0.074 score=0.03354
+  Ly= 550 sep= 125: mT=0.097 mR=0.437 minCE=0.053 score=0.04253
+  Ly= 550 sep= 150: mT=0.052 mR=0.493 minCE=0.030 score=0.05305
+  Ly= 550 sep= 175: mT=0.051 mR=0.507 minCE=0.027 score=0.05454
+  Ly= 550 sep= 200: mT=0.090 mR=0.496 minCE=0.048 score=0.04446
+  Ly= 550 sep= 225: mT=0.155 mR=0.447 minCE=0.082 score=0.03046
+  Ly= 550 sep= 250: mT=0.229 mR=0.332 minCE=0.105 score=0.02257
+  Ly= 550 sep= 275: mT=0.301 mR=0.167 minCE=0.106 score=0.02200
+  Ly= 550 sep= 300: mT=0.257 mR=0.078 minCE=0.060 score=0.03874
+  Ly= 550 sep= 325: mT=0.121 mR=0.060 minCE=0.012 score=0.06167
+  Ly= 600 sep=   0: mT=0.033 mR=0.013 minCE=0.001 score=0.06833
+  Ly= 600 sep=  25: mT=0.008 mR=0.015 minCE=0.000 score=0.06872
+  Ly= 600 sep=  50: mT=0.023 mR=0.034 minCE=0.001 score=0.06805
+  Ly= 600 sep=  75: mT=0.128 mR=0.138 minCE=0.031 score=0.05250
+  Ly= 600 sep= 100: mT=0.146 mR=0.288 minCE=0.065 score=0.03738
+  Ly= 600 sep= 125: mT=0.092 mR=0.397 minCE=0.052 score=0.04313
+  Ly= 600 sep= 150: mT=0.059 mR=0.445 minCE=0.034 score=0.05127
+  Ly= 600 sep= 175: mT=0.057 mR=0.459 minCE=0.031 score=0.05252
+  Ly= 600 sep= 200: mT=0.082 mR=0.449 minCE=0.047 score=0.04513
+  Ly= 600 sep= 225: mT=0.124 mR=0.405 minCE=0.071 score=0.03491
+  Ly= 600 sep= 250: mT=0.162 mR=0.304 minCE=0.079 score=0.03182
+  Ly= 600 sep= 275: mT=0.185 mR=0.156 minCE=0.060 score=0.03916
+  Ly= 600 sep= 300: mT=0.199 mR=0.041 minCE=0.040 score=0.04826
+  Ly= 600 sep= 325: mT=0.118 mR=0.017 minCE=0.011 score=0.06256
+
+  Zone 3 BEST: Ly=350 nm sep=250 nm score=0.00009
+  Zone-angles eta_T = ['0.463', '0.447', '0.416', '0.369']
+  Zone-angles theta_d = ['55.0', '57.3', '59.8', '62.5']
+  eta_R = ['0.302', '0.326', '0.283', '0.278', '0.308', '0.360', '0.414', '0.461', '0.492']
+  Wrote zone3_results.json
+
+============================================================
+MFE CALCULATION
+============================================================
+  theta_air=-10.0 z=1 eta_T=0.685 td=41.2° eta_R=0.056 CE=0.482
+  theta_air= -8.0 z=1 eta_T=0.653 td=42.9° eta_R=0.045 CE=0.436
+  theta_air= -6.0 z=1 eta_T=0.586 td=44.8° eta_R=0.032 CE=0.351
+  theta_air= -4.0 z=1 eta_T=0.486 td=46.6° eta_R=0.021 CE=0.242
+  theta_air= -2.0 z=2 eta_T=0.316 td=48.6° eta_R=0.708 CE=0.253
+  theta_air= +0.0 z=2 eta_T=0.332 td=50.6° eta_R=0.664 CE=0.257
+  theta_air= +2.0 z=2 eta_T=0.331 td=52.7° eta_R=0.616 CE=0.246
+  theta_air= +4.0 z=3 eta_T=0.463 td=55.0° eta_R=0.322 CE=0.295
+  theta_air= +6.0 z=3 eta_T=0.447 td=57.3° eta_R=0.383 CE=0.295
+  theta_air= +8.0 z=3 eta_T=0.416 td=59.8° eta_R=0.449 CE=0.282
+  theta_air=+10.0 z=3 eta_T=0.369 td=62.5° eta_R=0.492 CE=0.251
+
+============================================================
+MFE = 0.2418 (24.18%)
+Meets >= 25% target: False
+Coupling per angle: ['0.482', '0.436', '0.351', '0.242', '0.253', '0.257', '0.246', '0.295', '0.295', '0.282', '0.251']
+Best geometries: {1: {'Ly_nm': 700, 'sep_nm': 100}, 2: {'Ly_nm': 250, 'sep_nm': 25}, 3: {'Ly_nm': 350, 'sep_nm': 250}}
+============================================================
+Wrote mfe_result.json
+SIMULATION COMPLETE

@@ -1,0 +1,159 @@
+======================================================================
+Xiong 2025 TiO2/N-BK7 metasurface RCWA | lambda=532.0 nm d=453.0 nm h=250.0 nm NumBasis=25
+FREQ=0.851504  LAM/d=1.174393
+======================================================================
+
+============================================================
+Zone 1 grid scan (35 configs)
+============================================================
+  Ly=  300 sep=    0: mean_T=0.279 mean_R=0.182 score=0.15039
+  Ly=  300 sep=   50: mean_T=0.160 mean_R=0.169 score=0.24663
+  Ly=  300 sep=  100: mean_T=0.232 mean_R=0.156 score=0.19480
+  Ly=  300 sep=  150: mean_T=0.374 mean_R=0.223 score=0.08240
+  Ly=  300 sep=  200: mean_T=0.568 mean_R=0.218 score=0.03427
+  Ly=  400 sep=    0: mean_T=0.305 mean_R=0.306 score=0.09579
+  Ly=  400 sep=   50: mean_T=0.260 mean_R=0.187 score=0.16112
+  Ly=  400 sep=  100: mean_T=0.245 mean_R=0.184 score=0.17235
+  Ly=  400 sep=  150: mean_T=0.393 mean_R=0.232 score=0.07081
+  Ly=  400 sep=  200: mean_T=0.552 mean_R=0.228 score=0.03201
+  Ly=  453 sep=    0: mean_T=0.342 mean_R=0.291 score=0.07824
+  Ly=  453 sep=   50: mean_T=0.294 mean_R=0.178 score=0.14248
+  Ly=  453 sep=  100: mean_T=0.308 mean_R=0.181 score=0.13314
+  Ly=  453 sep=  150: mean_T=0.425 mean_R=0.207 score=0.06797
+  Ly=  453 sep=  200: mean_T=0.530 mean_R=0.204 score=0.04310
+  Ly=  500 sep=    0: mean_T=0.358 mean_R=0.293 score=0.07007
+  Ly=  500 sep=   50: mean_T=0.293 mean_R=0.172 score=0.14643
+  Ly=  500 sep=  100: mean_T=0.305 mean_R=0.168 score=0.14062
+  Ly=  500 sep=  150: mean_T=0.412 mean_R=0.199 score=0.07555
+  Ly=  500 sep=  200: mean_T=0.523 mean_R=0.196 score=0.04749
+  Ly=  600 sep=    0: mean_T=0.347 mean_R=0.264 score=0.08227
+  Ly=  600 sep=   50: mean_T=0.218 mean_R=0.122 score=0.22287
+  Ly=  600 sep=  100: mean_T=0.235 mean_R=0.151 score=0.19509
+  Ly=  600 sep=  150: mean_T=0.374 mean_R=0.206 score=0.08876
+  Ly=  600 sep=  200: mean_T=0.492 mean_R=0.201 score=0.05129
+  Ly=  700 sep=    0: mean_T=0.329 mean_R=0.236 score=0.10012
+  Ly=  700 sep=   50: mean_T=0.166 mean_R=0.124 score=0.26416
+  Ly=  700 sep=  100: mean_T=0.145 mean_R=0.155 score=0.26704
+  Ly=  700 sep=  150: mean_T=0.341 mean_R=0.208 score=0.10425
+  Ly=  700 sep=  200: mean_T=0.466 mean_R=0.202 score=0.05688
+  Ly=  800 sep=    0: mean_T=0.361 mean_R=0.287 score=0.06999
+  Ly=  800 sep=   50: mean_T=0.279 mean_R=0.158 score=0.16139
+  Ly=  800 sep=  100: mean_T=0.247 mean_R=0.164 score=0.18038
+  Ly=  800 sep=  150: mean_T=0.330 mean_R=0.207 score=0.11021
+  Ly=  800 sep=  200: mean_T=0.435 mean_R=0.203 score=0.06615
+
+  Zone 1 BEST: Ly=400.0 nm sep=200.0 nm score=0.03201
+  eta_T=['0.797', '0.830', '0.827', '0.789', '0.711', '0.598', '0.474', '0.364', '0.280', '0.221', '0.183']
+  eta_R=['0.068', '0.050', '0.109', '0.200', '0.265', '0.301', '0.323', '0.347', '0.385']
+  Wrote zone1_results.json
+
+============================================================
+Zone 2 grid scan (35 configs)
+============================================================
+  Ly=  300 sep=    0: mean_T=0.333 mean_R=0.332 score=0.06100
+  Ly=  300 sep=   50: mean_T=0.242 mean_R=0.336 score=0.08923
+  Ly=  300 sep=  100: mean_T=0.354 mean_R=0.447 score=0.01970
+  Ly=  300 sep=  150: mean_T=0.009 mean_R=0.743 score=0.23176
+  Ly=  300 sep=  200: mean_T=0.181 mean_R=0.716 score=0.09986
+  Ly=  400 sep=    0: mean_T=0.084 mean_R=0.297 score=0.19755
+  Ly=  400 sep=   50: mean_T=0.269 mean_R=0.090 score=0.24417
+  Ly=  400 sep=  100: mean_T=0.070 mean_R=0.250 score=0.23436
+  Ly=  400 sep=  150: mean_T=0.013 mean_R=0.665 score=0.20403
+  Ly=  400 sep=  200: mean_T=0.202 mean_R=0.630 score=0.06814
+  Ly=  453 sep=    0: mean_T=0.104 mean_R=0.293 score=0.18615
+  Ly=  453 sep=   50: mean_T=0.167 mean_R=0.120 score=0.26550
+  Ly=  453 sep=  100: mean_T=0.061 mean_R=0.247 score=0.24326
+  Ly=  453 sep=  150: mean_T=0.012 mean_R=0.739 score=0.22737
+  Ly=  453 sep=  200: mean_T=0.131 mean_R=0.692 score=0.12231
+  Ly=  500 sep=    0: mean_T=0.093 mean_R=0.198 score=0.25171
+  Ly=  500 sep=   50: mean_T=0.092 mean_R=0.050 score=0.37781
+  Ly=  500 sep=  100: mean_T=0.087 mean_R=0.312 score=0.18825
+  Ly=  500 sep=  150: mean_T=0.034 mean_R=0.691 score=0.19275
+  Ly=  500 sep=  200: mean_T=0.143 mean_R=0.658 score=0.10610
+  Ly=  600 sep=    0: mean_T=0.085 mean_R=0.052 score=0.38192
+  Ly=  600 sep=   50: mean_T=0.170 mean_R=0.054 score=0.32436
+  Ly=  600 sep=  100: mean_T=0.140 mean_R=0.179 score=0.23352
+  Ly=  600 sep=  150: mean_T=0.042 mean_R=0.376 score=0.19672
+  Ly=  600 sep=  200: mean_T=0.150 mean_R=0.357 score=0.12736
+  Ly=  700 sep=    0: mean_T=0.179 mean_R=0.177 score=0.21241
+  Ly=  700 sep=   50: mean_T=0.195 mean_R=0.091 score=0.27538
+  Ly=  700 sep=  100: mean_T=0.114 mean_R=0.106 score=0.31046
+  Ly=  700 sep=  150: mean_T=0.083 mean_R=0.211 score=0.24979
+  Ly=  700 sep=  200: mean_T=0.166 mean_R=0.202 score=0.20151
+  Ly=  800 sep=    0: mean_T=0.161 mean_R=0.145 score=0.24699
+  Ly=  800 sep=   50: mean_T=0.170 mean_R=0.057 score=0.32152
+  Ly=  800 sep=  100: mean_T=0.091 mean_R=0.076 score=0.35405
+  Ly=  800 sep=  150: mean_T=0.081 mean_R=0.108 score=0.33167
+  Ly=  800 sep=  200: mean_T=0.151 mean_R=0.105 score=0.28764
+
+  Zone 2 BEST: Ly=300.0 nm sep=100.0 nm score=0.01970
+  eta_T=['0.452', '0.453', '0.448', '0.433', '0.410', '0.380', '0.345', '0.306', '0.266', '0.224', '0.181']
+  eta_R=['0.423', '0.425', '0.432', '0.440', '0.449', '0.457', '0.464', '0.470', '0.466']
+  Wrote zone2_results.json
+
+============================================================
+Zone 3 grid scan (35 configs)
+============================================================
+  Ly=  300 sep=    0: mean_T=0.282 mean_R=0.200 score=0.20721
+  Ly=  300 sep=   50: mean_T=0.078 mean_R=0.367 score=0.15419
+  Ly=  300 sep=  100: mean_T=0.235 mean_R=0.133 score=0.28024
+  Ly=  300 sep=  150: mean_T=0.041 mean_R=0.827 score=0.12719
+  Ly=  300 sep=  200: mean_T=0.057 mean_R=0.841 score=0.12220
+  Ly=  400 sep=    0: mean_T=0.081 mean_R=0.317 score=0.18322
+  Ly=  400 sep=   50: mean_T=0.222 mean_R=0.118 score=0.29916
+  Ly=  400 sep=  100: mean_T=0.239 mean_R=0.335 score=0.11148
+  Ly=  400 sep=  150: mean_T=0.104 mean_R=0.781 score=0.07790
+  Ly=  400 sep=  200: mean_T=0.096 mean_R=0.789 score=0.08353
+  Ly=  453 sep=    0: mean_T=0.101 mean_R=0.239 score=0.23120
+  Ly=  453 sep=   50: mean_T=0.093 mean_R=0.116 score=0.35088
+  Ly=  453 sep=  100: mean_T=0.267 mean_R=0.278 score=0.14528
+  Ly=  453 sep=  150: mean_T=0.199 mean_R=0.578 score=0.02793
+  Ly=  453 sep=  200: mean_T=0.321 mean_R=0.587 score=0.00479
+  Ly=  500 sep=    0: mean_T=0.082 mean_R=0.159 score=0.31293
+  Ly=  500 sep=   50: mean_T=0.047 mean_R=0.114 score=0.37902
+  Ly=  500 sep=  100: mean_T=0.151 mean_R=0.301 score=0.16152
+  Ly=  500 sep=  150: mean_T=0.050 mean_R=0.505 score=0.11100
+  Ly=  500 sep=  200: mean_T=0.191 mean_R=0.515 score=0.04335
+  Ly=  600 sep=    0: mean_T=0.063 mean_R=0.038 score=0.45666
+  Ly=  600 sep=   50: mean_T=0.124 mean_R=0.084 score=0.37158
+  Ly=  600 sep=  100: mean_T=0.157 mean_R=0.231 score=0.21274
+  Ly=  600 sep=  150: mean_T=0.054 mean_R=0.427 score=0.13764
+  Ly=  600 sep=  200: mean_T=0.112 mean_R=0.434 score=0.10313
+  Ly=  700 sep=    0: mean_T=0.124 mean_R=0.096 score=0.35791
+  Ly=  700 sep=   50: mean_T=0.124 mean_R=0.072 score=0.38538
+  Ly=  700 sep=  100: mean_T=0.147 mean_R=0.124 score=0.31739
+  Ly=  700 sep=  150: mean_T=0.066 mean_R=0.254 score=0.23748
+  Ly=  700 sep=  200: mean_T=0.157 mean_R=0.259 score=0.19036
+  Ly=  800 sep=    0: mean_T=0.141 mean_R=0.133 score=0.31135
+  Ly=  800 sep=   50: mean_T=0.140 mean_R=0.087 score=0.36124
+  Ly=  800 sep=  100: mean_T=0.128 mean_R=0.088 score=0.36515
+  Ly=  800 sep=  150: mean_T=0.084 mean_R=0.126 score=0.34502
+  Ly=  800 sep=  200: mean_T=0.124 mean_R=0.128 score=0.32377
+
+  Zone 3 BEST: Ly=453.0 nm sep=200.0 nm score=0.00479
+  eta_T=['0.574', '0.505', '0.422', '0.357', '0.308', '0.275', '0.252', '0.237', '0.227', '0.215', '0.155']
+  eta_R=['0.089', '0.332', '0.530', '0.644', '0.710', '0.746', '0.760', '0.757', '0.719']
+  Wrote zone3_results.json
+
+============================================================
+MFE CALCULATION
+============================================================
+  theta_air=-10.0 zone=1 eta_T=0.797 td=41.2 eta_R=0.068 CE=0.647
+  theta_air= -8.0 zone=1 eta_T=0.830 td=42.9 eta_R=0.063 CE=0.698
+  theta_air= -6.0 zone=1 eta_T=0.827 td=44.8 eta_R=0.056 CE=0.691
+  theta_air= -4.0 zone=1 eta_T=0.789 td=46.6 eta_R=0.055 CE=0.632
+  theta_air= -2.0 zone=2 eta_T=0.410 td=48.6 eta_R=0.430 CE=0.272
+  theta_air= +0.0 zone=2 eta_T=0.380 td=50.6 eta_R=0.435 CE=0.247
+  theta_air= +2.0 zone=2 eta_T=0.345 td=52.7 eta_R=0.443 CE=0.219
+  theta_air= +4.0 zone=3 eta_T=0.237 td=55.0 eta_R=0.720 CE=0.187
+  theta_air= +6.0 zone=3 eta_T=0.227 td=57.3 eta_R=0.752 CE=0.184
+  theta_air= +8.0 zone=3 eta_T=0.215 td=59.8 eta_R=0.757 CE=0.174
+  theta_air=+10.0 zone=3 eta_T=0.155 td=62.5 eta_R=0.719 CE=0.118
+
+============================================================
+MFE = 0.1180 (11.80%)
+Meets >= 25% target: False
+Coupling eff: ['0.647', '0.698', '0.691', '0.632', '0.272', '0.247', '0.219', '0.187', '0.184', '0.174', '0.118']
+============================================================
+Wrote mfe_result.json
+SIMULATION COMPLETE

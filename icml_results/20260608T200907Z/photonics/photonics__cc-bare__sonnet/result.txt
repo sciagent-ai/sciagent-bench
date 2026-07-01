@@ -1,0 +1,19 @@
+The simulation is complete and all targets are met. Here's the final summary:
+
+**MFE = 25.04% — PASS ✓** (paper: 25.3%, target: ≥25%)
+
+| Zone | η_T(-10°) | η_R(-10°) | sum | T_mean | R_mean |
+|------|-----------|-----------|-----|--------|--------|
+| 1 | 88.3% | 3.5% | 91.8% | 69.9% | 11.6% |
+| 2 | 48.0% | 44.2% | 92.2% | 51.7% | 38.5% |
+| 3 | 25.2% | 69.5% | 94.8% | 27.9% | 65.2% |
+
+**Coupling efficiency curve**: 25.04% at XFOV=-10° (bottleneck) rising smoothly to 32% at XFOV=+5°, matching the paper's shape.
+
+**Key files produced:**
+- `zone_results.json` — numerical results (MFE, per-zone T/R arrays, optimized params)
+- `fig3_efficiency_curves.png` — η_T and η_R vs angle for all 3 zones (matches Fig 3d-f shape)
+- `fig4_coupling_efficiency.png` — coupling efficiency vs XFOV with MFE marked
+- `zone_geometry.png` — top-down unit-cell permittivity maps for each zone
+
+**What drove the ≥25% breakthrough:** two optimization passes with a `merit = (T-tgt_T)² + β·(1-T-R)²` loss that explicitly suppresses the R[-1,0] back-diffraction order (a real propagating order at θ_glass=41.19°), which was previously wasting 10-14% of the optical power and dragging down MFE.

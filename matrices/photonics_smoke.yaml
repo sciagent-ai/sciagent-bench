@@ -1,15 +1,20 @@
-# Photonics matrix — recursion ablation + baselines.
-# 4 cells × N=1 invocation each.
+# Smoke matrix — recursion ablation + baselines, three tasks.
+# 12 cells × N=1 invocation each.
 #
-# Conditions:
-#   cc-bare              raw Claude Code, no harness
-#   sciagent-default     sciagent with verifier_include_child_sessions=true
-#                        (new CLI default; verifier reads subagent logs)
-#   sciagent-crossverifier  same as default, verifier swapped to non-Anthropic
-#   sciagent-no-recursion   sciagent with verifier_include_child_sessions=false
-#                        (legacy behavior; verifier sees parent log only)
+# Conditions (replicated per task):
+#   cc-bare                     raw Claude Code, no harness
+#   sciagent-verifier-on-default sciagent with verifier_include_child_sessions=true
+#                               (new CLI default; verifier reads subagent logs)
+#   sciagent-crossverifier      same as default, verifier swapped to non-Anthropic
+#   sciagent-no-recursion       sciagent with verifier_include_child_sessions=false
+#                               (legacy behavior; verifier sees parent log only)
 #
-# The sciagent-default vs sciagent-no-recursion diff IS the recursion
+# Tasks:
+#   photonics       three-zone metasurface in-coupler (S4 RCWA, CPU)
+#   bioinformatics  INSERT-seq RNA pol II elongation, one-hot CNN (PyTorch GPU)
+#   cfd             micro data-center heat-transfer validation (OpenFOAM, CPU)
+#
+# The verifier-on-default vs no-recursion diff IS the recursion
 # engineering finding. Per-cell verification + efficiency are produced
 # post-hoc by tools/reverify_cells.py — bench no longer runs a verifier.
 cells:
@@ -19,7 +24,7 @@ cells:
     adapter_config: {with_sky: false, with_registry: false}
     llm: anthropic/claude-sonnet-4-6
 
-  - id: photonics__sciagent-default__sonnet
+  - id: photonics__sciagent-verifier-on-default__sonnet
     task: photonics
     adapter: sciagent
     adapter_config: {recipe: recipes/anthropic-single-family.yaml}
@@ -33,6 +38,56 @@ cells:
 
   - id: photonics__sciagent-no-recursion__sonnet
     task: photonics
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-verifier-no-recursion.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: bioinformatics__cc-bare__sonnet
+    task: bioinformatics
+    adapter: claude_code
+    # with_sky + with_registry on: pytorch service is GPU-only, so the
+    # agent needs sky on PATH and the service catalog to discover it.
+    adapter_config: {with_sky: true, with_registry: true}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: bioinformatics__sciagent-verifier-on-default__sonnet
+    task: bioinformatics
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-single-family.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: bioinformatics__sciagent-crossverifier__sonnet
+    task: bioinformatics
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-cross-family-verifier.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: bioinformatics__sciagent-no-recursion__sonnet
+    task: bioinformatics
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-verifier-no-recursion.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: cfd__cc-bare__sonnet
+    task: cfd
+    adapter: claude_code
+    adapter_config: {with_sky: false, with_registry: false}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: cfd__sciagent-verifier-on-default__sonnet
+    task: cfd
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-single-family.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: cfd__sciagent-crossverifier__sonnet
+    task: cfd
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-cross-family-verifier.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: cfd__sciagent-no-recursion__sonnet
+    task: cfd
     adapter: sciagent
     adapter_config: {recipe: recipes/anthropic-verifier-no-recursion.yaml}
     llm: anthropic/claude-sonnet-4-6

@@ -1,0 +1,5 @@
+# CLEANING UP
+
+rm -r processor*
+rm -r postProcessing
+rm -r 0

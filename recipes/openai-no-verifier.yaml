@@ -1,0 +1,18 @@
+# Recipe: openai-no-verifier
+#
+# OpenAI mirror of anthropic-no-verifier.yaml. Same as openai-single-family
+# but with the LLM verification gate OFF (enable_verification: false).
+# Skips the verifier subagent entirely — no verification_result events
+# written, verdict column ends up empty in results.csv.
+#
+# Ablation question: does the agent behave differently when there is
+# no in-loop verifier at all?
+agent:
+  model: openai/gpt-5.4
+orchestrator:
+  scientific_model: openai/gpt-5.4
+  coding_model:     openai/gpt-5.4-mini
+  fast_model:       openai/gpt-5.4-mini
+  verifier_model:   openai/gpt-5.4
+  vision_model:     openai/gpt-5.4
+  enable_verification: false

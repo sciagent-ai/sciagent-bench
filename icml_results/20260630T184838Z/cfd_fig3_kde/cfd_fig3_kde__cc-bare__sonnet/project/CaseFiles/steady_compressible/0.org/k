@@ -1,0 +1,71 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1806                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      k;      // k is the Turbulent Kinetic Energy
+			            // for each new case. k=(3/2)*((U/I)^2)  U=Freestream fluid velocity
+				        // I is Turbulence Intensity and can be estimated 
+				        // I=0.16*Re       Re=Pipe Diameter Reynolds #
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 0.01;
+
+
+boundaryField
+{
+    walls
+    {
+        type            kLowReWallFunction;
+        value           uniform 0.01;
+    }
+
+    hole
+    {
+        type            inletOutlet;
+        value           $internalField;
+        inletValue      uniform 0.01;
+    }
+
+    "crac.*_inlet"
+    {
+        type            turbulentIntensityKineticEnergyInlet;
+        intensity       0.05;
+        value           $internalField; // placeholder
+    }
+    "crac.*_outlet"
+    {
+        type            inletOutlet;
+        value           $internalField;
+        inletValue      uniform 0.01;
+    }
+
+    "rack.*_inlet"
+    {
+        type            turbulentIntensityKineticEnergyInlet;
+        intensity       0.05;
+        value           $internalField; // placeholder
+    }
+    "rack.*_outlet"
+    {
+        type            inletOutlet;
+        value           $internalField;
+        inletValue      uniform 0.01;
+    }
+
+}
+
+
+
+// ************************************************************************* //

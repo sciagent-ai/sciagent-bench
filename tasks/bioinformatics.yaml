@@ -1,0 +1,45 @@
+id: bioinformatics
+title: "INSERT-seq RNA pol II elongation, one-hot CNN baseline (bioinformatics.pdf, Task 5)"
+prompt: |
+  Reproduce Task 5 of bioinformatics.pdf (Tang et al. 2025, Fig 4b):
+  predict RNA pol II elongation potential from INSERT-seq using a
+  one-hot CNN baseline. The INSERT-seq dataset (Ref [82] in the paper)
+  contains 11,417 input sequences of length 173 nt with totalRNA-output
+  regression targets; split train/val/test = 0.8/0.1/0.1 (9131/1149/1137).
+  Train a ResidualBind-style 1D-CNN (Methods § "RBP" gives the block
+  layout — adapt to single-task regression with a scalar output) on
+  one-hot encoded sequences and evaluate Pearson correlation on the
+  held-out test split.
+  Verify: test-set Pearson correlation >= 0.55 (paper one-hot baseline
+  is ~0.58 per Fig 4b), plus a scatter plot of predicted vs measured
+  totalRNA for the test set.
+inputs:
+  - path: ./project/bioinformatics.pdf
+    source: /Users/shrutibadhwar/Documents/2026/testpackage/sciagent-tasks/nowtasks/bioinformatics.pdf
+verification_criteria:
+  key_value: insertseq_test_pearson
+  comparator: ">="
+  threshold: 0.55
+  paper_value: 0.58
+  required_figure: "insertseq_predicted_vs_measured.png"
+budget:
+  # INSERT-seq is small (~10K seqs × 173 nt) and the baseline is a
+  # one-hot CNN — fits on a single GPU. Budget covers:
+  #   - dataset fetch + parsing (~10 min, network-bound)
+  #   - container spin-up via pytorch service on SkyPilot (~15 min cold)
+  #   - CNN training to convergence on the train split (~30 min on A10G)
+  #   - test-set eval + scatter plot + writeup (~10 min)
+  # Total ~75 min; budget to 120 min so the agent can read background
+  # job output and emit a final result block without being guillotined.
+  # Sciagent cells also include verifier subagent turns on top.
+  wall_time_seconds: 7200
+  cost_usd: 5.00
+  # Claude Code's --print mode defaults to ~42 turns. INSERT-seq needs
+  # significantly more agent turns than photonics: data discovery +
+  # download, container launch, training run monitoring, eval, plot,
+  # report. 150 leaves headroom; sciagent honors its own iteration cap.
+  max_turns: 150
+services_needed:
+  - pytorch
+  - biopython
+  - sci-core

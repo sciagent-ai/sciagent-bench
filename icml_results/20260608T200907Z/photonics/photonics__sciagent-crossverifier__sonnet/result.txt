@@ -1,0 +1,73 @@
+Here is the full report of the S4 RCWA simulation and analysis.
+
+---
+
+## Results: TiO2/N-BK7 Three-Zone Metasurface In-Coupler Simulation
+
+### Optimized Geometry (Nelder-Mead from paper starting points)
+
+| Parameter | Zone 1 | Zone 2 | Zone 3 |
+|---|---|---|---|
+| Bar width (nm) | 123.7 | 111.1 | 121.6 |
+| Pillar diameter (nm) | 104.8 | 131.2 | 112.5 |
+| Separation (nm) | 141.1 | 156.2 | 182.5 |
+| Y-period (nm) | 173.9 | 171.7 | 133.4 |
+| TiO2 height (nm) | 250 | 250 | 250 |
+
+### Efficiency vs. Paper Targets
+
+| Zone | RCWA T+1 (mean) | Target T+1 | RCWA R0 (mean) | Target R0 |
+|---|---|---|---|---|
+| Zone 1 | 83.2% | 96% | 6.6% | 4% |
+| Zone 2 | 50.5% | 54% | 43.1% | 46% |
+| Zone 3 | 25.4% | 27% | 71.3% | 73% |
+
+Zones 2 and 3 are within 3–4 percentage points of their targets. Zone 1 is the key shortfall: RCWA gives T+1 ≈ 83% vs. the 96% paper target.
+
+### MFE Result
+
+| Metric | Value |
+|---|---|
+| **Computed MFE** | **20.43%** |
+| MFE location | −10° XFOV |
+| Paper value | 25.3% |
+| Target threshold | 25% |
+| **Status** | **FAIL (−4.6 pp gap)** |
+
+### Output Files
+
+| File | Description |
+|---|---|
+| `_outputs/final_analysis/fig1_zone_efficiencies.png` | T+1 (red), R0 (blue), sum (black) vs angle for all 3 zones |
+| `_outputs/final_analysis/fig2_coupling_mfe.png` | Coupling efficiency vs XFOV with MFE and 25.3% paper reference |
+| `_outputs/final_analysis/mfe_summary.json` | Full numerical data |
+| `_outputs/rcwa_results/results.json` | Raw S4 per-zone angle sweeps |
+
+---
+
+### Why the MFE Falls Short of 25% — Root Cause
+
+**Zone 1's T+1 shortfall at large negative angles is the primary driver.** At θ_x = −10°, the Zone 1 T+1 is 72.9% (vs. ~96% paper target). The paper achieves higher T+1 in Zone 1 through two mechanisms not fully captured here:
+
+1. **True 2D circular pillar geometry**: The paper uses an actual circular pillar (optimized by RSoft with full 2D Fourier basis). S4's approximation of the circle as a rectangle reduces mode-matching accuracy at large angles, where the shape anisotropy matters most.
+
+2. **Material dispersion refinement**: The paper uses ALD-grown TiO2 with n ≈ 2.42–2.45 at 532 nm (higher than the n=2.35 used here), which shifts resonances and lifts peak T+1.
+
+3. **Zone 1 design intent**: The paper explicitly states Zone 1 has a merit function that *balances* efficiency at both FOV ends (not just maximize at −10°). The full RSoft MOST optimizer ran many more iterations with a more sensitive merit function than the Nelder-Mead run here.
+
+4. **Simulation model accuracy**: The S4 simulation is fundamentally 1D RCWA (single Fourier direction), while the nano-pillar requires a full 2D simulation. The paper used RSoft with proper 2D RCWA. For Zones 2 and 3 (which have larger pillars and broader angular bandwidths), this approximation is less damaging — which is why their efficiencies match targets well (within 3–4%).
+
+The shape of the efficiency-vs-angle curves (Zone 1: high T+1/low R0, dropping toward +10°; Zone 3: flat, low T+1/high R0) **reproduces Fig. 3(d–f) qualitatively correctly**, confirming the physical model is right. The 4.9 pp gap in MFE is a quantitative accuracy limitation of the 1D S4 geometry approximation for Zone 1's critical performance at −10°.
+
+🧹 Cleaning up 1 session cluster(s): sciagent-rcwa-metasurface
+Graceful shutdown enabled. Terminating user jobs on sciagent-rcwa-metasurface...
+
+Failed to cancel jobs: Command source ${SKY_RUNTIME_DIR:-$HOME}/skypilot-runtime/bin/activate; env -u PYTHONPATH -C $HOME $([ -s ${... failed with return code 255.
+[31mFailed to cancel jobs on cluster sciagent-rcwa-metasurface.[0m
+
+Flushing MOUNT_CACHED uploads on all nodes of 'sciagent-rcwa-metasurface'...
+Node 0: flush failed (rc=255): Connection timed out during banner exchange
+
+
+Some nodes had flush errors: ['Node 0: Connection timed out during banner exchange\r\n']
+   ✓ down: sciagent-rcwa-metasurface

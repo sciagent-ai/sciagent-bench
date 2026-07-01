@@ -1,0 +1,113 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1812                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+scale   1;
+
+//      180mm,  XXC
+//Nx 36;
+//Ny 18;
+//Nz 39;
+
+//      160mm,  XC
+//Nx 41;
+//Ny 21;
+//Nz 44;
+
+//      140mm,  C
+//Nx 47;
+//Ny 24;
+//Nz 50;
+
+//      120mm, N
+// Nx 54;
+// Ny 28;
+// Nz 58;
+
+//      100mm, M
+//Nx 65;
+//Ny 33;
+//Nz 70;
+
+//      80mm, F
+// Nx 81;
+// Ny 41;
+// Nz 88;
+
+//      60mm, UF
+//Nx 108;
+//Ny 55;
+//Nz 117;
+
+//      50mm, UF2
+//Nx 130;
+//Ny 66;
+//Nz 140;
+
+//      40mm, UUF
+//Nx 163;
+//Ny 83;
+//Nz 175;
+
+//      140mm,  C  (active)
+Nx 47;
+Ny 24;
+Nz 50;
+
+// 6.5/0.05=130
+// 3.3/0.05=66
+// 7.0/0.05=140
+
+xi -0.0;
+xf 6.5;
+
+yi -0.0;
+yf 3.3;
+
+zi -0.0;
+zf 7.0;
+
+vertices
+(
+    ($xi $yi $zi) //0
+    ($xf $yi $zi) //1
+    ($xf $yf $zi) //2
+    ($xi $yf $zi) //3
+    ($xi $yi $zf) //4
+    ($xf $yi $zf) //5
+    ($xf $yf $zf) //6
+    ($xi $yf $zf) //7
+);
+
+
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) ($Nx $Ny $Nz) simpleGrading (1 1 1)
+);
+
+edges
+(
+);
+
+patches
+(
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //

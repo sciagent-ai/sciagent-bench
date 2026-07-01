@@ -1,0 +1,17 @@
+
+FoamFile
+{
+ class dictionary;
+ format ascii;
+ object decomposeParDict;
+ version 2.0;
+}
+
+numberOfSubdomains 220;
+
+method              metis;
+
+coeffs
+{
+    n           (4 4 6);
+}

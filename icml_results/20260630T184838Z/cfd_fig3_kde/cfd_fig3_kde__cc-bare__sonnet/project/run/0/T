@@ -1,0 +1,189 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 291.45;
+
+boundaryField
+{
+    crac01_inlet
+    {
+        type            fixedValue;
+        value           uniform 291.45;
+    }
+    crac01_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    crac02_inlet
+    {
+        type            fixedValue;
+        value           uniform 291.45;
+    }
+    crac02_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    crac03_inlet
+    {
+        type            fixedValue;
+        value           uniform 291.45;
+    }
+    crac03_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    crac04_inlet
+    {
+        type            fixedValue;
+        value           uniform 291.45;
+    }
+    crac04_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    rack01_inlet
+    {
+        type            fixedValue;
+        value           uniform 296.63;
+    }
+    rack01_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    rack02_inlet
+    {
+        type            fixedValue;
+        value           uniform 296.81;
+    }
+    rack02_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    rack03_inlet
+    {
+        type            fixedValue;
+        value           uniform 298.02;
+    }
+    rack03_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    rack04_inlet
+    {
+        type            fixedValue;
+        value           uniform 300.49;
+    }
+    rack04_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    rack05_inlet
+    {
+        type            fixedValue;
+        value           uniform 302.56;
+    }
+    rack05_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    rack06_inlet
+    {
+        type            fixedValue;
+        value           uniform 302.81;
+    }
+    rack06_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    rack07_inlet
+    {
+        type            fixedValue;
+        value           uniform 300.19;
+    }
+    rack07_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    rack08_inlet
+    {
+        type            fixedValue;
+        value           uniform 299.79;
+    }
+    rack08_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    rack09_inlet
+    {
+        type            fixedValue;
+        value           uniform 300.62;
+    }
+    rack09_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    rack10_inlet
+    {
+        type            fixedValue;
+        value           uniform 300.35;
+    }
+    rack10_outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 291.45;
+        value           uniform 291.45;
+    }
+    walls
+    {
+        type            zeroGradient;
+    }
+    hole
+    {
+        type            zeroGradient;
+    }
+}
+
+
+// ************************************************************************* //

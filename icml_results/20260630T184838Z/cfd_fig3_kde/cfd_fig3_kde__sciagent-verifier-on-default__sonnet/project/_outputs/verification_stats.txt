@@ -1,0 +1,9 @@
+cell_count: 61811
+paper_cell_count: 61927
+cell_count_error_pct: 0.19
+vol_weighted_mean_T_K: 296.2092
+T_min_K: 290.9645
+T_max_K: 302.9278
+total_volume_m3: 117.5916
+kde_covariance_factor: 0.1
+mean_T_in_range_294_298: YES

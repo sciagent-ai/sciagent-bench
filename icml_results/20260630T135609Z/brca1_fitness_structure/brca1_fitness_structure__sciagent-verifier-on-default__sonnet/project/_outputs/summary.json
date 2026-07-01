@@ -1,0 +1,20 @@
+{
+  "n_mutations": 1837,
+  "mapping_rate": 1.0,
+  "mean_fitness_by_ss": {
+    "coil": -0.5674781578741339,
+    "helix": -0.6242003905286458,
+    "sheet": -0.6679005570788178
+  },
+  "mean_fitness_by_accessibility": {
+    "buried": -1.497464849521739,
+    "exposed": -0.590939419070011
+  },
+  "mean_fitness_by_domain": {
+    "BRCT": -0.5824950461916667,
+    "Other": -0.02996460125806451,
+    "RING": -0.7053111948243478
+  },
+  "buried_vs_exposed_pvalue": 0.00014787586218240428,
+  "buried_vs_exposed_U": 11268.0
+}

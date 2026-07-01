@@ -1,0 +1,230 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1806                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 291.45;
+
+Cp 1006; // @ 300K J/kg.K
+//Rho 1.205; // kg/m3
+
+PR1 6208; // J/s
+PR2 3263;
+PR3 5458;
+PR4 3983;
+PR5 3463;
+PR6 4036;
+PR7 3982;
+PR8 2014;
+PR9 2057;
+PR10 2178;
+
+QR1 1.190; // kg/s
+QR2 0.605;
+QR3 0.826;
+QR4 0.438;
+QR5 0.310;
+QR6 0.353;
+QR7 0.453;
+QR8 0.240;
+QR9 0.223;
+QR10 0.243;
+
+boundaryField
+{
+
+    walls
+    {
+        type            zeroGradient; // adiabatic
+    }
+
+    hole
+    {
+        type            zeroGradient; // adiabatic
+    }
+
+    "crac.*_inlet"
+    {
+        type            fixedValue;
+        value           uniform 291.45; // 18.3 deg C
+    }
+
+    "crac.*_outlet"
+    {
+        type            inletOutlet;
+        value           $internalField;
+        inletValue      uniform 291.45;
+    }
+
+    "rack.*_outlet"
+    {
+        type            inletOutlet;
+        value           $internalField;
+        inletValue      uniform 291.45;
+    }
+
+//
+
+    rack01_inlet
+    {
+        type            groovyBC;
+        valueExpression "T_return+$PR1/($Cp*$QR1)";
+        variables       "T_return{rack01_outlet}=sum(T*mag(Sf()))/sum(mag(Sf()));";
+    }
+    rack02_inlet
+    {
+        type            groovyBC;
+        valueExpression "T_return+$PR2/($Cp*$QR2)";
+        variables       "T_return{rack02_outlet}=sum(T*mag(Sf()))/sum(mag(Sf()));";
+    }
+    rack03_inlet
+    {
+        type            groovyBC;
+        valueExpression "T_return+$PR3/($Cp*$QR3)";
+        variables       "T_return{rack03_outlet}=sum(T*mag(Sf()))/sum(mag(Sf()));";
+    }
+    rack04_inlet
+    {
+        type            groovyBC;
+        valueExpression "T_return+$PR4/($Cp*$QR4)";
+        variables       "T_return{rack04_outlet}=sum(T*mag(Sf()))/sum(mag(Sf()));";
+    }
+    rack05_inlet
+    {
+        type            groovyBC;
+        valueExpression "T_return+$PR5/($Cp*$QR5)";
+        variables       "T_return{rack05_outlet}=sum(T*mag(Sf()))/sum(mag(Sf()));";
+    }
+    rack06_inlet
+    {
+        type            groovyBC;
+        valueExpression "T_return+$PR6/($Cp*$QR6)";
+        variables       "T_return{rack06_outlet}=sum(T*mag(Sf()))/sum(mag(Sf()));";
+    }
+    rack07_inlet
+    {
+        type            groovyBC;
+        valueExpression "T_return+$PR7/($Cp*$QR7)";
+        variables       "T_return{rack07_outlet}=sum(T*mag(Sf()))/sum(mag(Sf()));";
+    }
+    rack08_inlet
+    {
+        type            groovyBC;
+        valueExpression "T_return+$PR8/($Cp*$QR8)";
+        variables       "T_return{rack08_outlet}=sum(T*mag(Sf()))/sum(mag(Sf()));";
+    }
+    rack09_inlet
+    {
+        type            groovyBC;
+        valueExpression "T_return+$PR9/($Cp*$QR9)";
+        variables       "T_return{rack09_outlet}=sum(T*mag(Sf()))/sum(mag(Sf()));";
+    }
+    rack10_inlet
+    {
+        type            groovyBC;
+        valueExpression "T_return+$PR10/($Cp*$QR10)";
+        variables       "T_return{rack10_outlet}=sum(T*mag(Sf()))/sum(mag(Sf()));";
+    }
+
+/*
+
+//
+    
+    rack01_inlet
+    {
+        type            outletMappedUniformInletHeatAddition;
+        outletPatch     rack01_outlet;
+        Q               7481;     // Heat addition in W
+        phi             phi;
+        value           uniform 0;
+    }
+    rack02_inlet
+    {
+        type            outletMappedUniformInletHeatAddition;
+        outletPatch     rack02_outlet;
+        Q               3933;     // Heat addition in W
+        phi             phi;
+        value           uniform 0;
+    }
+    rack03_inlet
+    {
+        type            outletMappedUniformInletHeatAddition;
+        outletPatch     rack03_outlet;
+        Q               6578;     // Heat addition in W
+        phi             phi;
+        value           uniform 0;
+    }
+    rack04_inlet
+    {
+        type            outletMappedUniformInletHeatAddition;
+        outletPatch     rack04_outlet;
+        Q               4800;     // Heat addition in W
+        phi             phi;
+        value           uniform 0;
+    }
+    rack05_inlet
+    {
+        type            outletMappedUniformInletHeatAddition;
+        outletPatch     rack05_outlet;
+        Q               4174;     // Heat addition in W
+        phi             phi;
+        value           uniform 0;
+    }
+    rack06_inlet
+    {
+        type            outletMappedUniformInletHeatAddition;
+        outletPatch     rack06_outlet;
+        Q               4864;     // Heat addition in W
+        phi             phi;
+        value           uniform 0;
+    }
+    rack07_inlet
+    {
+        type            outletMappedUniformInletHeatAddition;
+        outletPatch     rack07_outlet;
+        Q               4799;     // Heat addition in W
+        phi             phi;
+        value           uniform 0;
+    }
+    rack08_inlet
+    {
+        type            outletMappedUniformInletHeatAddition;
+        outletPatch     rack08_outlet;
+        Q               2428;     // Heat addition in W
+        phi             phi;
+        value           uniform 0;
+    }
+    rack09_inlet
+    {
+        type            outletMappedUniformInletHeatAddition;
+        outletPatch     rack09_outlet;
+        Q               2479;     // Heat addition in W
+        phi             phi;
+        value           uniform 0;
+    }
+    rack10_inlet
+    {
+        type            outletMappedUniformInletHeatAddition;
+        outletPatch     rack10_outlet;
+        Q               2625;     // Heat addition in W
+        phi             phi;
+        value           uniform 0;
+    }
+*/
+
+}
+
+// ************************************************************************* //

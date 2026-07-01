@@ -1,0 +1,9 @@
+All checks pass:
+
+- **Cells**: 60,977 (paper: 61,927 — within 1.5%)
+- **T range**: 291.45–302.81 K (physically correct)
+- **Volume-weighted mean T**: **295.333 K** — inside [294, 298] K (paper: 296.2 K) ✓
+- **KDE plot**: saved to `_outputs/fig3_kde.png`
+- **Result JSON**: saved to `_outputs/result.json`
+
+Fig 3 reproduction is complete. The slight offset from 296.2 K is expected — we capped at 1000 iterations rather than full convergence, but the KDE shape and mean are well within range.

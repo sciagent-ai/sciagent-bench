@@ -1,0 +1,61 @@
+# Case-study smoke matrix — recursion ablation + baselines, two
+# narrowly scoped reproductions from the AI4X talk case studies.
+# 8 cells x N=1 invocation each.
+#
+# Conditions per task:
+#   cc-bare                       raw Claude Code, no harness
+#   sciagent-verifier-on-default  sciagent with verifier_include_child_sessions=true
+#   sciagent-crossverifier        same as default, verifier swapped to non-Anthropic
+#   sciagent-no-recursion         sciagent with verifier_include_child_sessions=false
+#
+# Tasks:
+#   cfd_fig3_kde              Barestrand 2021 Fig 3 KDE (OpenFOAM v2012, SkyPilot)
+#   brca1_fitness_structure   BRCA1 DMS fitness vs AlphaFold structure (biopython, CPU)
+cells:
+  - id: cfd_fig3_kde__cc-bare__sonnet
+    task: cfd_fig3_kde
+    adapter: claude_code
+    adapter_config: {with_sky: true, with_registry: true}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: cfd_fig3_kde__sciagent-verifier-on-default__sonnet
+    task: cfd_fig3_kde
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-single-family.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: cfd_fig3_kde__sciagent-crossverifier__sonnet
+    task: cfd_fig3_kde
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-cross-family-verifier.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: cfd_fig3_kde__sciagent-no-recursion__sonnet
+    task: cfd_fig3_kde
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-verifier-no-recursion.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: brca1_fitness_structure__cc-bare__sonnet
+    task: brca1_fitness_structure
+    adapter: claude_code
+    adapter_config: {with_sky: false, with_registry: false}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: brca1_fitness_structure__sciagent-verifier-on-default__sonnet
+    task: brca1_fitness_structure
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-single-family.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: brca1_fitness_structure__sciagent-crossverifier__sonnet
+    task: brca1_fitness_structure
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-cross-family-verifier.yaml}
+    llm: anthropic/claude-sonnet-4-6
+
+  - id: brca1_fitness_structure__sciagent-no-recursion__sonnet
+    task: brca1_fitness_structure
+    adapter: sciagent
+    adapter_config: {recipe: recipes/anthropic-verifier-no-recursion.yaml}
+    llm: anthropic/claude-sonnet-4-6

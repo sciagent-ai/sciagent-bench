@@ -1,0 +1,96 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1806                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    cellDisplacement
+    {
+        solver          GAMG;
+        smoother        GaussSeidel;
+        tolerance       1e-7;
+        relTol          0.001;
+    }
+
+    /*
+    p_rgh
+    {
+        solver PCG;
+        preconditioner DIC;
+        tolerance 1e-7;
+        relTol 0.01;
+        minIter 3;
+        maxIter 1000;
+    }
+    */
+    
+    p_rgh
+    {
+        solver           GAMG;
+        tolerance        1e-7;
+        relTol           0.01;
+        minIter          1;
+        maxIter          200;
+        smoother         DIC; // DIC; //DICGaussSeidel; //FDIC;
+        agglomerator     algebraicPair;
+    }
+    
+    "(T|U|h|k|epsilon|omega)"
+    {
+        solver          PBiCGStab; //smoothSolver; PBiCGStab;
+        //smoother        DILUGaussSeidel;
+        preconditioner  DILU;
+        tolerance       1e-08; // refine after some time to 1e-8
+        relTol          0.001;
+    }
+
+}
+
+SIMPLE
+{
+    nNonOrthogonalCorrectors 2;
+    consistent yes;
+
+    residualControl
+    {
+        p_rgh           1e-5;
+        U               1e-4;
+        "(T|h)"             1e-4;
+
+        "(k|epsilon|omega)" 1e-4;
+    }
+}
+
+relaxationFactors
+{
+    fields
+    {
+        rho             1.0;
+        p_rgh           1;  //0.7;
+    }
+
+    equations
+    {
+        U               0.5; // start with .5 for initial stability
+        "(T|h)"               0.5;
+        k                     0.5;
+        "(epsilon|omega)"     0.5;
+    }
+}
+
+// ************************************************************************* //
+
+

@@ -1,0 +1,115 @@
+This case was run using OpenFOAM.com v.2012 and GroovyBC installed as part of swak4foam. Gnuplot is used to monitor the residuals.
+
+---------INTRO--------- 
+Case folders provided here covers a base setup for doing datacenter simulations on the included .stl geometry
+The provided cases use snappyHexMesh, the k-eps turb. model, finest grid with steady/transient setups
+
+To change the grid density, comment/uncomment inside the blockMeshDict and rerun the meshing steps. 
+
+---------RUNNING CASES--------- 
+Each case contains its own simplified Allclean & Allrun script for single node computation, reading the instructions below is preferred.
+
+---------RUNNING CASES--------- 
+DISCLAIMER: The "caserun"-script are a guide and paths may need to be modified depending on case location 
+and OpenFOAM binaries for cluster execution. Also the Python scripts may need some hands on work depending on the intention of the user.
+
+To run the cases, copy and paste the following files into the case directory of interest:
+    residuals, caserun, machines, postPlot
+
+Update lines 8-12 in the caserun-script as necessary for the following variables:
+    exec: "path to foamExec"
+    solver: "solver name"
+    steadyCase: "path to steady case for solution mapping"
+    time: "time folder to use for the mapping"
+
+To run the steady cases:
+    enter folder:                       cd steady/
+    cleanup case and mesh:              . caserun -0b -1
+    cleanup & prepare BC's:             . caserun -0b -2
+    decompose and run on cluster:       . caserun -0 -0a -2a -2eN -3N -4 5
+    reconstruct:                        . caserun -5
+
+To run the transient cases (starting from reconstructed steady solution):
+    enter folder:                                     cd transient/
+    cleanup case and mesh:                            . caserun -0b -1
+    cleanup, prepare BC's, MAPPING steady solution:   . caserun -0b -2 -2d
+    decompose and run on cluster:                     . caserun -0 -0a -2a -2eN -3N -4 5
+    reconstruct:                                      . caserun -5
+
+Simplified conceptual resulting run sequence:
+    cleanup:
+        rm -r processor*
+        rm -r postProcessing
+        rm -r 0
+    running:
+        mesh:
+            rm -r constant/polyMesh/
+            blockMesh
+            surfaceFeatureExtract
+            decomposePar -decomposeParDict system/meshParDict
+            renumberMesh -decomposeParDict system/meshParDict -overwrite
+            snappyHexMesh -decomposeParDict system/meshParDict -overwrite
+            reconstructParMesh -constant -fullMatch
+            checkMesh | tee logs/log1_check
+        copy BC:
+            cp -r 0.org 0
+        decompose:
+            decomposePar
+        map fields (if transient):
+            mapFields $steadyCase -sourceTime $time -consistent
+        run:
+            mpirun -np $nmesh $solver -parallel
+        postprocess:
+            postProcess -latestTime
+
+------------------ On boundary conditions ------------------
+
+Boundary conditions are steady for all cases with specific differences inbetween the Boussinesq and Compressible cases highlighted as follows:
+
+alphat
+    Boussinesq:
+        walls:
+            type            alphatJayatillekeWallFunction;
+    Compressible:
+        walls:
+            type            compressible::alphatJayatillekeWallFunction;        
+p_rgh
+    Boussinesq:
+        internalField   uniform 0;
+    Compressible:
+        internalField   uniform 101325;
+
+
+Other than above specified boundary conditions, all other are exactly the same inbetween the case setups
+
+
+------------------ For postprocessing: ------------------
+
+The following files were used for generating plots and extracting data, they are added here but may need some hands on work to be applied depending on type of study to be done
+
+__ postPlot.py __
+
+For displaying time series data for boundaries as simulation runs based on logs, the resulting output text is added to the data_v11a file for each case
+
+__ data_v11a __
+
+data-file containing the results from all cases necessary to generate the parallel coordinates plots for temperature and pressure.
+
+__ parCoordPlot.py __
+
+Code for postprocessing the results of sampled boundary conditions contained in the file: data_v11a
+This is used for generating the parallel-coordinates plots as presented in the article
+
+__ kdePlot.py __
+
+For loading reconstructed solutions and generating the cellvolume-weighted KDE-plots
+
+Requires the below postprocessing steps on the case to be applied
+
+# reconstructPar -case . -latestTime | tee logs/log4_rP_latest
+# postProcess -latestTime -func writeCellVolumes
+# postProcess -latestTime -func writeCellCentres
+# checkMesh -writeFields '(wallDistance)' -latestTime 
+
+
+

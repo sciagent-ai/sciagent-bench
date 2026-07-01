@@ -1,0 +1,297 @@
+{
+  "_metadata": {
+    "source": "photonics.pdf - Optical Materials Express Vol. 15, No. 12, 1 Dec 2025",
+    "title": "Design and experimental validation of a high-efficiency multi-zone metasurface waveguide in-coupler",
+    "authors": "Pei Xiong, Jeremy Goodsell, Daniel Nikolov, Jannick P. Rolland, Nick A. Vamivakas",
+    "doi": "10.1364/OME.576634",
+    "extraction_notes": "All values extracted directly from paper text, Table 1, Fig 2(e) (multimodal read p.3), and Fig 3(a-f) (multimodal read p.5)"
+  },
+  "system_parameters": {
+    "wavelength_nm": 532,
+    "polarization": "TE",
+    "grating_period_nm": 453,
+    "grating_period_note": "Derived from system specification that smallest diffraction angle for field (-10 deg, 0 deg) is just larger than the critical angle of N-BK7",
+    "waveguide_material": "N-BK7",
+    "meta_atom_material": "TiO2",
+    "waveguide_thickness_mm": 0.5,
+    "incoupler_size_mm": "3 x 3",
+    "pupil_size_mm": "3 x 3",
+    "FOV_deg": "20 x 20",
+    "XFOV_range_deg": [
+      -10,
+      10
+    ],
+    "XFOV_step_deg": 2
+  },
+  "refractive_indices": {
+    "note": "Exact numerical values not explicitly stated in paper text; standard catalog values given here for reference",
+    "TiO2_at_532nm": {
+      "value": "not explicitly stated in paper",
+      "typical_ALD_TiO2_range": "2.30 to 2.40",
+      "paper_description": "high refractive index, low absorption in visible spectrum; ALD deposition yields higher index than sputtered TiO2"
+    },
+    "N_BK7_at_532nm": {
+      "value": "not explicitly stated in paper",
+      "typical_catalog_value": 1.5195,
+      "note": "Inferred from critical angle of ~41.2 deg (paper states lower TIR bound is 41.2-41.5 deg)"
+    }
+  },
+  "critical_angle_N_BK7": {
+    "value_deg": 41.2,
+    "source": "Fig 3 caption states reflection angle range starts at 41.2 deg; text states incident angle in glass starts at 41.5 deg (just above critical angle); text: 'the smallest diffraction angle for the field (-10 deg, 0 deg) is just larger than the critical angle of N-BK7'",
+    "note": "critical angle = arcsin(n_air / n_BK7); consistent with 41.2 deg lower bound for TIR propagation"
+  },
+  "grating_equation": {
+    "form": "n_d * sin(theta_d) = n_i * sin(theta_i) + m * lambda / d",
+    "variables": {
+      "n_d": "refractive index on diffraction side",
+      "n_i": "refractive index on incident side",
+      "theta_d": "diffraction angle",
+      "theta_i": "incident angle",
+      "m": "diffraction order",
+      "lambda": "wavelength",
+      "d": "grating period"
+    },
+    "usage_in_paper": "Used to convert XFOV incident angles (-10 to +10 deg) to first-order diffraction angles in glass (41.5 to 62.5 deg); simulation source placed inside glass substrate"
+  },
+  "MFE": {
+    "achieved_percent": 25.3,
+    "theoretical_limit_percent": 29.0,
+    "definition": "Minimum Field Efficiency - minimum in-coupling efficiency for all fields within FOV; upper limit of brightness for achieving uniform output since low-efficiency areas cannot be digitally brightened",
+    "location_of_MFE": "XFOV = -10 deg (worst field)",
+    "simulated_at_minus10deg_percent": 25.3,
+    "measured_at_minus10deg_percent": 17.0,
+    "average_simulated_percent": 31.0,
+    "average_measured_percent": 30.0,
+    "design_parameters_for_theoretical_limit": {
+      "waveguide": "N-BK7",
+      "thickness_mm": 0.5,
+      "pupil_size_mm": "3 x 3",
+      "wavelength_nm": 532,
+      "FOV_deg": "20 x 20",
+      "assumption": "pupil and in-coupler equally sized and co-planar"
+    }
+  },
+  "fig2e_per_zone_targets": {
+    "note": "Ideal targets assuming sum of two interaction efficiencies = 100% (from Ref [27] theoretical framework). Values read from Fig 2(e) multimodal image.",
+    "zone1": {
+      "zone_size_mm": 1.06,
+      "first_order_diffraction_efficiency_percent": 96,
+      "zeroth_order_reflection_efficiency_percent": 4,
+      "sum_percent": 100
+    },
+    "zone2": {
+      "zone_size_mm": 1.01,
+      "first_order_diffraction_efficiency_percent": 54,
+      "zeroth_order_reflection_efficiency_percent": 46,
+      "sum_percent": 100
+    },
+    "zone3": {
+      "zone_size_mm": 0.93,
+      "first_order_diffraction_efficiency_percent": 27,
+      "zeroth_order_reflection_efficiency_percent": 73,
+      "sum_percent": 100
+    },
+    "total_incoupler_width_mm": 3.0,
+    "layout": "Zone1 | Zone2 | Zone3 arranged laterally; sizes are widths along XFOV direction"
+  },
+  "unit_cell_structure": {
+    "description": "One nano-beam + one nano-pillar per unit cell",
+    "nano_beam": "runs along x-direction (perpendicular to grating vector); its width is in the x-direction",
+    "nano_pillar": "circular or partial-circular cross-section column",
+    "x_period_nm": 453,
+    "height_all_zones_nm": 250,
+    "height_note": "All three zones share the same height; constraint imposed to accommodate fabrication",
+    "zones_2_3_note": "Nano-pillars in zones 2 and 3 display partial circular shapes; pillar dimensions exceed unit cell boundaries during optimization; sharp corners appear slightly rounded after fabrication",
+    "substrate": "N-BK7 glass",
+    "meta_atom_material": "TiO2 deposited by ALD (Atomic Layer Deposition)",
+    "design_variables": [
+      "width of nano-beam",
+      "diameter of nano-pillar",
+      "thickness (height) of nano-pillar",
+      "separation between nano-beam and nano-pillar",
+      "unit cell size along y-direction"
+    ]
+  },
+  "per_zone_geometry": {
+    "note": "Designed values from Table 1 and Fig 3(a-c) labels. Measured values from Table 1 (SEM, within +/-20 nm). Height=250 nm for all zones.",
+    "zone1": {
+      "bar_width_designed_nm": 110,
+      "bar_width_measured_nm": 110.5,
+      "pillar_diameter_designed_nm": 100,
+      "pillar_diameter_measured_nm": 97.98,
+      "pillar_width_designed_nm": null,
+      "pillar_width_measured_nm": null,
+      "height_nm": 250,
+      "x_period_nm": 453,
+      "y_period_unit_cell_nm": 177,
+      "y_period_source": "Fig 3(a) label on 3D geometry diagram",
+      "pillar_type": "full circular"
+    },
+    "zone2": {
+      "bar_width_designed_nm": 110,
+      "bar_width_measured_nm": 110.3,
+      "pillar_diameter_designed_nm": 170,
+      "pillar_diameter_measured_nm": 156.9,
+      "pillar_width_designed_nm": 156.5,
+      "pillar_width_measured_nm": 136.4,
+      "height_nm": 250,
+      "x_period_nm": 453,
+      "y_period_unit_cell_nm": 300,
+      "y_period_source": "Fig 3(b) label on 3D geometry diagram",
+      "pillar_type": "partial circular (extends beyond unit cell boundary)"
+    },
+    "zone3": {
+      "bar_width_designed_nm": 100,
+      "bar_width_measured_nm": 100.1,
+      "pillar_diameter_designed_nm": 196,
+      "pillar_diameter_measured_nm": 190.2,
+      "pillar_width_designed_nm": 160.5,
+      "pillar_width_measured_nm": 149.5,
+      "height_nm": 250,
+      "x_period_nm": 453,
+      "y_period_unit_cell_nm": 64,
+      "y_period_source": "Fig 3(c) label on 3D geometry diagram (reading uncertain; may represent separation or partial dimension)",
+      "pillar_type": "partial circular (extends beyond unit cell boundary)"
+    }
+  },
+  "fig3df_efficiency_curves_approximate": {
+    "note": "Values APPROXIMATED from graphical reading of Fig 3(d-f) plots. Red curves = 1st-order diffraction efficiency vs incident angle (-10 to +10 deg). Blue curves = 0th-order reflection efficiency vs secondary (internal) incident angle (41.2 to 62.5 deg). Black curves = sum. Reading precision +/-3 to 5%.",
+    "angle_correspondence": "Primary incident angles (-10, -5, 0, +5, +10 deg) correspond to secondary (internal) angles approximately (41.5, 46.5, 52.0, 57.0, 62.5 deg) in N-BK7",
+    "zone1_fig3d": {
+      "description": "Zone 1: non-uniform, high at -10 deg, gradually decreasing toward +10 deg (limited angular bandwidth). Optimization merit balances efficiencies at both ends of XFOV.",
+      "first_order_diffraction_efficiency_percent": {
+        "minus10deg": 84,
+        "minus5deg": 75,
+        "0deg": 70,
+        "plus5deg": 62,
+        "plus10deg": 55
+      },
+      "zeroth_order_reflection_efficiency_percent": {
+        "secondary_41p2deg_minus10_primary": 15,
+        "secondary_46p5deg_minus5_primary": 13,
+        "secondary_52deg_0_primary": 12,
+        "secondary_57deg_plus5_primary": 11,
+        "secondary_62p5deg_plus10_primary": 10
+      },
+      "sum_approx_percent": {
+        "minus10deg": 99,
+        "0deg": 82,
+        "plus10deg": 65
+      }
+    },
+    "zone2_fig3e": {
+      "description": "Zone 2: much flatter efficiency curve than zone 1; inherently broader angular bandwidth. Optimized only for -10 deg field.",
+      "first_order_diffraction_efficiency_percent": {
+        "minus10deg": 48,
+        "minus5deg": 50,
+        "0deg": 52,
+        "plus5deg": 52,
+        "plus10deg": 50
+      },
+      "zeroth_order_reflection_efficiency_percent": {
+        "secondary_41p2deg_minus10_primary": 40,
+        "secondary_46p5deg_minus5_primary": 42,
+        "secondary_52deg_0_primary": 43,
+        "secondary_57deg_plus5_primary": 43,
+        "secondary_62p5deg_plus10_primary": 43
+      },
+      "sum_approx_percent": {
+        "minus10deg": 88,
+        "0deg": 95,
+        "plus10deg": 93
+      }
+    },
+    "zone3_fig3f": {
+      "description": "Zone 3: flat efficiency curve with low diffraction and high reflection; broader angular bandwidth; trade-off between peak efficiency and angular bandwidth.",
+      "first_order_diffraction_efficiency_percent": {
+        "minus10deg": 25,
+        "minus5deg": 24,
+        "0deg": 23,
+        "plus5deg": 23,
+        "plus10deg": 22
+      },
+      "zeroth_order_reflection_efficiency_percent": {
+        "secondary_41p2deg_minus10_primary": 62,
+        "secondary_46p5deg_minus5_primary": 65,
+        "secondary_52deg_0_primary": 67,
+        "secondary_57deg_plus5_primary": 67,
+        "secondary_62p5deg_plus10_primary": 67
+      },
+      "sum_approx_percent": {
+        "minus10deg": 87,
+        "0deg": 90,
+        "plus10deg": 89
+      }
+    }
+  },
+  "simulation_parameters": {
+    "RCWA_tool": "RSoft (Keysight, former Synopsys)",
+    "optimizer": "Multi-Variable Optimization and Scanning Tool (MOST) in RSoft",
+    "ray_tracing_tool": "LightTools (Keysight, former Synopsys)",
+    "simulation_source_location": "inside glass substrate",
+    "internal_angle_range_deg": [
+      41.5,
+      62.5
+    ],
+    "internal_angle_corresponds_to_XFOV_deg": [
+      -10,
+      10
+    ],
+    "reflection_measurement_angle_in_air_deg": [
+      39.22,
+      72.17
+    ],
+    "reflection_measurement_angle_in_glass_deg": [
+      42.5,
+      62.5
+    ]
+  },
+  "fill_factor_duty_cycle": {
+    "note": "Not explicitly stated as fill factor in paper; derived from bar width / x-period",
+    "zone1_beam_fill_factor_x": 0.243,
+    "zone2_beam_fill_factor_x": 0.243,
+    "zone3_beam_fill_factor_x": 0.221,
+    "calculation": "bar_width_nm / grating_period_nm",
+    "ranges_mentioned": "No explicit fill factor or duty cycle range given; optimization variables are beam width, pillar diameter, pillar height, beam-pillar separation, and y unit cell size"
+  },
+  "fabrication": {
+    "method": "Atomic Layer Deposition (ALD)",
+    "ALD_system": "Cambridge Savannah 200",
+    "precursors": "TDMAT and water",
+    "deposition_rate_nm_per_cycle": 0.065,
+    "chamber_temp_C": 85,
+    "TDMAT_precursor_temp_C": 70,
+    "resist": "PMMA (MicroChem), diluted positive e-beam resist",
+    "resist_thickness_nm": 300,
+    "EBL_system": "100 kV JEOL 9500",
+    "spin_coat_rpm": 1800,
+    "spin_coat_duration_s": 60,
+    "bake_temp_C": 170,
+    "bake_duration_min": 15,
+    "ICP_etching_gases": "BCl3/Cl2/Ar (30/2/7 sccm)",
+    "ICP_RF_power_W": 50,
+    "ICP_power_W": 800,
+    "etch_rate_nm_per_min": 66,
+    "metasurface_size_each_um": 800,
+    "max_aspect_ratio": 2.5,
+    "fabrication_tolerance_nm": 20,
+    "substrate": "N-BK7"
+  },
+  "measurement_setup": {
+    "diffraction_fiber_collimator": "Thorlabs CFS18-532-FC",
+    "diffraction_beam_diameter_mm": 3.5,
+    "coupling_fiber_collimator": "Thorlabs F810FC-543",
+    "coupling_beam_diameter_mm": 6.4,
+    "aperture_size_mm": "3 x 3 square",
+    "angle_step_deg": 2,
+    "prism_material": "N-BK7",
+    "matching_liquid": "BK-7 matching liquid (Cargille)",
+    "detector": "photodiode"
+  },
+  "_reproduction_note": {
+    "copied_from": "../../photonics__sciagent-verifier-on-default__sonnet_old4/project/_outputs/paper_params.json",
+    "copied_at": "2026-06-30",
+    "purpose": "Input targets for S4 RCWA reproduction in current project"
+  }
+}
