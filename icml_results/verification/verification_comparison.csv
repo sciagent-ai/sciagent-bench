@@ -1,0 +1,7 @@
+task,condition,cell_id,criterion,paper_value,claimed_value,passes_threshold,sci_verdict,sci_confidence,sci_verifier_model,agreement,extraction_notes
+photonics,cc-bare,photonics__cc-bare__sonnet,≥ 0.25,0.253,0.2504,pass,,,,,"result.txt: ""MFE = 25.04%"" line 3"
+photonics,sciagent-verifier-on-default,photonics__sciagent-verifier-on-default__sonnet,≥ 0.25,0.253,0.2509,pass,verified,0.75,subagent_verifier,yes,"result.txt: ""MFE Verification: 25.09%"""
+brca1_fitness_structure,cc-bare,brca1_fitness_structure__cc-bare__sonnet,≥ 0.95,1.0,,,,,,,HAND-FILL: mapping_success_rate not stated in result.txt directly; check summary.json in ./project/_outputs/ or task's mapping section
+brca1_fitness_structure,sciagent-verifier-on-default,brca1_fitness_structure__sciagent-verifier-on-default__sonnet,≥ 0.95,1.0,,,verified,0.78,subagent_verifier,,HAND-FILL: same — check ./project/_outputs/summary.json for the actual number
+cfd_fig3_kde,cc-bare,cfd_fig3_kde__cc-bare__sonnet,"in [294.0, 298.0]",296.2,295.333,pass,,,,,"result.txt: ""Volume-weighted mean T: 295.333 K"""
+cfd_fig3_kde,sciagent-verifier-on-default,cfd_fig3_kde__sciagent-verifier-on-default__sonnet,"in [294.0, 298.0]",296.2,296.2092,pass,verified,0.91,subagent_verifier,yes,"project/_outputs/verification_stats.txt: ""vol_weighted_mean_T_K: 296.2092"""
