@@ -1,7 +1,7 @@
 task,condition,cell_id,claimed_value,extraction_notes
 photonics,cc-bare,photonics__cc-bare__sonnet,0.2504,"result.txt: ""MFE = 25.04%"" line 3"
 photonics,sciagent-verifier-on-default,photonics__sciagent-verifier-on-default__sonnet,0.2509,"result.txt: ""MFE Verification: 25.09%"""
-brca1_fitness_structure,cc-bare,brca1_fitness_structure__cc-bare__sonnet,,"HAND-FILL: mapping_success_rate not stated in result.txt directly; check summary.json in ./project/_outputs/ or task's mapping section"
-brca1_fitness_structure,sciagent-verifier-on-default,brca1_fitness_structure__sciagent-verifier-on-default__sonnet,,"HAND-FILL: same — check ./project/_outputs/summary.json for the actual number"
+brca1_fitness_structure,cc-bare,brca1_fitness_structure__cc-bare__sonnet,1.0,"result.txt: ""V2: mapping success rate | 1.0000 (100%)"""
+brca1_fitness_structure,sciagent-verifier-on-default,brca1_fitness_structure__sciagent-verifier-on-default__sonnet,1.0,"result.txt: ""Mapping rate: 1.00 (100%, target ≥ 0.95)"""
 cfd_fig3_kde,cc-bare,cfd_fig3_kde__cc-bare__sonnet,295.333,"result.txt: ""Volume-weighted mean T: 295.333 K"""
 cfd_fig3_kde,sciagent-verifier-on-default,cfd_fig3_kde__sciagent-verifier-on-default__sonnet,296.2092,"project/_outputs/verification_stats.txt: ""vol_weighted_mean_T_K: 296.2092"""

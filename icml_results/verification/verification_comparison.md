@@ -1,20 +1,19 @@
-# Verification comparison — cc-bare vs sciagent (T3 axis)
+# Verification comparison — cc-bare vs sciagent (T1 · T2 · T3)
 
-Deterministic Correctness check (does the claim satisfy the paper's numeric threshold?) applied uniformly to both adapters, joined with sciagent's own in-loop LLM-verifier verdict (which cc-bare cells lack entirely). See `README.md` for the full method.
+Deterministic audit across the design-doc rubric applied to both adapters:
+- **T1 (Computed?)** — did the required tool run?  sciagent: `compute_job_launched.service` events across parent + child sessions.  cc-bare: `Bash` tool_use commands in the Claude Code stream matched against a per-service signature (see `_CC_BARE_T1_SIGNATURES`).
+- **T2 (Traceable?)** — does the claimed value appear in some `tool_result` output within float tolerance?  sciagent: `tool_result.output_summary` across parent + child sessions.  cc-bare: `tool_result` blocks in the Claude Code stream.
+- **T3 (Correct?)** — does the claim satisfy the paper's numeric threshold? Deterministic; adapter-agnostic.
+- **sciagent-only**: `sci_verdict` / `sci_confidence` from the last `verification_result` event; `agreement` compares that verdict against the deterministic T3 result.
 
-| task | condition | criterion | paper_value | claimed_value | passes_threshold | sci_verdict | sci_confidence | agreement |
-|:---|:---|:---|---:|---:|---:|:---|---:|:---|
-| photonics | cc-bare | ≥ 0.25 | 0.253 | 0.2504 | pass | — | — | — |
-| photonics | sciagent-verifier-on-default | ≥ 0.25 | 0.253 | 0.2509 | pass | verified | 0.75 | yes |
-| brca1_fitness_structure | cc-bare | ≥ 0.95 | 1.0 | — | — | — | — | — |
-| brca1_fitness_structure | sciagent-verifier-on-default | ≥ 0.95 | 1.0 | — | — | verified | 0.78 | — |
-| cfd_fig3_kde | cc-bare | in [294.0, 298.0] | 296.2 | 295.333 | pass | — | — | — |
-| cfd_fig3_kde | sciagent-verifier-on-default | in [294.0, 298.0] | 296.2 | 296.2092 | pass | verified | 0.91 | yes |
+T1 for cc-bare can report `yes*` when at least one required service matched but at least one has no signature mapping; `unknown` when none of the services have signatures. See `README.md`.
 
-## Rows awaiting hand-filled `claimed_value`
-
-- **brca1_fitness_structure / cc-bare** — HAND-FILL: mapping_success_rate not stated in result.txt directly; check summary.json in ./project/_outputs/ or task's mapping section
-- **brca1_fitness_structure / sciagent-verifier-on-default** — HAND-FILL: same — check ./project/_outputs/summary.json for the actual number
-
-Edit `claim_values.csv` in this folder, then rerun `verify_and_compare.py`.
+| task | condition | criterion | claimed_value | paper_value | T1_computed | T2_traceable | T3_passes_threshold | sci_verdict | sci_confidence | agreement |
+|:---|:---|:---|---:|---:|:---|:---|:---|:---|---:|:---|
+| photonics | cc-bare | ≥ 0.25 | 0.2504 | 0.253 | yes | yes | pass | — | — | — |
+| photonics | sciagent-verifier-on-default | ≥ 0.25 | 0.2509 | 0.253 | yes | yes | pass | verified | 0.75 | yes |
+| brca1_fitness_structure | cc-bare | ≥ 0.95 | 1.0 | 1.0 | yes | yes | pass | — | — | — |
+| brca1_fitness_structure | sciagent-verifier-on-default | ≥ 0.95 | 1.0 | 1.0 | yes | yes | pass | verified | 0.78 | yes |
+| cfd_fig3_kde | cc-bare | in [294.0, 298.0] | 295.333 | 296.2 | yes | yes | pass | — | — | — |
+| cfd_fig3_kde | sciagent-verifier-on-default | in [294.0, 298.0] | 296.2092 | 296.2 | yes | yes | pass | verified | 0.91 | yes |
 
