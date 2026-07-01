@@ -8,16 +8,26 @@ for full tables see `task_vs_verification.md`.
 
 ```
 efficiency/
-├── analyze_task_vs_verification.py   ← analyzer (25 KB)
+├── analyze_task_vs_verification.py   ← data extractor (25 KB)
+├── make_case_study_diagrams.py       ← 6-panel diagram maker
 ├── task_vs_verification.md           ← full per-cell tables
 ├── task_vs_verification.csv          ← machine-readable
 ├── task_vs_verification_summary.md   ← paper-ready narrative (5.7 KB)
 ├── task_vs_verification_synthesis.md ← this file
 └── charts/
-    ├── cc_vs_sciagent_by_task.png    ← 3 tasks × 2 adapters
-    ├── photonics_variants_split.png  ← 5 photonics variants stacked
-    └── cost_types_by_cell.png        ← LLM / compute / storage / verifier
+    ├── photonics_efficiency.png                 ← per-case-study 6-panel
+    ├── brca1_fitness_structure_efficiency.png   ← per-case-study 6-panel
+    ├── cfd_fig3_kde_efficiency.png              ← per-case-study 6-panel
+    ├── summary_by_task.png                      ← compact 3-task cost row
+    └── photonics_variants_split.png             ← photonics variants (verifier configs)
 ```
+
+Each per-case-study 6-panel figure shows: wall-clock time, cost
+(LLM + compute + verifier LLM stacked), iterations (with subagent
+breakdown), tokens (stacked by source), tool calls, and remote compute
+jobs. Same layout as the earlier `results/…/performance/comparison.png`
+photonics diagram, generalized across the three case studies with the
+verifier called out as its own segment.
 
 ## Three findings from the split
 
