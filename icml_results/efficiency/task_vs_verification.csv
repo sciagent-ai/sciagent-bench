@@ -1,0 +1,12 @@
+task,condition,cell_id,adapter,task_llm_usd,task_compute_usd,task_storage_usd,verification_llm_usd,total_usd,task_tokens_in,task_tokens_out,verification_tokens_in,verification_tokens_out
+photonics,cc-bare,photonics__cc-bare__sonnet,cc-bare,6.7038473499999975,0.0,0.0,0.0,6.7038473499999975,6301875,249778,0,0
+photonics,sciagent-verifier-on-default,photonics__sciagent-verifier-on-default__sonnet,sciagent,9.832481700000002,0.25509444444444446,0.0,0.44539665,10.532972794444445,4981473,156842,149089,5709
+brca1_fitness_structure,cc-bare,brca1_fitness_structure__cc-bare__sonnet,cc-bare,0.31827265,0.0,0.0,0.0,0.31827265,343186,9785,0,0
+brca1_fitness_structure,sciagent-verifier-on-default,brca1_fitness_structure__sciagent-verifier-on-default__sonnet,sciagent,1.5457244999999995,0.029893333333333334,0.0,0.17272350000000003,1.7483413333333329,1340256,17288,66958,2450
+cfd_fig3_kde,cc-bare,cfd_fig3_kde__cc-bare__sonnet,cc-bare,7.3093613500000005,0.0,0.0,0.0,7.3093613500000005,297874,1844,0,0
+cfd_fig3_kde,sciagent-verifier-on-default,cfd_fig3_kde__sciagent-verifier-on-default__sonnet,sciagent,4.8704622,0.21193333333333333,0.0,0.08943165,5.171827183333334,3972635,35887,33947,295
+photonics,sciagent-verifier-on-default,photonics__sciagent-verifier-on-default__sonnet,sciagent,9.832481700000002,0.25509444444444446,0.0,0.44539665,10.532972794444445,4981473,156842,149089,5709
+photonics,sciagent-no-recursion,photonics__sciagent-no-recursion__sonnet,sciagent,4.44845325,0.2679388888888889,0.0,0.47729145000000006,5.193683588888889,3191737,77952,234881,11946
+photonics,sciagent-crossverifier,photonics__sciagent-crossverifier__sonnet,sciagent,5.047683299999999,0.5164222222222222,0.0,0.438896,6.003001522222221,2029425,114971,359300,11386
+photonics,sciagent-verifier-off,photonics__sciagent-verifier-off__sonnet,sciagent,6.97296645,0.7715166666666666,0.0,0.0,7.744483116666667,4744621,175810,0,0
+photonics,cc-bare,photonics__cc-bare__sonnet,cc-bare,6.7038473499999975,0.0,0.0,0.0,6.7038473499999975,6301875,249778,0,0
